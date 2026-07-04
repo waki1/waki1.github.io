@@ -3,32 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ImageRotator - 写真の向き補正・画像変換をかんたんに</title>
-  <meta name="description" content="ImageRotatorは、写真の向き補正、画像の一括回転、形式変換、SNS向けクロップ、Live Photos変換、動画トリミングに対応したiOS向けメディア変換アプリです。" />
-  <meta property="og:title" content="ImageRotator - 写真の向き補正・画像変換をかんたんに" />
-  <meta property="og:description" content="画像はまとめて一括回転。動画は個別にトリミング・解像度変換。写真や動画を投稿しやすい形に整えるiOSアプリ。" />
+  <title id="page-title">ImageRotator - 見せる前に、まっすぐに。</title>
+  <meta id="meta-description" name="description" content="ImageRotatorは、写真や動画を人に見せる前に、向きや形をそっと整えるためのiPhoneアプリです。" />
+  <meta id="og-title" property="og:title" content="ImageRotator - 見せる前に、まっすぐに。" />
+  <meta id="og-description" property="og:description" content="ImageRotatorは、写真や動画を人に見せる前に、向きや形をそっと整えるためのiPhoneアプリです。" />
   <meta property="og:type" content="website" />
   <meta name="theme-color" content="#2563eb" />
   <style>
     :root {
       --bg: #f7f9fd;
-      --bg2: #eef5ff;
       --text: #101828;
-      --muted: #667085;
-      --soft: #f2f4f7;
+      --muted: #5b6472;
       --card: rgba(255,255,255,.84);
       --white: #fff;
       --line: rgba(16,24,40,.10);
       --blue: #2563eb;
       --blue2: #1d4ed8;
       --cyan: #06b6d4;
-      --green: #10b981;
-      --purple: #7c3aed;
-      --orange: #f97316;
-      --shadow: 0 28px 80px rgba(15,23,42,.13);
       --shadow2: 0 16px 44px rgba(37,99,235,.18);
       --radius: 28px;
-      --radius-sm: 18px;
       --max: 1120px;
     }
 
@@ -78,12 +71,42 @@
     .brand { display: flex; align-items: center; gap: 12px; font-weight: 900; letter-spacing: -.03em; }
     .logo {
       width: 40px; height: 40px; border-radius: 13px;
-      background: linear-gradient(135deg, var(--blue), var(--cyan));
+      background: var(--blue);
       display: grid; place-items: center; color: #fff; font-size: 20px;
       box-shadow: 0 12px 30px rgba(37,99,235,.28);
     }
-    .nav-links { display: flex; align-items: center; gap: 22px; color: var(--muted); font-size: 14px; font-weight: 700; }
+    .nav-links {
+      display: flex; align-items: center; gap: 22px; color: var(--muted); font-size: 14px; font-weight: 700;
+      overflow-x: auto; white-space: nowrap; scrollbar-width: none;
+    }
+    .nav-links::-webkit-scrollbar { display: none; }
     .nav-links a:hover { color: var(--blue); }
+    .language-switch {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.72);
+    }
+    .language-switch button {
+      min-width: 38px;
+      min-height: 32px;
+      padding: 5px 9px;
+      border: 0;
+      border-radius: 999px;
+      color: var(--muted);
+      background: transparent;
+      font: inherit;
+      font-size: 12px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+    .language-switch button[aria-pressed="true"] {
+      color: #fff;
+      background: var(--blue);
+      box-shadow: 0 5px 12px rgba(37,99,235,.28);
+    }
     .btn {
       display: inline-flex;
       align-items: center;
@@ -115,7 +138,7 @@
       margin: 0;
       font-size: clamp(42px, 6vw, 76px);
       line-height: 1.05;
-      letter-spacing: -.075em;
+      letter-spacing: -.03em;
     }
     .hero h1 span { color: var(--blue); }
     .lead { margin: 26px 0 0; color: var(--muted); font-size: clamp(17px, 2vw, 21px); max-width: 660px; }
@@ -159,96 +182,90 @@
     .photo-stack { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     .photo-card {
       height: 128px; border-radius: 22px;
-      background: linear-gradient(135deg, #bfdbfe, #a5f3fc);
+      background: rgba(37,99,235,.16);
       box-shadow: inset 0 0 0 1px rgba(255,255,255,.55);
       position: relative; overflow: hidden;
     }
-    .photo-card:nth-child(2) { background: linear-gradient(135deg, #ddd6fe, #fecdd3); transform: rotate(90deg); }
-    .photo-card:nth-child(3) { background: linear-gradient(135deg, #bbf7d0, #bae6fd); transform: rotate(-90deg); }
-    .photo-card:nth-child(4) { background: linear-gradient(135deg, #fed7aa, #fde68a); }
+    .photo-card:nth-child(2) { background: rgba(6,182,212,.16); transform: rotate(90deg); }
+    .photo-card:nth-child(3) { background: rgba(37,99,235,.10); transform: rotate(-90deg); }
+    .photo-card:nth-child(4) { background: rgba(6,182,212,.22); }
     .photo-card:before { content:""; position:absolute; left:18px; bottom:18px; width:54px; height:38px; background:rgba(255,255,255,.62); clip-path: polygon(0 100%, 45% 40%, 64% 70%, 78% 30%, 100% 100%); }
     .photo-card:after { content:""; position:absolute; right:16px; top:16px; width:20px; height:20px; border-radius:50%; background:rgba(255,255,255,.72); }
     .control { margin-top: 18px; background: rgba(255,255,255,.86); border:1px solid rgba(37,99,235,.10); border-radius: 24px; padding: 16px; box-shadow: 0 14px 30px rgba(37,99,235,.08); }
     .control-row { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; font-size:13px; color:var(--muted); font-weight:800; }
     .rotate-buttons { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
     .rotate-buttons div { border-radius:16px; background:#eff6ff; color:#1d4ed8; padding:13px 8px; text-align:center; font-weight:900; }
-    .save-bar { margin-top: 12px; border-radius: 18px; padding: 14px; background: linear-gradient(135deg, var(--blue), var(--cyan)); color:#fff; text-align:center; font-weight:900; }
+    .save-bar { margin-top: 12px; border-radius: 18px; padding: 14px; background: var(--blue); color:#fff; text-align:center; font-weight:900; }
 
     section { padding: 76px 0; }
     .section-head { max-width: 780px; margin: 0 auto 34px; text-align: center; }
-    .section-head h2 { margin:0; font-size: clamp(30px, 4vw, 48px); line-height:1.18; letter-spacing:-.06em; }
+    .section-head h2 { margin:0; font-size: clamp(30px, 4vw, 48px); line-height:1.18; letter-spacing:-.03em; }
     .section-head p { margin:16px auto 0; color:var(--muted); font-size:17px; }
 
-    .cards { display:grid; grid-template-columns: repeat(3, 1fr); gap:18px; }
-    .card {
+    .approach-items { display:grid; grid-template-columns: repeat(3, 1fr); gap:18px; }
+    .approach-item {
       background: var(--card);
       border: 1px solid rgba(255,255,255,.72);
       border-radius: var(--radius);
       padding: 26px;
       box-shadow: 0 18px 48px rgba(15,23,42,.08);
     }
-    .icon { width:46px; height:46px; border-radius:16px; display:grid; place-items:center; margin-bottom:18px; font-size:23px; background:#eff6ff; color:var(--blue); }
-    .card h3 { margin:0 0 8px; font-size:20px; letter-spacing:-.04em; }
-    .card p { margin:0; color:var(--muted); font-size:15px; }
-    .label { display:inline-flex; margin-bottom:12px; padding:5px 10px; border-radius:999px; font-size:12px; font-weight:900; background:#ecfdf5; color:#047857; }
-    .label.video { background:#f5f3ff; color:#6d28d9; }
+    .approach-item h3 { margin:0 0 8px; font-size:20px; letter-spacing:-.04em; }
+    .approach-item p { margin:0; color:var(--muted); font-size:15px; }
 
-    .compare { background: linear-gradient(180deg, rgba(238,245,255,.78), rgba(255,255,255,.82)); }
-    .compare-box { display:grid; grid-template-columns: 1fr auto 1fr; gap:18px; align-items:center; }
-    .beforeafter { background:#fff; border-radius: var(--radius); border:1px solid var(--line); padding:22px; box-shadow: 0 16px 46px rgba(15,23,42,.08); }
-    .beforeafter h3 { margin:0 0 16px; letter-spacing:-.04em; }
-    .mini-grid { display:grid; grid-template-columns: repeat(3,1fr); gap:10px; }
-    .mini { height:96px; border-radius:18px; background:linear-gradient(135deg,#dbeafe,#a7f3d0); position:relative; }
-    .before .mini:nth-child(1){ transform:rotate(90deg); }
-    .before .mini:nth-child(2){ transform:rotate(-90deg); }
-    .before .mini:nth-child(4){ transform:rotate(90deg); }
-    .after .mini { transform:rotate(0deg); }
-    .arrow { width:54px; height:54px; border-radius:999px; background:var(--blue); color:#fff; display:grid; place-items:center; font-size:26px; box-shadow:var(--shadow2); }
+    .moments { display:grid; grid-template-columns: repeat(3, 1fr); gap:18px; }
+    .moment {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,.72);
+      border-radius: var(--radius);
+      padding: 26px;
+      box-shadow: 0 18px 48px rgba(15,23,42,.08);
+      color: var(--muted);
+      font-size: 16px;
+    }
 
-    .split { display:grid; grid-template-columns: .92fr 1.08fr; gap:32px; align-items:center; }
-    .panel { background: #fff; border-radius: var(--radius); padding: 32px; border:1px solid var(--line); box-shadow: 0 18px 50px rgba(15,23,42,.08); }
-    .list { display:grid; gap:14px; margin:0; padding:0; list-style:none; }
-    .list li { display:flex; gap:12px; align-items:flex-start; color:var(--muted); }
-    .check { flex:0 0 24px; width:24px; height:24px; border-radius:8px; background:#ecfdf5; color:#059669; display:grid; place-items:center; font-weight:900; font-size:14px; margin-top:2px; }
-
-    .feature-grid { display:grid; grid-template-columns: repeat(4, 1fr); gap:14px; }
-    .feature-chip { background:#fff; border:1px solid var(--line); border-radius:20px; padding:16px; font-weight:900; letter-spacing:-.03em; min-height:88px; display:flex; flex-direction:column; justify-content:space-between; }
-    .feature-chip small { color:var(--muted); font-weight:700; letter-spacing:0; margin-top:6px; }
+    .manifesto { text-align:center; }
+    .manifesto blockquote {
+      margin: 0 auto;
+      max-width: 720px;
+      font-size: clamp(22px, 3.2vw, 34px);
+      line-height: 1.5;
+      letter-spacing: -.02em;
+      font-weight: 800;
+      color: var(--text);
+    }
 
     .privacy { background:#0f172a; color:#fff; border-radius: 36px; padding: 44px; display:grid; grid-template-columns: 1fr 1fr; gap:28px; align-items:center; box-shadow: 0 30px 90px rgba(15,23,42,.28); }
-    .privacy h2 { margin:0; font-size: clamp(28px, 4vw, 42px); line-height:1.18; letter-spacing:-.06em; }
+    .privacy h2 { margin:0; font-size: clamp(28px, 4vw, 42px); line-height:1.18; letter-spacing:-.03em; }
     .privacy p { color:#cbd5e1; margin:14px 0 0; }
     .privacy-items { display:grid; gap:12px; }
     .privacy-item { background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.10); border-radius:18px; padding:16px; }
 
     .cta { padding-bottom: 96px; }
-    .cta-box { text-align:center; border-radius: 40px; padding: 58px 24px; background: linear-gradient(135deg, rgba(37,99,235,.10), rgba(6,182,212,.12)); border:1px solid rgba(37,99,235,.12); }
-    .cta-box h2 { margin:0; font-size: clamp(32px, 5vw, 56px); line-height:1.12; letter-spacing:-.07em; }
+    .cta-box { text-align:center; border-radius: 40px; padding: 58px 24px; background: rgba(37,99,235,.08); border:1px solid rgba(37,99,235,.12); }
+    .cta-box h2 { margin:0; font-size: clamp(32px, 5vw, 56px); line-height:1.12; letter-spacing:-.03em; }
     .cta-box p { margin:18px auto 28px; color:var(--muted); max-width:680px; }
     footer { padding: 28px 0 44px; color:var(--muted); font-size:13px; border-top:1px solid var(--line); }
     .foot { display:flex; justify-content:space-between; gap:18px; flex-wrap:wrap; }
 
     @media (max-width: 900px) {
-      .nav-links a:not(.btn) { display:none; }
       .hero { padding-top: 54px; }
-      .hero-grid, .split, .privacy { grid-template-columns:1fr; }
+      .hero-grid, .privacy { grid-template-columns:1fr; }
       .phone-stage { min-height: 500px; }
       .phone { width:min(300px,82vw); }
       .screen { min-height: 560px; }
       .floating-card { display:none; }
-      .cards { grid-template-columns:1fr; }
-      .compare-box { grid-template-columns:1fr; }
-      .arrow { margin: 0 auto; transform: rotate(90deg); }
-      .feature-grid { grid-template-columns: repeat(2,1fr); }
+      .approach-items { grid-template-columns:1fr; }
+      .moments { grid-template-columns:1fr; }
     }
     @media (max-width: 560px) {
       .wrap { width:min(100% - 28px, var(--max)); }
       .nav-inner { height:66px; }
       .brand span { display:none; }
       .btn { padding: 11px 15px; font-size:14px; }
+      .language-switch button { min-width: 34px; padding-inline: 7px; }
       .hero h1 { font-size: 42px; }
       section { padding: 54px 0; }
-      .feature-grid { grid-template-columns:1fr; }
       .privacy { padding: 28px; border-radius: 28px; }
       .cta-box { border-radius: 30px; }
     }
@@ -257,15 +274,19 @@
 <body>
   <header class="nav">
     <div class="wrap nav-inner">
-      <a class="brand" href="#top" aria-label="ImageRotator トップへ">
+      <a class="brand" href="#top" aria-label="ImageRotator トップへ" data-i18n-aria-label="brandLabel">
         <div class="logo">↻</div>
         <span>ImageRotator</span>
       </a>
-      <nav class="nav-links" aria-label="ページ内ナビゲーション">
-        <a href="#features">機能</a>
-        <a href="#usecase">使い方</a>
-        <a href="#privacy">プライバシー</a>
-        <a class="btn btn-primary" href="https://apps.apple.com/jp/app/%E7%94%BB%E5%83%8F%E5%9B%9E%E8%BB%A2%E3%83%84%E3%83%BC%E3%83%AB-%E5%90%91%E3%81%8D%E3%82%92%E4%B8%80%E7%9E%AC%E3%81%A7%E4%BF%AE%E6%AD%A3-%E4%B8%80%E6%8B%AC%E5%9B%9E%E8%BB%A2%E3%81%A7%E6%99%82%E7%9F%AD%E5%AE%9F%E7%8F%BE/id6754210727" target="_blank" rel="noopener">App Store</a>
+      <nav class="nav-links" aria-label="ページ内ナビゲーション" data-i18n-aria-label="navLabel">
+        <a href="#approach" data-i18n="navApproach">考え方</a>
+        <a href="#moments" data-i18n="navMoments">こんな瞬間に</a>
+        <a href="#privacy" data-i18n="navPrivacy">プライバシー</a>
+        <div class="language-switch" role="group" aria-label="言語を選択" data-i18n-aria-label="languageLabel">
+          <button type="button" data-language="ja" aria-pressed="true">JA</button>
+          <button type="button" data-language="en" aria-pressed="false">EN</button>
+        </div>
+        <a class="btn btn-primary" href="https://apps.apple.com/jp/app/id6754210727" target="_blank" rel="noopener" data-store-link data-i18n="navAppStore">App Store</a>
       </nav>
     </div>
   </header>
@@ -274,19 +295,19 @@
     <section class="hero">
       <div class="wrap hero-grid">
         <div>
-          <div class="eyebrow">画像は一括回転 / 動画は個別編集</div>
-          <h1>写真の向きも、<br><span>投稿前の整え</span>も、すばやく。</h1>
-          <p class="lead">
-            ImageRotatorは、写真の回転・サイズ変更・形式変換・クロップをかんたんに行えるiOSアプリです。画像はまとめて一括回転。動画は複数選択したうえで、各動画ごとにトリミング・解像度変換・自動分割ができます。
+          <div class="eyebrow" data-i18n="heroEyebrow">写真と動画の、小さな仕上げ。</div>
+          <h1 data-i18n-html="heroTitle">見せる前に、<br><span>まっすぐに。</span></h1>
+          <p class="lead" data-i18n="heroLead">
+            撮ったときのままでいい。傾いた一枚も、向きの違う数枚も、見せる前にそっと整えるだけです。
           </p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="https://apps.apple.com/jp/app/%E7%94%BB%E5%83%8F%E5%9B%9E%E8%BB%A2%E3%83%84%E3%83%BC%E3%83%AB-%E5%90%91%E3%81%8D%E3%82%92%E4%B8%80%E7%9E%AC%E3%81%A7%E4%BF%AE%E6%AD%A3-%E4%B8%80%E6%8B%AC%E5%9B%9E%E8%BB%A2%E3%81%A7%E6%99%82%E7%9F%AD%E5%AE%9F%E7%8F%BE/id6754210727" target="_blank" rel="noopener">App Storeで見る</a>
-            <a class="btn btn-secondary" href="#features">できることを見る</a>
+            <a class="btn btn-primary" href="https://apps.apple.com/jp/app/id6754210727" target="_blank" rel="noopener" data-store-link data-i18n="heroAppStoreButton">App Storeで見る</a>
+            <a class="btn btn-secondary" href="#approach" data-i18n="heroApproachButton">考え方を見る</a>
           </div>
           <div class="trust">
-            <span>✓ 画像の一括回転に対応</span>
-            <span>✓ JPEG / PNG / HEIC保存</span>
-            <span>✓ Live Photos変換</span>
+            <span data-i18n="trust1">✓ 端末内だけで完結</span>
+            <span data-i18n="trust2">✓ 元の写真はそのまま残せる</span>
+            <span data-i18n="trust3">✓ 迷わず使える、シンプルな操作</span>
           </div>
         </div>
 
@@ -296,7 +317,7 @@
               <div class="screen">
                 <div class="status"><div class="island"></div></div>
                 <div class="app-ui">
-                  <div class="app-title"><strong>画像を回転</strong><span class="pill">4枚選択中</span></div>
+                  <div class="app-title"><strong data-i18n="appTitle">向きを整える</strong><span class="pill" data-i18n="appPill">選択中</span></div>
                   <div class="photo-stack">
                     <div class="photo-card"></div>
                     <div class="photo-card"></div>
@@ -304,117 +325,50 @@
                     <div class="photo-card"></div>
                   </div>
                   <div class="control">
-                    <div class="control-row"><span>回転方向</span><span>90°ずつ調整</span></div>
-                    <div class="rotate-buttons"><div>↺ 左回転</div><div>↻ 右回転</div></div>
-                    <div class="save-bar">まとめて保存</div>
+                    <div class="control-row"><span data-i18n="controlRow1">向き</span><span data-i18n="controlRow2">タップして調整</span></div>
+                    <div class="rotate-buttons"><div data-i18n="rotateLeft">↺ 左に</div><div data-i18n="rotateRight">↻ 右に</div></div>
+                    <div class="save-bar" data-i18n="saveBar">まとめて保存</div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <p class="phone-note">※画面は開発中のものを含み、実際の表示と異なる場合があります。</p>
+          <p class="phone-note" data-i18n="phoneNote">※画面は開発中のものを含み、実際の表示と異なる場合があります。</p>
         </div>
       </div>
     </section>
 
-    <section class="compare">
+    <section id="approach">
       <div class="wrap">
         <div class="section-head">
-          <h2>バラバラの写真を、まとめて同じ向きに。</h2>
-          <p>写真ライブラリから複数の画像を選択し、左または右に90度ずつ回転。向きがそろった状態で保存できます。</p>
+          <h2 data-i18n="approachTitle">整えるのに、正解はいらない。</h2>
         </div>
-        <div class="compare-box">
-          <div class="beforeafter before">
-            <h3>Before</h3>
-            <div class="mini-grid">
-              <div class="mini"></div><div class="mini"></div><div class="mini"></div>
-              <div class="mini"></div><div class="mini"></div><div class="mini"></div>
-            </div>
-          </div>
-          <div class="arrow">→</div>
-          <div class="beforeafter after">
-            <h3>After</h3>
-            <div class="mini-grid">
-              <div class="mini"></div><div class="mini"></div><div class="mini"></div>
-              <div class="mini"></div><div class="mini"></div><div class="mini"></div>
-            </div>
-          </div>
+        <div class="approach-items">
+          <article class="approach-item">
+            <h3 data-i18n="approach1Title">撮った瞬間を、疑わない</h3>
+            <p data-i18n="approach1Body">手ぶれも、傾きも、まず気にせず撮っていい。整えるのはあとからで十分です。</p>
+          </article>
+          <article class="approach-item">
+            <h3 data-i18n="approach2Title">やり直しは、失敗じゃない</h3>
+            <p data-i18n="approach2Body">一度で決まらなくても構いません。何度でも向きや形を選び直せます。</p>
+          </article>
+          <article class="approach-item">
+            <h3 data-i18n="approach3Title">見せる前の、ひと手間だけ</h3>
+            <p data-i18n="approach3Body">誰かに送る前、投稿する前。その直前だけ、そっと形を整えます。</p>
+          </article>
         </div>
       </div>
     </section>
 
-    <section id="features">
+    <section id="moments">
       <div class="wrap">
         <div class="section-head">
-          <h2>よく使う編集だけを、迷わず使える。</h2>
-          <p>写真整理、SNS投稿、共有前の変換に必要な機能をまとめました。</p>
+          <h2 data-i18n="momentsTitle">こんな瞬間に。</h2>
         </div>
-        <div class="cards">
-          <article class="card">
-            <span class="label">画像：一括対応</span>
-            <div class="icon">↻</div>
-            <h3>写真の回転・一括処理</h3>
-            <p>画像を複数選択して、左回転・右回転をまとめて実行。1枚ずつ直す手間を減らせます。</p>
-          </article>
-          <article class="card">
-            <span class="label">画像：形式変換</span>
-            <div class="icon">▣</div>
-            <h3>保存形式とサイズ変更</h3>
-            <p>JPEG、PNG、HEICで保存可能。用途に合わせて画像サイズも調整できます。</p>
-          </article>
-          <article class="card">
-            <span class="label">SNS向け</span>
-            <div class="icon">⌗</div>
-            <h3>アスペクト比クロップ</h3>
-            <p>9:16、16:9、4:5、1:1など、投稿先に合わせた比率で写真や動画を切り抜けます。</p>
-          </article>
-          <article class="card">
-            <span class="label video">Live Photos</span>
-            <div class="icon">◎</div>
-            <h3>Live Photos変換</h3>
-            <p>Live Photosを動画やGIFとして保存。SNSやメッセージで共有しやすい形式に変換できます。</p>
-          </article>
-          <article class="card">
-            <span class="label video">動画：個別対応</span>
-            <div class="icon">▶</div>
-            <h3>動画の解像度変換</h3>
-            <p>動画は個別に選んで、720p、1080p、4Kなど用途に合わせた解像度へ変換できます。</p>
-          </article>
-          <article class="card">
-            <span class="label video">動画：個別対応</span>
-            <div class="icon">✂</div>
-            <h3>トリミング・自動分割</h3>
-            <p>開始位置と終了位置を指定して切り出し。指定秒数ごとの自動分割にも対応しています。</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="usecase">
-      <div class="wrap split">
-        <div class="panel">
-          <div class="section-head" style="text-align:left;margin:0 0 24px;">
-            <h2>こんな場面で便利です。</h2>
-            <p>撮影後、投稿前、共有前。ちょっとした整え作業を短時間で済ませたいときに使えます。</p>
-          </div>
-          <ul class="list">
-            <li><span class="check">✓</span><span>撮影した写真の向きをまとめて直したい</span></li>
-            <li><span class="check">✓</span><span>SNS投稿用に縦長・横長・正方形へ整えたい</span></li>
-            <li><span class="check">✓</span><span>Live Photosを動画やGIFとして共有したい</span></li>
-            <li><span class="check">✓</span><span>動画の必要な部分だけを切り出したい</span></li>
-            <li><span class="check">✓</span><span>短い動画クリップをまとめて作りたい</span></li>
-            <li><span class="check">✓</span><span>共有前に写真の位置情報を削除したい</span></li>
-          </ul>
-        </div>
-        <div class="feature-grid">
-          <div class="feature-chip">画像一括回転<small>複数画像をまとめて処理</small></div>
-          <div class="feature-chip">左右90°回転<small>写真の向きを素早く補正</small></div>
-          <div class="feature-chip">形式変換<small>JPEG / PNG / HEIC</small></div>
-          <div class="feature-chip">サイズ変更<small>用途に合わせて調整</small></div>
-          <div class="feature-chip">SNS比率<small>9:16 / 16:9 / 4:5 / 1:1</small></div>
-          <div class="feature-chip">Live Photos<small>動画 / GIFに変換</small></div>
-          <div class="feature-chip">動画トリミング<small>必要な範囲だけ保存</small></div>
-          <div class="feature-chip">動画分割<small>指定秒数ごとに作成</small></div>
+        <div class="moments">
+          <div class="moment" data-i18n="moment1">旅先で撮った一枚が、あとで見たら横を向いていたとき。</div>
+          <div class="moment" data-i18n="moment2">送る前に、なんとなく整えたい一本の動画があるとき。</div>
+          <div class="moment" data-i18n="moment3">誰かに見せる前に、少しだけ整える時間がほしいとき。</div>
         </div>
       </div>
     </section>
@@ -423,24 +377,30 @@
       <div class="wrap">
         <div class="privacy">
           <div>
-            <h2>共有前のプライバシーにも配慮。</h2>
-            <p>写真や動画を保存・共有する前に、不要な情報や見せたくない部分を調整できます。</p>
+            <h2 data-i18n="privacyTitle">見せる前の整えは、あなたの手元だけで。</h2>
+            <p data-i18n="privacyLead">写真や動画を人に見せる前に、余計なものは持ち出しません。整える作業は、すべて端末の中で完結します。</p>
           </div>
           <div class="privacy-items">
-            <div class="privacy-item"><strong>位置情報の削除</strong><br><span style="color:#cbd5e1;">保存時に位置情報を削除するか選択できます。</span></div>
-            <div class="privacy-item"><strong>元ファイルの保持を選択</strong><br><span style="color:#cbd5e1;">元の写真や動画を残すか、変換後に削除するか設定できます。</span></div>
-            <div class="privacy-item"><strong>顔モザイク加工</strong><br><span style="color:#cbd5e1;">写真内の顔を隠したいときの加工にも対応しています。</span></div>
+            <div class="privacy-item" data-i18n-html="privacyItem1"><strong>位置情報の削除</strong><br><span style="color:#cbd5e1;">保存時に位置情報を削除するか選択できます。</span></div>
+            <div class="privacy-item" data-i18n-html="privacyItem2"><strong>元ファイルの保持を選択</strong><br><span style="color:#cbd5e1;">元の写真や動画を残すか、変換後に削除するか設定できます。</span></div>
+            <div class="privacy-item" data-i18n-html="privacyItem3"><strong>顔モザイク加工</strong><br><span style="color:#cbd5e1;">写真内の顔を隠したいときの加工にも対応しています。</span></div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="cta">
+    <section class="manifesto">
+      <div class="wrap section-head">
+        <blockquote data-i18n-html="manifestoQuote">まっすぐでなくても、撮っていい。<br>見せる前に、整えればいい。</blockquote>
+      </div>
+    </section>
+
+    <section id="release" class="cta">
       <div class="wrap">
         <div class="cta-box">
-          <h2>写真の向き補正を、もっとラクに。</h2>
-          <p>画像はまとめて一括回転。動画は個別にトリミング・変換。投稿前や共有前のひと手間を、ImageRotatorで短くできます。</p>
-          <a class="btn btn-primary" href="https://apps.apple.com/jp/app/%E7%94%BB%E5%83%8F%E5%9B%9E%E8%BB%A2%E3%83%84%E3%83%BC%E3%83%AB-%E5%90%91%E3%81%8D%E3%82%92%E4%B8%80%E7%9E%AC%E3%81%A7%E4%BF%AE%E6%AD%A3-%E4%B8%80%E6%8B%AC%E5%9B%9E%E8%BB%A2%E3%81%A7%E6%99%82%E7%9F%AD%E5%AE%9F%E7%8F%BE/id6754210727" target="_blank" rel="noopener">App Storeでダウンロード</a>
+          <h2 data-i18n="ctaTitle">App Storeで、公開中です。</h2>
+          <p data-i18n="ctaBody">見せる前の小さな整えを、ImageRotatorで。今日から、手元ではじめられます。</p>
+          <a class="btn btn-primary" href="https://apps.apple.com/jp/app/id6754210727" target="_blank" rel="noopener" data-store-link data-i18n="ctaButton">App Storeでダウンロード</a>
         </div>
       </div>
     </section>
@@ -448,11 +408,171 @@
 
   <footer>
     <div class="wrap foot">
-      <div>© ImageRotator</div>
-      <div>画像の一括回転に対応。動画は個別編集に対応。</div>
+      <div data-i18n="footerCopyright">© ImageRotator</div>
+      <div data-i18n="footerTagline">見せる前に、まっすぐに。写真と動画のための、小さな整え。</div>
     </div>
   </footer>
   <script>
+    const japaneseText = Object.fromEntries(
+      [...document.querySelectorAll("[data-i18n]")].map(element => [
+        element.dataset.i18n,
+        element.textContent
+      ])
+    );
+    const japaneseHTML = Object.fromEntries(
+      [...document.querySelectorAll("[data-i18n-html]")].map(element => [
+        element.dataset.i18nHtml,
+        element.innerHTML
+      ])
+    );
+    const japaneseLabels = Object.fromEntries(
+      [...document.querySelectorAll("[data-i18n-aria-label]")].map(element => [
+        element.dataset.i18nAriaLabel,
+        element.getAttribute("aria-label")
+      ])
+    );
+
+    const translations = {
+      ja: {
+        text: japaneseText,
+        html: japaneseHTML,
+        labels: japaneseLabels,
+        meta: {
+          title: "ImageRotator - 見せる前に、まっすぐに。",
+          description: "ImageRotatorは、写真や動画を人に見せる前に、向きや形をそっと整えるためのiPhoneアプリです。",
+          ogDescription: "ImageRotatorは、写真や動画を人に見せる前に、向きや形をそっと整えるためのiPhoneアプリです。",
+          storeUrl: "https://apps.apple.com/jp/app/id6754210727"
+        }
+      },
+      en: {
+        text: {
+          navApproach: "Our approach",
+          navMoments: "Moments",
+          navPrivacy: "Privacy",
+          navAppStore: "App Store",
+          heroEyebrow: "A small finishing touch for your photos and videos.",
+          heroLead: "It's fine as you shot it. A tilted photo, a handful of mismatched clips — just tidy them up gently before you share.",
+          heroAppStoreButton: "View on the App Store",
+          heroApproachButton: "See our approach",
+          trust1: "✓ Everything happens on your device",
+          trust2: "✓ Your originals stay untouched",
+          trust3: "✓ Simple, no guesswork",
+          appTitle: "Straighten it out",
+          appPill: "Selected",
+          controlRow1: "Orientation",
+          controlRow2: "Just tap to adjust",
+          rotateLeft: "↺ Left",
+          rotateRight: "↻ Right",
+          saveBar: "Save all",
+          phoneNote: "*Screens may show work-in-progress UI and can differ from the final app.",
+          approachTitle: "There's no one right way to straighten something out.",
+          approach1Title: "Don't second-guess the moment",
+          approach1Body: "Shake, tilt, whatever — shoot first and worry about it later. Straightening it out can always come after.",
+          approach2Title: "Redoing it isn't a mistake",
+          approach2Body: "It doesn't have to be right the first time. You can always choose the orientation or shape again.",
+          approach3Title: "Just one small step before you show it",
+          approach3Body: "Right before you send it, right before you post it — that's the only moment this touches.",
+          momentsTitle: "Moments like these.",
+          moment1: "The photo you took on a trip turns out to be lying on its side.",
+          moment2: "A video you want to tidy up, just a little, before you send it.",
+          moment3: "You just want a moment to adjust something before showing it to someone.",
+          privacyTitle: "The tidying happens only on your device.",
+          privacyLead: "Nothing extra leaves your device before you share. All the tidying happens right there, on your phone.",
+          ctaTitle: "Now available on the App Store.",
+          ctaBody: "A small tidying-up before you share — that's ImageRotator. Start right on your phone, today.",
+          ctaButton: "Download on the App Store",
+          footerCopyright: "© ImageRotator",
+          footerTagline: "Straighten it out before you show it. A small tidy-up for your photos and videos."
+        },
+        html: {
+          heroTitle: "Straighten it out,<br><span>before you show it.</span>",
+          manifestoQuote: "It's fine if it's not straight.<br>You can always straighten it out before you show it.",
+          privacyItem1: "<strong>Remove location data</strong><br><span style=\"color:#cbd5e1;\">Choose whether to strip location data when saving.</span>",
+          privacyItem2: "<strong>Keep or discard the originals</strong><br><span style=\"color:#cbd5e1;\">Decide whether to keep the original photo or video, or delete it after converting.</span>",
+          privacyItem3: "<strong>Face mosaic</strong><br><span style=\"color:#cbd5e1;\">Also supports blurring faces in photos when you want to hide them.</span>"
+        },
+        labels: {
+          brandLabel: "Back to the ImageRotator home",
+          navLabel: "Page navigation",
+          languageLabel: "Choose a language"
+        },
+        meta: {
+          title: "ImageRotator - Straighten it out, before you show it.",
+          description: "ImageRotator is an iPhone app for gently tidying up the orientation and shape of your photos and videos, right before you share them.",
+          ogDescription: "It's fine as you shot it. Just tidy it up gently before you show it to anyone.",
+          storeUrl: "https://apps.apple.com/us/app/id6754210727"
+        }
+      }
+    };
+
+    function savedLanguage() {
+      try {
+        return localStorage.getItem("imageRotatorLanguage");
+      } catch {
+        return null;
+      }
+    }
+
+    function rememberLanguage(language) {
+      try {
+        localStorage.setItem("imageRotatorLanguage", language);
+      } catch {
+        // Language switching still works when storage is unavailable.
+      }
+    }
+
+    function applyLanguage(language, shouldRemember = false) {
+      const selected = translations[language] ? language : "ja";
+      const translation = translations[selected];
+
+      document.documentElement.lang = selected;
+      document.title = translation.meta.title;
+      document.querySelector("#meta-description").content = translation.meta.description;
+      document.querySelector("#og-title").content = translation.meta.title;
+      document.querySelector("#og-description").content = translation.meta.ogDescription;
+
+      document.querySelectorAll("[data-i18n]").forEach(element => {
+        element.textContent = translation.text[element.dataset.i18n];
+      });
+      document.querySelectorAll("[data-i18n-html]").forEach(element => {
+        element.innerHTML = translation.html[element.dataset.i18nHtml];
+      });
+      document.querySelectorAll("[data-i18n-aria-label]").forEach(element => {
+        element.setAttribute(
+          "aria-label",
+          translation.labels[element.dataset.i18nAriaLabel]
+        );
+      });
+      document.querySelectorAll("[data-store-link]").forEach(element => {
+        element.href = translation.meta.storeUrl;
+      });
+      document.querySelectorAll("[data-language]").forEach(button => {
+        button.setAttribute("aria-pressed", String(button.dataset.language === selected));
+      });
+
+      if (shouldRemember) {
+        rememberLanguage(selected);
+        const url = new URL(window.location.href);
+        url.searchParams.set("lang", selected);
+        history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
+      }
+    }
+
+    const requestedLanguage = new URLSearchParams(window.location.search).get("lang");
+    const hasRequestedLanguage = Object.prototype.hasOwnProperty.call(
+      translations,
+      requestedLanguage
+    );
+    const initialLanguage = hasRequestedLanguage
+      ? requestedLanguage
+      : savedLanguage() || (navigator.language.toLowerCase().startsWith("ja") ? "ja" : "en");
+
+    applyLanguage(initialLanguage);
+
+    document.querySelectorAll("[data-language]").forEach(button => {
+      button.addEventListener("click", () => applyLanguage(button.dataset.language, true));
+    });
+
     document.addEventListener("copy", event => event.preventDefault());
     document.addEventListener("cut", event => event.preventDefault());
     document.addEventListener("contextmenu", event => event.preventDefault());

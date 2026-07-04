@@ -4,10 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PlaceDiary - その場所の空気を、静かに残す</title>
-  <meta name="description" content="PlaceDiaryは、場所にまつわる温度や余白を静かに残すためのiPhoneアプリです。現在リリース準備中。" />
+  <meta id="meta-description" name="description" content="PlaceDiaryは、場所にまつわる温度や余白を静かに残すためのiPhoneアプリです。App Storeで配信中。" />
   <meta name="robots" content="noai, noimageai" />
-  <meta property="og:title" content="PlaceDiary - その場所の空気を、静かに残す" />
-  <meta property="og:description" content="地図でもアルバムでもなく、場所の記憶をやわらかく綴るための世界観を紹介しています。" />
+  <meta id="og-title" property="og:title" content="PlaceDiary - その場所の空気を、静かに残す" />
+  <meta id="og-description" property="og:description" content="地図でもアルバムでもなく、場所の記憶をやわらかく綴るための世界観を紹介しています。" />
   <meta property="og:type" content="website" />
   <meta name="theme-color" content="#3f5e52" />
   <style>
@@ -41,10 +41,7 @@
       color: var(--ink);
       font-family: var(--font-body);
       line-height: 1.76;
-      background:
-        radial-gradient(circle at 10% 8%, rgba(140,169,143,.25), transparent 24rem),
-        radial-gradient(circle at 90% 10%, rgba(220,204,174,.24), transparent 24rem),
-        linear-gradient(180deg, #f9fcf8 0%, var(--mist) 45%, #fbfdfb 100%);
+      background: linear-gradient(180deg, #f9fcf8 0%, var(--mist) 46%, #fbfdfb 100%);
       overflow-x: hidden;
       -webkit-touch-callout: none;
       -webkit-user-select: none;
@@ -57,7 +54,7 @@
       inset: 0;
       z-index: -1;
       pointer-events: none;
-      opacity: .22;
+      opacity: .12;
       background-image:
         radial-gradient(circle, rgba(63,94,82,.2) 0 1px, transparent 1.2px),
         radial-gradient(circle, rgba(111,141,130,.18) 0 1px, transparent 1.2px);
@@ -150,6 +147,35 @@
 
     .nav-links a:hover { color: var(--ink); }
 
+    .language-switch {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px;
+      border-radius: 999px;
+      border: 1px solid rgba(199, 213, 202, .9);
+      background: rgba(255, 255, 255, .6);
+    }
+
+    .language-switch button {
+      min-width: 38px;
+      min-height: 32px;
+      padding: 5px 9px;
+      border: 0;
+      border-radius: 999px;
+      color: var(--muted);
+      background: transparent;
+      font: inherit;
+      font-size: 12px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .language-switch button[aria-pressed="true"] {
+      color: #f8fbf7;
+      background: var(--fern);
+      box-shadow: 0 5px 12px rgba(63, 94, 82, .24);
+    }
+
     .btn {
       display: inline-flex;
       align-items: center;
@@ -201,10 +227,10 @@
     h1 {
       margin: 24px 0 18px;
       font-family: var(--font-title);
-      font-size: clamp(46px, 7vw, 80px);
-      line-height: 1.02;
-      letter-spacing: -.05em;
-      font-weight: 680;
+      font-size: clamp(42px, 6vw, 72px);
+      line-height: 1.05;
+      letter-spacing: -.035em;
+      font-weight: 630;
     }
 
     h1 span { color: var(--fern-soft); }
@@ -370,15 +396,7 @@
     }
 
     .spark {
-      display: grid;
-      place-items: center;
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      color: #f8fbf7;
-      background: var(--fern);
-      font-size: 13px;
-      font-weight: 900;
+      display: none;
     }
 
     .weekly-copy {
@@ -421,9 +439,9 @@
     .metric-col b {
       display: block;
       margin-top: 4px;
-      color: #7d4d3d;
+      color: var(--ink);
       font-family: var(--font-title);
-      font-size: 19px;
+      font-size: 18px;
       line-height: 1;
     }
 
@@ -608,7 +626,7 @@
       margin: 0;
       color: var(--muted);
       font-size: 15px;
-      font-weight: 700;
+      font-weight: 500;
       line-height: 1.8;
     }
 
@@ -699,7 +717,7 @@
       margin: 0;
       color: var(--muted);
       font-size: 14px;
-      font-weight: 700;
+      font-weight: 500;
     }
 
     .voices {
@@ -749,8 +767,7 @@
       color: var(--fern);
       font-size: 11px;
       font-weight: 900;
-      letter-spacing: .04em;
-      text-transform: uppercase;
+      letter-spacing: .02em;
     }
 
     .story-sheet h3 {
@@ -892,9 +909,7 @@
       padding: 44px;
       border-radius: 36px;
       border: 1px solid rgba(199, 213, 202, .78);
-      background:
-        linear-gradient(135deg, rgba(140,169,143,.2), rgba(220,204,174,.24)),
-        rgba(248, 251, 247, .9);
+      background: rgba(248, 251, 247, .92);
       box-shadow: var(--shadow);
     }
 
@@ -903,6 +918,10 @@
       grid-template-columns: .9fr 1.1fr;
       gap: 28px;
       align-items: start;
+    }
+
+    .release-store-btn {
+      margin-top: 22px;
     }
 
     .release h2 {
@@ -941,9 +960,7 @@
       border-radius: 40px;
       color: #f4f8f4;
       text-align: center;
-      background:
-        radial-gradient(circle at 86% 16%, rgba(220,204,174,.35), transparent 18rem),
-        linear-gradient(135deg, #2b3532, #3f5e52 56%, #6f8d82);
+      background: linear-gradient(135deg, #2b3532, #3f5e52);
       box-shadow: 0 30px 90px rgba(43, 58, 53, .24);
     }
 
@@ -971,12 +988,6 @@
       z-index: 1;
       margin-top: 0;
       justify-content: center;
-    }
-
-    .btn-disabled {
-      color: rgba(248, 251, 247, .94);
-      background: linear-gradient(135deg, #3f5e52, #6f8d82);
-      cursor: default;
     }
 
     footer {
@@ -1036,6 +1047,7 @@
         padding: 10px 14px;
         font-size: 13px;
       }
+      .language-switch button { min-width: 34px; padding-inline: 7px; }
       .hero { padding: 42px 0 48px; }
       h1 { font-size: clamp(40px, 12vw, 48px); }
       .lead {
@@ -1130,15 +1142,19 @@
 <body>
   <header class="nav">
     <div class="wrap nav-inner">
-      <a class="brand" href="#top" aria-label="PlaceDiary トップへ">
+      <a class="brand" href="#top" aria-label="PlaceDiary トップへ" data-i18n-aria-label="brandLabel">
         <span class="brand-mark" aria-hidden="true"></span>
         <span>PlaceDiary</span>
       </a>
-      <nav class="nav-links" aria-label="ページ内ナビゲーション">
-        <a href="#world">世界観</a>
-        <a href="#journey">余白</a>
-        <a href="#voice">記憶</a>
-        <a class="btn btn-primary" href="#release">リリース準備中</a>
+      <nav class="nav-links" aria-label="ページ内ナビゲーション" data-i18n-aria-label="navLabel">
+        <a href="#world" data-i18n="navWorld">世界観</a>
+        <a href="#journey" data-i18n="navJourney">余白</a>
+        <a href="#voice" data-i18n="navVoice">記憶</a>
+        <div class="language-switch" role="group" aria-label="言語を選択" data-i18n-aria-label="languageLabel">
+          <button type="button" data-language="ja" aria-pressed="true">JA</button>
+          <button type="button" data-language="en" aria-pressed="false">EN</button>
+        </div>
+        <a class="btn btn-primary" href="https://apps.apple.com/jp/app/id6773775438" target="_blank" rel="noopener" data-store-link data-i18n="navRelease">App Store</a>
       </nav>
     </div>
   </header>
@@ -1147,29 +1163,29 @@
     <section class="hero">
       <div class="wrap hero-grid">
         <div>
-          <div class="eyebrow">場所の記憶を、静かに綴る</div>
-          <h1>その場所の空気を、<br><span>静かに残す。</span></h1>
-          <p class="lead">
+          <div class="eyebrow" data-i18n="heroEyebrow">場所の記憶を、静かに綴る</div>
+          <h1 data-i18n-html="heroTitle">その場所の空気を、<br><span>静かに残す。</span></h1>
+          <p class="lead" data-i18n="heroLead">
             PlaceDiaryは、訪れた場所の情報ではなく、そこで感じた温度や気配を残すためのアプリです。写真や地図の外側にある、言葉になりきらない記憶をそっと置いておける場所を目指しています。
           </p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="#world">世界観を見る</a>
-            <a class="btn btn-secondary" href="#release">公開予定について</a>
+            <a class="btn btn-primary" href="#world" data-i18n="heroWorldButton">世界観を見る</a>
+            <a class="btn btn-secondary" href="https://apps.apple.com/jp/app/id6773775438" target="_blank" rel="noopener" data-store-link data-i18n="heroReleaseButton">App Storeでダウンロード</a>
           </div>
           <div class="note">
-            <span>✓ 場所を評価するより、感じたことを大切に</span>
-            <span>✓ 早く消費しない、記憶のペース</span>
-            <span>✓ あとから読み返したくなる静けさ</span>
+            <span data-i18n="heroNote1">✓ 場所を評価するより、感じたことを大切に</span>
+            <span data-i18n="heroNote2">✓ 早く消費しない、記憶のペース</span>
+            <span data-i18n="heroNote3">✓ あとから読み返したくなる静けさ</span>
           </div>
         </div>
 
         <div class="phone-stage" aria-hidden="true">
-          <div class="memo memo-left">
+          <div class="memo memo-left" data-i18n-html="memoLeft">
             <span class="strip"></span>
             街角のひかり
             <small>夕方の匂いと、足音のリズム</small>
           </div>
-          <div class="memo memo-right">
+          <div class="memo memo-right" data-i18n-html="memoRight">
             <span class="strip"></span>
             小さな寄り道
             <small>名前より先に覚えている空気</small>
@@ -1180,26 +1196,26 @@
               <div class="island"></div>
               <div class="app-ui">
                 <div class="app-title">Place Diary</div>
-                <div class="intro-copy">今週のひろがり</div>
-                <div class="intro-sub">あなたの1週間のあしあと</div>
+                <div class="intro-copy" data-i18n="introCopy">今週のひろがり</div>
+                <div class="intro-sub" data-i18n="introSub">あなたの1週間のあしあと</div>
                 <div class="weekly-card">
                   <div class="weekly-head">
                     <span class="spark">✦</span>
-                    <span>この日の物語</span>
+                    <span data-i18n="weeklyHeadLabel">この日の物語</span>
                   </div>
-                  <p class="weekly-copy">18:12から20:03まで、3.8kmの移動を12件の足あとで残しています。</p>
+                  <p class="weekly-copy" data-i18n="weeklyCopy">18:12から20:03まで、3.8kmの移動を12件の足あとで残しています。</p>
                 </div>
                 <div class="metric-strip">
-                  <div class="metric-col"><small>足あと</small><b>12</b></div>
+                  <div class="metric-col"><small data-i18n="metricFootprintsLabel">足あと</small><b>12</b></div>
                   <span class="metric-divider"></span>
-                  <div class="metric-col"><small>距離</small><b>3.8km</b></div>
+                  <div class="metric-col"><small data-i18n="metricDistanceLabel">距離</small><b>3.8km</b></div>
                   <span class="metric-divider"></span>
-                  <div class="metric-col"><small>街</small><b>4</b></div>
+                  <div class="metric-col"><small data-i18n="metricTownsLabel">街</small><b>4</b></div>
                 </div>
                 <div class="mini-map">
                   <div class="map-head">
-                    <span>地図</span>
-                    <span>今日</span>
+                    <span data-i18n="mapLabel">地図</span>
+                    <span data-i18n="mapTodayLabel">今日</span>
                   </div>
                   <div class="route-canvas">
                     <span class="route-line one"></span>
@@ -1211,9 +1227,9 @@
                 </div>
               </div>
               <div class="tabs">
-                <div class="tab active"><strong>⌂</strong>今日</div>
-                <div class="tab"><strong>▦</strong>地図</div>
-                <div class="tab"><strong>⚙</strong>設定</div>
+                <div class="tab active"><strong>⌂</strong><span data-i18n="tabToday">今日</span></div>
+                <div class="tab"><strong>▦</strong><span data-i18n="tabMap">地図</span></div>
+                <div class="tab"><strong>⚙</strong><span data-i18n="tabSettings">設定</span></div>
               </div>
             </div>
           </div>
@@ -1224,24 +1240,24 @@
     <section id="world">
       <div class="wrap">
         <div class="section-head">
-          <h2>場所は、座標よりも記憶で残る。</h2>
-          <p>同じ通りでも、晴れた日と雨上がりではまったく違う場所になる。PlaceDiaryは、説明しきれないその差を、静かなトーンで残すことを大切にしています。</p>
+          <h2 data-i18n="worldTitle">場所は、座標よりも記憶で残る。</h2>
+          <p data-i18n="worldLead">同じ通りでも、晴れた日と雨上がりではまったく違う場所になる。PlaceDiaryは、説明しきれないその差を、静かなトーンで残すことを大切にしています。</p>
         </div>
         <div class="cards">
           <article class="card">
             <div class="icon">◌</div>
-            <h3>場所の温度を残す</h3>
-            <p>有名かどうかより、そのとき自分がどう感じたか。場所にまつわる小さな感覚を中心に据えた世界観です。</p>
+            <h3 data-i18n="card1Title">場所の温度を残す</h3>
+            <p data-i18n="card1Body">有名かどうかより、そのとき自分がどう感じたか。場所にまつわる小さな感覚を中心に据えた世界観です。</p>
           </article>
           <article class="card">
             <div class="icon moss">☲</div>
-            <h3>記録に余白を残す</h3>
-            <p>言葉が少ない日も、まとまっていない気持ちの日も、そのままで置いておける余白を前提に設計しています。</p>
+            <h3 data-i18n="card2Title">記録に余白を残す</h3>
+            <p data-i18n="card2Body">言葉が少ない日も、まとまっていない気持ちの日も、そのままで置いておける余白を前提に設計しています。</p>
           </article>
           <article class="card">
             <div class="icon soft">⟡</div>
-            <h3>あとで開きたくなる静けさ</h3>
-            <p>すぐに見せるためではなく、時間が経ってから自分に返ってくる体験をつくることを目標にしています。</p>
+            <h3 data-i18n="card3Title">あとで開きたくなる静けさ</h3>
+            <p data-i18n="card3Body">すぐに見せるためではなく、時間が経ってから自分に返ってくる体験をつくることを目標にしています。</p>
           </article>
         </div>
       </div>
@@ -1250,29 +1266,29 @@
     <section id="journey" class="journey">
       <div class="wrap journey-grid">
         <div class="panel">
-          <h2>集めるより、ほどく。</h2>
-          <p>PlaceDiaryが目指すのは、情報を増やし続けることではありません。訪れた場所で受け取った感情を、あとでゆっくりほどけるように残すことです。</p>
+          <h2 data-i18n="journeyTitle">集めるより、ほどく。</h2>
+          <p data-i18n="journeyLead">PlaceDiaryが目指すのは、情報を増やし続けることではありません。訪れた場所で受け取った感情を、あとでゆっくりほどけるように残すことです。</p>
         </div>
         <div class="steps">
           <div class="step">
             <div class="step-num">1</div>
             <div>
-              <h3>通り過ぎる前の気配</h3>
-              <p>目的地に着くまでの道、視界の端に残った色、ふと立ち止まった理由。そこからすでに記憶は始まっています。</p>
+              <h3 data-i18n="step1Title">通り過ぎる前の気配</h3>
+              <p data-i18n="step1Body">目的地に着くまでの道、視界の端に残った色、ふと立ち止まった理由。そこからすでに記憶は始まっています。</p>
             </div>
           </div>
           <div class="step">
             <div class="step-num">2</div>
             <div>
-              <h3>その場にいるときの温度</h3>
-              <p>光の角度、空気の重さ、会話の間。名前をつけにくい印象ほど、時間が経ってから価値を持つと考えています。</p>
+              <h3 data-i18n="step2Title">その場にいるときの温度</h3>
+              <p data-i18n="step2Body">光の角度、空気の重さ、会話の間。名前をつけにくい印象ほど、時間が経ってから価値を持つと考えています。</p>
             </div>
           </div>
           <div class="step">
             <div class="step-num">3</div>
             <div>
-              <h3>あとで思い出すための余韻</h3>
-              <p>数日後や季節が変わったあとに開いたとき、場所そのものより先に気持ちが戻ってくる。そんな残り方を目指します。</p>
+              <h3 data-i18n="step3Title">あとで思い出すための余韻</h3>
+              <p data-i18n="step3Body">数日後や季節が変わったあとに開いたとき、場所そのものより先に気持ちが戻ってくる。そんな残り方を目指します。</p>
             </div>
           </div>
         </div>
@@ -1282,15 +1298,15 @@
     <section id="voice">
       <div class="wrap">
         <div class="section-head">
-          <h2>誰かの正解ではなく、自分の記憶の形で。</h2>
-          <p>PlaceDiaryは、比較のための記録ではなく、その人自身の輪郭を残すための場として構想しています。目立つことよりも、長く寄り添えることを優先します。</p>
+          <h2 data-i18n="voiceTitle">誰かの正解ではなく、自分の記憶の形で。</h2>
+          <p data-i18n="voiceLead">PlaceDiaryは、比較のための記録ではなく、その人自身の輪郭を残すための場として構想しています。目立つことよりも、長く寄り添えることを優先します。</p>
         </div>
         <div class="voices">
           <div class="story-window" aria-hidden="true">
             <div class="story-sheet">
               <p class="story-label">Day Story</p>
-              <h3>この日の物語</h3>
-              <p>17:42から20:10まで、4.1kmの移動を15件の足あとで残した日。</p>
+              <h3 data-i18n="storyTitle">この日の物語</h3>
+              <p data-i18n="storyBody">17:42から20:10まで、4.1kmの移動を15件の足あとで残した日。</p>
             </div>
             <div class="story-map">
               <span class="story-route one"></span>
@@ -1300,23 +1316,23 @@
               <span class="story-dot c"></span>
             </div>
             <div class="story-tags">
-              <div class="story-tag"><small>足あと</small><b>15件</b></div>
-              <div class="story-tag"><small>距離</small><b>4.1km</b></div>
-              <div class="story-tag"><small>時間</small><b>2h28m</b></div>
+              <div class="story-tag"><small data-i18n="storyTagFootprints">足あと</small><b data-i18n="storyTagFootprintsValue">15件</b></div>
+              <div class="story-tag"><small data-i18n="storyTagDistance">距離</small><b>4.1km</b></div>
+              <div class="story-tag"><small data-i18n="storyTagTime">時間</small><b>2h28m</b></div>
             </div>
           </div>
           <div class="voice-list">
             <article class="voice-item">
-              <h3>場所の解像度は、人それぞれ</h3>
-              <p>同じ場所でも、見える景色や記憶の焦点は違います。PlaceDiaryはその違いを揃えず、尊重する方向で考えています。</p>
+              <h3 data-i18n="voice1Title">場所の解像度は、人それぞれ</h3>
+              <p data-i18n="voice1Body">同じ場所でも、見える景色や記憶の焦点は違います。PlaceDiaryはその違いを揃えず、尊重する方向で考えています。</p>
             </article>
             <article class="voice-item">
-              <h3>大きな出来事だけが記録ではない</h3>
-              <p>遠出や旅行だけでなく、日常の短い寄り道にも意味があります。何気ない一瞬を残す感覚を大切にします。</p>
+              <h3 data-i18n="voice2Title">大きな出来事だけが記録ではない</h3>
+              <p data-i18n="voice2Body">遠出や旅行だけでなく、日常の短い寄り道にも意味があります。何気ない一瞬を残す感覚を大切にします。</p>
             </article>
             <article class="voice-item">
-              <h3>読み返すほどに意味が育つ</h3>
-              <p>その日には気づかなかった感情が、あとで見えてくる。時間とともに記憶が育つ余地を残すことを目指します。</p>
+              <h3 data-i18n="voice3Title">読み返すほどに意味が育つ</h3>
+              <p data-i18n="voice3Body">その日には気づかなかった感情が、あとで見えてくる。時間とともに記憶が育つ余地を残すことを目指します。</p>
             </article>
           </div>
         </div>
@@ -1328,13 +1344,14 @@
         <div class="release">
           <div class="release-grid">
             <div>
-              <h2>現在、リリース準備中です。</h2>
-              <p>PlaceDiaryは、世界観と体験の細部を磨きながら公開準備を進めています。ここでは先行して、アプリが大切にしたい思想と空気感をお届けしています。</p>
+              <h2 data-i18n="releaseTitle">App Storeで配信中です。</h2>
+              <p data-i18n="releaseBody">PlaceDiaryは、App Storeで公開しました。これからも世界観と体験の細部を、じっくり磨いていきます。</p>
+              <a class="btn btn-primary release-store-btn" href="https://apps.apple.com/jp/app/id6773775438" target="_blank" rel="noopener" data-store-link data-i18n="releaseStoreButton">App Storeで見る</a>
             </div>
             <div class="release-points">
-              <div class="release-point">場所の情報より、場所で感じたことを中心にする</div>
-              <div class="release-point">短い言葉でも残せる、静かな記録体験を目指す</div>
-              <div class="release-point">時間が経ってから読み返せる余白を守る</div>
+              <div class="release-point" data-i18n="releasePoint1">場所の情報より、場所で感じたことを中心にする</div>
+              <div class="release-point" data-i18n="releasePoint2">短い言葉でも残せる、静かな記録体験を目指す</div>
+              <div class="release-point" data-i18n="releasePoint3">時間が経ってから読み返せる余白を守る</div>
             </div>
           </div>
         </div>
@@ -1344,11 +1361,11 @@
     <section class="cta">
       <div class="wrap">
         <div class="cta-box">
-          <h2>場所の記憶は、<br>もっと静かでいい。</h2>
-          <p>PlaceDiaryは、情報を競うためではなく、自分の感覚をていねいに残すためのアプリとして準備を進めています。公開まで、もうしばらくお待ちください。</p>
+          <h2 data-i18n-html="ctaTitle">場所の記憶は、<br>もっと静かでいい。</h2>
+          <p data-i18n="ctaBody">PlaceDiaryは、情報を競うためではなく、自分の感覚をていねいに残すためのアプリとして公開しています。</p>
           <div class="hero-actions">
-            <span class="btn btn-disabled">App Store 公開準備中</span>
-            <a class="btn btn-secondary" href="#top">トップへ戻る</a>
+            <a class="btn btn-primary" href="https://apps.apple.com/jp/app/id6773775438" target="_blank" rel="noopener" data-store-link data-i18n="ctaStore">App Storeでダウンロード</a>
+            <a class="btn btn-secondary" href="#top" data-i18n="ctaTop">トップへ戻る</a>
           </div>
         </div>
       </div>
@@ -1357,12 +1374,200 @@
 
   <footer>
     <div class="wrap foot">
-      <span>© 2026 PlaceDiary</span>
-      <span>場所の空気を、静かに残すiPhoneアプリ。</span>
+      <span data-i18n="footerCopyright">© 2026 PlaceDiary</span>
+      <span data-i18n="footerTagline">場所の空気を、静かに残すiPhoneアプリ。</span>
     </div>
   </footer>
 
   <script>
+    const japaneseText = Object.fromEntries(
+      [...document.querySelectorAll("[data-i18n]")].map(element => [
+        element.dataset.i18n,
+        element.textContent
+      ])
+    );
+    const japaneseHTML = Object.fromEntries(
+      [...document.querySelectorAll("[data-i18n-html]")].map(element => [
+        element.dataset.i18nHtml,
+        element.innerHTML
+      ])
+    );
+    const japaneseLabels = Object.fromEntries(
+      [...document.querySelectorAll("[data-i18n-aria-label]")].map(element => [
+        element.dataset.i18nAriaLabel,
+        element.getAttribute("aria-label")
+      ])
+    );
+
+    const translations = {
+      ja: {
+        text: japaneseText,
+        html: japaneseHTML,
+        labels: japaneseLabels,
+        meta: {
+          title: "PlaceDiary - その場所の空気を、静かに残す",
+          description: "PlaceDiaryは、場所にまつわる温度や余白を静かに残すためのiPhoneアプリです。App Storeで配信中。",
+          ogTitle: "PlaceDiary - その場所の空気を、静かに残す",
+          ogDescription: "地図でもアルバムでもなく、場所の記憶をやわらかく綴るための世界観を紹介しています。",
+          storeUrl: "https://apps.apple.com/jp/app/id6773775438"
+        }
+      },
+      en: {
+        text: {
+          navWorld: "Our world",
+          navJourney: "Stillness",
+          navVoice: "Memory",
+          navRelease: "App Store",
+          heroEyebrow: "Quietly writing down the memory of a place",
+          heroLead: "PlaceDiary is not about recording facts about the places you visit, but about keeping the warmth and atmosphere you felt there. It aims to be a place to gently set down memories that never quite become words — the ones beyond any photo or map.",
+          heroWorldButton: "See our world",
+          heroReleaseButton: "Download on the App Store",
+          heroNote1: "✓ Valuing how you felt over how a place rates",
+          heroNote2: "✓ A pace for memory, not for quick consumption",
+          heroNote3: "✓ A quietness you'll want to revisit later",
+          introCopy: "This week's footprint",
+          introSub: "Your trail from the past week",
+          weeklyHeadLabel: "Story of the day",
+          weeklyCopy: "From 6:12 to 8:03 PM, 3.8km of movement kept as 12 footprints.",
+          metricFootprintsLabel: "Footprints",
+          metricDistanceLabel: "Distance",
+          metricTownsLabel: "Towns",
+          mapLabel: "Map",
+          mapTodayLabel: "Today",
+          tabToday: "Today",
+          tabMap: "Map",
+          tabSettings: "Settings",
+          worldTitle: "A place lingers in memory more than on a map.",
+          worldLead: "The same street feels entirely different on a sunny day than after the rain. PlaceDiary cares about keeping that quiet, hard-to-explain difference in a gentle tone.",
+          card1Title: "Keep the warmth of a place",
+          card1Body: "What matters is not how well-known a place is, but how you felt there at that moment. A world built around the small sensations tied to a place.",
+          card2Title: "Leave room within the record",
+          card2Body: "Designed with the assumption that days with few words, or feelings that haven't quite taken shape, can still be set down just as they are.",
+          card3Title: "A quietness worth opening again later",
+          card3Body: "The goal is not to show something right away, but to create an experience that returns to you after time has passed.",
+          journeyTitle: "Less collecting, more unraveling.",
+          journeyLead: "PlaceDiary isn't aiming to keep piling up information. It's about keeping the feelings you picked up at a place so they can slowly unravel later.",
+          step1Title: "The sense of a place before you arrive",
+          step1Body: "The road on the way there, a color caught at the edge of your sight, the reason you paused for a moment. Memory has already begun by then.",
+          step2Title: "The warmth of being there",
+          step2Body: "The angle of the light, the weight of the air, a pause in conversation. We believe the impressions hardest to name are the ones that gain value with time.",
+          step3Title: "The afterglow you recall later",
+          step3Body: "Opening it again days later, or once the season has changed, the feeling returns before the place itself does. That's the kind of remnant we hope to create.",
+          voiceTitle: "Not someone else's answer, but the shape of your own memory.",
+          voiceLead: "PlaceDiary isn't conceived as a record for comparison, but as a place to keep the outline of who you are. We prioritize staying close over standing out.",
+          storyTitle: "Story of the day",
+          storyBody: "From 5:42 to 8:10 PM, a day of 4.1km kept as 15 footprints.",
+          storyTagFootprints: "Footprints",
+          storyTagFootprintsValue: "15",
+          storyTagDistance: "Distance",
+          storyTagTime: "Time",
+          voice1Title: "Everyone sees a place at their own resolution",
+          voice1Body: "Even the same place can look different, and memories can focus on different things. PlaceDiary aims to respect that difference rather than smooth it over.",
+          voice2Title: "Not every record has to be a big event",
+          voice2Body: "Meaning isn't limited to trips and outings — short everyday detours matter too. We care about keeping a sense of those quiet, passing moments.",
+          voice3Title: "Meaning grows the more you read it again",
+          voice3Body: "Feelings you didn't notice on the day itself can surface later. We aim to leave room for memory to keep growing over time.",
+          releaseTitle: "Now available on the App Store.",
+          releaseBody: "PlaceDiary has been released on the App Store. We'll keep refining its world and the details of the experience over time.",
+          releasePoint1: "Centering what you felt at a place, not just its information",
+          releasePoint2: "Aiming for a quiet recording experience, even with just a few words",
+          releasePoint3: "Protecting the space to read it again after time has passed",
+          releaseStoreButton: "View on the App Store",
+          ctaBody: "PlaceDiary is here not to compete over information, but to carefully keep your own sense of things.",
+          ctaStore: "Download on the App Store",
+          ctaTop: "Back to top",
+          footerCopyright: "© 2026 PlaceDiary",
+          footerTagline: "An iPhone app for quietly keeping the air of a place."
+        },
+        html: {
+          heroTitle: "The air of a place,<br><span>kept quietly.</span>",
+          memoLeft: "<span class=\"strip\"></span>\n            Light on the street corner\n            <small>The smell of evening, the rhythm of footsteps</small>",
+          memoRight: "<span class=\"strip\"></span>\n            A small detour\n            <small>An air you remember before the name</small>",
+          ctaTitle: "The memory of a place<br>can be quieter than this."
+        },
+        labels: {
+          brandLabel: "Back to the PlaceDiary home",
+          navLabel: "In-page navigation",
+          languageLabel: "Choose a language"
+        },
+        meta: {
+          title: "PlaceDiary - Quietly keeping the air of a place",
+          description: "PlaceDiary is an iPhone app for quietly keeping the warmth and space tied to places. Now available on the App Store.",
+          ogTitle: "PlaceDiary - Quietly keeping the air of a place",
+          ogDescription: "Not a map, not an album — a glimpse into the world of gently writing down the memory of a place.",
+          storeUrl: "https://apps.apple.com/us/app/id6773775438"
+        }
+      }
+    };
+
+    function savedLanguage() {
+      try {
+        return localStorage.getItem("placeDiaryLanguage");
+      } catch {
+        return null;
+      }
+    }
+
+    function rememberLanguage(language) {
+      try {
+        localStorage.setItem("placeDiaryLanguage", language);
+      } catch {
+        // Language switching still works when storage is unavailable.
+      }
+    }
+
+    function applyLanguage(language, shouldRemember = false) {
+      const selected = translations[language] ? language : "ja";
+      const translation = translations[selected];
+
+      document.documentElement.lang = selected;
+      document.title = translation.meta.title;
+      document.querySelector("#meta-description").content = translation.meta.description;
+      document.querySelector("#og-title").content = translation.meta.ogTitle;
+      document.querySelector("#og-description").content = translation.meta.ogDescription;
+
+      document.querySelectorAll("[data-i18n]").forEach(element => {
+        element.textContent = translation.text[element.dataset.i18n];
+      });
+      document.querySelectorAll("[data-i18n-html]").forEach(element => {
+        element.innerHTML = translation.html[element.dataset.i18nHtml];
+      });
+      document.querySelectorAll("[data-i18n-aria-label]").forEach(element => {
+        element.setAttribute(
+          "aria-label",
+          translation.labels[element.dataset.i18nAriaLabel]
+        );
+      });
+      document.querySelectorAll("[data-store-link]").forEach(element => {
+        element.href = translation.meta.storeUrl;
+      });
+      document.querySelectorAll("[data-language]").forEach(button => {
+        button.setAttribute("aria-pressed", String(button.dataset.language === selected));
+      });
+
+      if (shouldRemember) {
+        rememberLanguage(selected);
+        const url = new URL(window.location.href);
+        url.searchParams.set("lang", selected);
+        history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
+      }
+    }
+
+    const requestedLanguage = new URLSearchParams(window.location.search).get("lang");
+    const hasRequestedLanguage = Object.prototype.hasOwnProperty.call(
+      translations,
+      requestedLanguage
+    );
+    const initialLanguage = hasRequestedLanguage
+      ? requestedLanguage
+      : savedLanguage() || (navigator.language.toLowerCase().startsWith("ja") ? "ja" : "en");
+
+    applyLanguage(initialLanguage);
+
+    document.querySelectorAll("[data-language]").forEach(button => {
+      button.addEventListener("click", () => applyLanguage(button.dataset.language, true));
+    });
+
     document.addEventListener("copy", event => event.preventDefault());
     document.addEventListener("cut", event => event.preventDefault());
     document.addEventListener("contextmenu", event => event.preventDefault());

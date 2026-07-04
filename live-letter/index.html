@@ -4,10 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Live Letter - ライブの余韻を手紙のように残す</title>
-  <meta name="description" content="Live Letterは、ライブやフェスの余韻を手紙やスクラップブックのように残して見返すiPhoneアプリです。App Storeで公開中です。" />
+  <meta id="meta-description" name="description" content="Live Letterは、ライブやフェスの余韻を手紙やスクラップブックのように残して見返すiPhoneアプリです。App Storeで公開中です。" />
   <meta name="robots" content="noai, noimageai" />
-  <meta property="og:title" content="Live Letter - ライブの余韻を手紙のように残す" />
-  <meta property="og:description" content="ライブが終わったあとも、ふとした瞬間に思い出せるように。あの日の空気を、手紙を綴るように残すiPhoneアプリです。" />
+  <meta id="og-title" property="og:title" content="Live Letter - ライブの余韻を手紙のように残す" />
+  <meta id="og-description" property="og:description" content="ライブが終わったあとも、ふとした瞬間に思い出せるように。あの日の空気を、手紙を綴るように残すiPhoneアプリです。" />
   <meta property="og:type" content="website" />
   <meta name="apple-itunes-app" content="app-id=6771392293" />
   <meta name="theme-color" content="#5c4736" />
@@ -42,10 +42,7 @@
       color: var(--ink);
       font-family: var(--font);
       line-height: 1.75;
-      background:
-        radial-gradient(circle at 10% 8%, rgba(233, 187, 177, .34), transparent 24rem),
-        radial-gradient(circle at 88% 12%, rgba(135, 150, 110, .22), transparent 28rem),
-        linear-gradient(180deg, #fffaf3 0%, var(--paper) 44%, #fffdf8 100%);
+      background: linear-gradient(180deg, #fffaf3 0%, var(--paper) 46%, #fffdf8 100%);
       overflow-x: hidden;
       -webkit-touch-callout: none;
       -webkit-user-select: none;
@@ -57,7 +54,7 @@
       position: fixed;
       inset: 0;
       pointer-events: none;
-      opacity: .18;
+      opacity: .10;
       background-image:
         radial-gradient(circle, rgba(92,71,54,.22) 0 1px, transparent 1.2px),
         radial-gradient(circle, rgba(138,110,77,.16) 0 1px, transparent 1.2px);
@@ -149,6 +146,35 @@
     }
 
     .nav-links a:hover { color: var(--ink); }
+
+    .language-switch {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px;
+      border: 1px solid rgba(216, 196, 173, .78);
+      border-radius: 999px;
+      background: rgba(255, 249, 240, .8);
+    }
+
+    .language-switch button {
+      min-width: 38px;
+      min-height: 32px;
+      padding: 5px 9px;
+      border: 0;
+      border-radius: 999px;
+      color: var(--muted);
+      background: transparent;
+      font: inherit;
+      font-size: 12px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .language-switch button[aria-pressed="true"] {
+      color: #fff;
+      background: var(--ink);
+      box-shadow: 0 5px 12px rgba(92, 71, 54, .24);
+    }
 
     .btn {
       display: inline-flex;
@@ -542,7 +568,7 @@
       margin: 0;
       color: var(--muted);
       font-size: 15px;
-      font-weight: 700;
+      font-weight: 500;
       line-height: 1.78;
     }
 
@@ -633,7 +659,7 @@
       margin: 0;
       color: var(--muted);
       font-size: 14px;
-      font-weight: 700;
+      font-weight: 500;
     }
 
     .share-layout {
@@ -673,8 +699,7 @@
       padding: 22px;
       border: 1px solid rgba(255, 250, 243, .35);
       border-radius: 24px;
-      background: rgba(255, 250, 243, .1);
-      backdrop-filter: blur(16px);
+      background: rgba(255, 250, 243, .18);
     }
 
     .share-photo {
@@ -776,9 +801,7 @@
       padding: 58px 34px;
       border-radius: 40px;
       color: #fffaf3;
-      background:
-        radial-gradient(circle at 85% 18%, rgba(233,187,177,.35), transparent 18rem),
-        linear-gradient(135deg, #30283a, #5c4736 56%, #8a6e4d);
+      background: linear-gradient(135deg, #30283a, #5c4736);
       box-shadow: 0 30px 90px rgba(48, 40, 58, .24);
       text-align: center;
     }
@@ -875,6 +898,7 @@
         padding: 10px 14px;
         font-size: 13px;
       }
+      .language-switch button { min-width: 34px; padding-inline: 7px; }
       .hero { padding: 42px 0 48px; }
       h1 { font-size: clamp(40px, 12vw, 48px); }
       .lead {
@@ -981,15 +1005,19 @@
 <body>
   <header class="nav">
     <div class="wrap nav-inner">
-      <a class="brand" href="#top" aria-label="Live Letter トップへ">
+      <a class="brand" href="#top" aria-label="Live Letter トップへ" data-i18n-aria-label="brandLabel">
         <span class="brand-mark" aria-hidden="true"></span>
         <span>Live Letter</span>
       </a>
-      <nav class="nav-links" aria-label="ページ内ナビゲーション">
-        <a href="#features">世界観</a>
-        <a href="#flow">余韻</a>
-        <a href="#share">手紙</a>
-        <a class="btn btn-primary" href="https://apps.apple.com/jp/app/live-letter/id6771392293" target="_blank" rel="noopener">App Store</a>
+      <nav class="nav-links" aria-label="ページ内ナビゲーション" data-i18n-aria-label="navLabel">
+        <a href="#features" data-i18n="navFeatures">世界観</a>
+        <a href="#flow" data-i18n="navFlow">余韻</a>
+        <a href="#share" data-i18n="navShare">手紙</a>
+        <div class="language-switch" role="group" aria-label="言語を選択" data-i18n-aria-label="languageLabel">
+          <button type="button" data-language="ja" aria-pressed="true">JA</button>
+          <button type="button" data-language="en" aria-pressed="false">EN</button>
+        </div>
+        <a class="btn btn-primary" href="https://apps.apple.com/jp/app/id6771392293" target="_blank" rel="noopener" data-store-link>App Store</a>
       </nav>
     </div>
   </header>
@@ -998,32 +1026,32 @@
     <section class="hero">
       <div class="wrap hero-grid">
         <div>
-          <div class="eyebrow">ライブの余韻を、手紙のように</div>
-          <h1>ライブの余韻を、<br><span>手紙のように</span>残す。</h1>
-          <p class="lead">
+          <div class="eyebrow" data-i18n="heroEyebrow">ライブの余韻を、手紙のように</div>
+          <h1 data-i18n-html="heroTitle">ライブの余韻を、<br><span>手紙のように</span>残す。</h1>
+          <p class="lead" data-i18n="heroLead">
             Live Letterは、ライブが終わったあとも心に残る熱や、次の公演を待つ時間を、そっとしまっておくためのアプリです。あの日の空気を思い出したいとき、手紙を読み返すように開ける場所を目指しています。
           </p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="https://apps.apple.com/jp/app/live-letter/id6771392293" target="_blank" rel="noopener" aria-label="App StoreでLive Letterを開く">App Storeで見る</a>
-            <a class="btn btn-secondary" href="#features">できることを見る</a>
+            <a class="btn btn-primary" href="https://apps.apple.com/jp/app/id6771392293" target="_blank" rel="noopener" data-store-link aria-label="App StoreでLive Letterを開く" data-i18n-aria-label="storeLinkLabel" data-i18n="heroStoreButton">App Storeで見る</a>
+            <a class="btn btn-secondary" href="#features" data-i18n="heroFeaturesButton">できることを見る</a>
           </div>
           <div class="note">
-            <span>✓ 終演後の余韻をゆっくり残す</span>
-            <span>✓ 次の楽しみを静かに温める</span>
-            <span>✓ あの日の気持ちに戻れる</span>
+            <span data-i18n="heroNote1">✓ 終演後の余韻をゆっくり残す</span>
+            <span data-i18n="heroNote2">✓ 次の楽しみを静かに温める</span>
+            <span data-i18n="heroNote3">✓ あの日の気持ちに戻れる</span>
           </div>
         </div>
 
         <div class="phone-stage" aria-hidden="true">
           <div class="paper-tag tag-left">
             <span class="tape"></span>
-            あの日の空気
-            <small>光、音、帰り道の気持ちまで</small>
+            <span data-i18n="tagLeftTitle">あの日の空気</span>
+            <small data-i18n="tagLeftBody">光、音、帰り道の気持ちまで</small>
           </div>
           <div class="paper-tag tag-right">
             <span class="tape"></span>
-            次の約束
-            <small>待っている時間も思い出の一部に</small>
+            <span data-i18n="tagRightTitle">次の約束</span>
+            <small data-i18n="tagRightBody">待っている時間も思い出の一部に</small>
           </div>
 
           <div class="phone">
@@ -1031,8 +1059,8 @@
               <div class="island"></div>
               <div class="app-ui">
                 <div class="app-title">Live Letter ✦</div>
-                <div class="dashboard-copy">今日の余韻も、次の予定も、ここに。</div>
-                <div class="dashboard-sub">手紙の束をめくるように、ライブの日を思い出す場所。</div>
+                <div class="dashboard-copy" data-i18n="dashboardCopy">今日の余韻も、次の予定も、ここに。</div>
+                <div class="dashboard-sub" data-i18n="dashboardSub">手紙の束をめくるように、ライブの日を思い出す場所。</div>
                 <div class="metrics">
                   <div class="metric"><small>Afterglow</small><b>24</b><small>letters</small></div>
                   <div class="metric"><small>Next</small><b>12</b><small>days</small></div>
@@ -1043,17 +1071,17 @@
                     <div class="photo"></div>
                     <div>
                       <h3>Dear Last Night</h3>
-                      <p>終演後の帰り道<br>まだ耳に残る一曲</p>
+                      <p data-i18n-html="nextCardBody">終演後の帰り道<br>まだ耳に残る一曲</p>
                     </div>
                   </div>
                 </div>
               </div>
               <div class="tabs">
-                <div class="tab"><strong>⌂</strong>余韻</div>
-                <div class="tab"><strong>⌕</strong>次へ</div>
+                <div class="tab" data-i18n-html="tab1"><strong>⌂</strong>余韻</div>
+                <div class="tab" data-i18n-html="tab2"><strong>⌕</strong>次へ</div>
                 <div class="center-tab">✎</div>
-                <div class="tab"><strong>▧</strong>手紙</div>
-                <div class="tab"><strong>✦</strong>私へ</div>
+                <div class="tab" data-i18n-html="tab3"><strong>▧</strong>手紙</div>
+                <div class="tab" data-i18n-html="tab4"><strong>✦</strong>私へ</div>
               </div>
             </div>
           </div>
@@ -1064,24 +1092,24 @@
     <section id="features">
       <div class="wrap">
         <div class="section-head">
-          <h2>ライブは、終わったあとも続いている。</h2>
-          <p>会場を出たあとの高鳴り、帰り道でふと思い出す一瞬、次の予定を待つ時間。Live Letterは、その全部を急がせずに残すための小さなスクラップブックです。</p>
+          <h2 data-i18n="featuresTitle">ライブは、終わったあとも続いている。</h2>
+          <p data-i18n="featuresLead">会場を出たあとの高鳴り、帰り道でふと思い出す一瞬、次の予定を待つ時間。Live Letterは、その全部を急がせずに残すための小さなスクラップブックです。</p>
         </div>
         <div class="cards">
           <article class="card">
             <div class="icon">♪</div>
-            <h3>余韻を急がせない</h3>
-            <p>熱が冷めないうちに全部を整理しなくても大丈夫。帰ってから、翌朝、何日か経ってからでも、その日の気持ちをゆっくり置いておけます。</p>
+            <h3 data-i18n="feature1Title">余韻を急がせない</h3>
+            <p data-i18n="feature1Body">熱が冷めないうちに全部を整理しなくても大丈夫。帰ってから、翌朝、何日か経ってからでも、その日の気持ちをゆっくり置いておけます。</p>
           </article>
           <article class="card">
             <div class="icon sage">▧</div>
-            <h3>紙の手触りを感じる場所</h3>
-            <p>まっさらな画面ではなく、少し温度のある紙面にしまう感覚。ライブの記憶を、ただのデータではなく一通の手紙のように扱います。</p>
+            <h3 data-i18n="feature2Title">紙の手触りを感じる場所</h3>
+            <p data-i18n="feature2Body">まっさらな画面ではなく、少し温度のある紙面にしまう感覚。ライブの記憶を、ただのデータではなく一通の手紙のように扱います。</p>
           </article>
           <article class="card">
             <div class="icon warm">☑</div>
-            <h3>次の楽しみまで、つながる</h3>
-            <p>まだ先のライブを待つ時間も、思い出のはじまり。過去の余韻とこれからの期待が、同じ場所にやさしく並びます。</p>
+            <h3 data-i18n="feature3Title">次の楽しみまで、つながる</h3>
+            <p data-i18n="feature3Body">まだ先のライブを待つ時間も、思い出のはじまり。過去の余韻とこれからの期待が、同じ場所にやさしく並びます。</p>
           </article>
         </div>
       </div>
@@ -1090,29 +1118,29 @@
     <section id="flow" class="flow">
       <div class="wrap flow-grid">
         <div class="letter-panel">
-          <h2>書くというより、しまっておく。</h2>
-          <p>Live Letterが大切にしたいのは、できることの多さではなく、ライブの日を思い出すときの空気感です。言葉になりきらない気持ちも、そのまま置ける余白を残しています。</p>
+          <h2 data-i18n="flowTitle">書くというより、しまっておく。</h2>
+          <p data-i18n="flowBody">Live Letterが大切にしたいのは、できることの多さではなく、ライブの日を思い出すときの空気感です。言葉になりきらない気持ちも、そのまま置ける余白を残しています。</p>
         </div>
         <div class="steps">
           <div class="step">
             <div class="step-num">1</div>
             <div>
-              <h3>始まる前の高鳴り</h3>
-              <p>その日を待つ時間、会場へ向かう道、開演前のそわそわした気持ち。その時点から、もう物語は始まっています。</p>
+              <h3 data-i18n="step1Title">始まる前の高鳴り</h3>
+              <p data-i18n="step1Body">その日を待つ時間、会場へ向かう道、開演前のそわそわした気持ち。その時点から、もう物語は始まっています。</p>
             </div>
           </div>
           <div class="step">
             <div class="step-num">2</div>
             <div>
-              <h3>終わった直後の熱</h3>
-              <p>拍手、照明、最後の一曲、帰り道の会話。細かく整理しなくても、まずは残したい気持ちだけを受け止めます。</p>
+              <h3 data-i18n="step2Title">終わった直後の熱</h3>
+              <p data-i18n="step2Body">拍手、照明、最後の一曲、帰り道の会話。細かく整理しなくても、まずは残したい気持ちだけを受け止めます。</p>
             </div>
           </div>
           <div class="step">
             <div class="step-num">3</div>
             <div>
-              <h3>時間が経ってからの余韻</h3>
-              <p>何週間もあとに開いたとき、あの日の温度が少し戻ってくる。そんな読み返し方ができる場所を目指しています。</p>
+              <h3 data-i18n="step3Title">時間が経ってからの余韻</h3>
+              <p data-i18n="step3Body">何週間もあとに開いたとき、あの日の温度が少し戻ってくる。そんな読み返し方ができる場所を目指しています。</p>
             </div>
           </div>
         </div>
@@ -1122,29 +1150,29 @@
     <section id="share">
       <div class="wrap">
         <div class="section-head">
-          <h2>見せるためだけではなく、思い出すために。</h2>
-          <p>誰かに伝えたい夜も、自分だけで大切にしたい夜もあります。Live Letterは、ライブの記憶を派手に飾りすぎず、その人らしい温度で残せる表現を大切にします。</p>
+          <h2 data-i18n="shareTitle">見せるためだけではなく、思い出すために。</h2>
+          <p data-i18n="shareLead">誰かに伝えたい夜も、自分だけで大切にしたい夜もあります。Live Letterは、ライブの記憶を派手に飾りすぎず、その人らしい温度で残せる表現を大切にします。</p>
         </div>
         <div class="share-layout">
           <div class="share-preview" aria-hidden="true">
             <div class="share-card">
               <div class="share-photo"></div>
               <h3>Tonight, I was there.</h3>
-              <p>光が消えたあとも<br>まだ胸に残っているもの</p>
+              <p data-i18n-html="sharePreviewBody">光が消えたあとも<br>まだ胸に残っているもの</p>
             </div>
           </div>
           <div class="share-list">
             <article class="share-item">
-              <h3>言葉になりきらない気持ち</h3>
-              <p>うまく説明できない感動も、短い一文でも、そのまま残せることを大切にしています。</p>
+              <h3 data-i18n="shareItem1Title">言葉になりきらない気持ち</h3>
+              <p data-i18n="shareItem1Body">うまく説明できない感動も、短い一文でも、そのまま残せることを大切にしています。</p>
             </article>
             <article class="share-item">
-              <h3>一人ひとり違う余韻</h3>
-              <p>同じライブでも、残したい瞬間は人それぞれ。自分の記憶のかたちに合う余白を用意します。</p>
+              <h3 data-i18n="shareItem2Title">一人ひとり違う余韻</h3>
+              <p data-i18n="shareItem2Body">同じライブでも、残したい瞬間は人それぞれ。自分の記憶のかたちに合う余白を用意します。</p>
             </article>
             <article class="share-item">
-              <h3>読み返したくなる雰囲気</h3>
-              <p>あとで開いたときに、少しだけ胸があたたかくなる。そんな小さな体験を積み重ねていきます。</p>
+              <h3 data-i18n="shareItem3Title">読み返したくなる雰囲気</h3>
+              <p data-i18n="shareItem3Body">あとで開いたときに、少しだけ胸があたたかくなる。そんな小さな体験を積み重ねていきます。</p>
             </article>
           </div>
         </div>
@@ -1156,13 +1184,13 @@
         <div class="privacy">
           <div class="privacy-grid">
             <div>
-              <h2>App Storeで公開中です。</h2>
-              <p>Live Letterは、iPhoneで使えるアプリとして公開されました。ライブの余韻や次の予定を、自分のペースで残して見返せます。</p>
+              <h2 data-i18n="privacyTitle">App Storeで公開中です。</h2>
+              <p data-i18n="privacyBody">Live Letterは、iPhoneで使えるアプリとして公開されました。ライブの余韻や次の予定を、自分のペースで残して見返せます。</p>
             </div>
             <div class="privacy-points">
-              <div class="privacy-point">ライブの熱を急いで消費しないこと</div>
-              <div class="privacy-point">書き残す時間そのものが心地よいこと</div>
-              <div class="privacy-point">あとから開いたときに余韻が戻ること</div>
+              <div class="privacy-point" data-i18n="privacyPoint1">ライブの熱を急いで消費しないこと</div>
+              <div class="privacy-point" data-i18n="privacyPoint2">書き残す時間そのものが心地よいこと</div>
+              <div class="privacy-point" data-i18n="privacyPoint3">あとから開いたときに余韻が戻ること</div>
             </div>
           </div>
         </div>
@@ -1172,11 +1200,11 @@
     <section id="download" class="cta">
       <div class="wrap">
         <div class="cta-box">
-          <h2>忘れたくない夜を、<br>一通の手紙に。</h2>
-          <p>Live LetterはApp Storeからダウンロードできます。ライブが終わった夜も、次の公演を待つ時間も、自分だけの手紙として残せます。</p>
+          <h2 data-i18n-html="ctaTitle">忘れたくない夜を、<br>一通の手紙に。</h2>
+          <p data-i18n="ctaBody">Live LetterはApp Storeからダウンロードできます。ライブが終わった夜も、次の公演を待つ時間も、自分だけの手紙として残せます。</p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="https://apps.apple.com/jp/app/live-letter/id6771392293" target="_blank" rel="noopener" aria-label="App StoreでLive Letterを開く">App Storeで見る</a>
-            <a class="btn btn-secondary" href="#top">トップへ戻る</a>
+            <a class="btn btn-primary" href="https://apps.apple.com/jp/app/id6771392293" target="_blank" rel="noopener" data-store-link aria-label="App StoreでLive Letterを開く" data-i18n-aria-label="storeLinkLabel" data-i18n="ctaStoreButton">App Storeで見る</a>
+            <a class="btn btn-secondary" href="#top" data-i18n="ctaTopButton">トップへ戻る</a>
           </div>
         </div>
       </div>
@@ -1185,11 +1213,188 @@
 
   <footer>
     <div class="wrap foot">
-      <span>© 2026 Live Letter</span>
-      <span>ライブの余韻を、手紙のように残すiPhoneアプリ。</span>
+      <span data-i18n="footerCopyright">© 2026 Live Letter</span>
+      <span data-i18n="footerTagline">ライブの余韻を、手紙のように残すiPhoneアプリ。</span>
     </div>
   </footer>
   <script>
+    const japaneseText = Object.fromEntries(
+      [...document.querySelectorAll("[data-i18n]")].map(element => [
+        element.dataset.i18n,
+        element.textContent
+      ])
+    );
+    const japaneseHTML = Object.fromEntries(
+      [...document.querySelectorAll("[data-i18n-html]")].map(element => [
+        element.dataset.i18nHtml,
+        element.innerHTML
+      ])
+    );
+    const japaneseLabels = Object.fromEntries(
+      [...document.querySelectorAll("[data-i18n-aria-label]")].map(element => [
+        element.dataset.i18nAriaLabel,
+        element.getAttribute("aria-label")
+      ])
+    );
+
+    const translations = {
+      ja: {
+        text: japaneseText,
+        html: japaneseHTML,
+        labels: japaneseLabels,
+        meta: {
+          title: "Live Letter - ライブの余韻を手紙のように残す",
+          description: "Live Letterは、ライブやフェスの余韻を手紙やスクラップブックのように残して見返すiPhoneアプリです。App Storeで公開中です。",
+          ogDescription: "ライブが終わったあとも、ふとした瞬間に思い出せるように。あの日の空気を、手紙を綴るように残すiPhoneアプリです。",
+          storeUrl: "https://apps.apple.com/jp/app/id6771392293"
+        }
+      },
+      en: {
+        text: {
+          navFeatures: "Our world",
+          navFlow: "Afterglow",
+          navShare: "Letters",
+          heroEyebrow: "The afterglow of a live show, kept like a letter",
+          heroLead: "Live Letter is an app for quietly tucking away the warmth that lingers after a show, and the time spent waiting for the next one. Whenever you want to remember the air of that day, it's a place you can open like rereading a letter.",
+          heroStoreButton: "View on the App Store",
+          heroFeaturesButton: "See what you can do",
+          heroNote1: "✓ Let the afterglow settle in its own time",
+          heroNote2: "✓ Quietly warm up your next excitement",
+          heroNote3: "✓ Return to how that day felt",
+          tagLeftTitle: "The air of that day",
+          tagLeftBody: "The light, the sound, even how you felt on the way home",
+          tagRightTitle: "The next promise",
+          tagRightBody: "The time spent waiting becomes part of the memory too",
+          dashboardCopy: "Today's afterglow and what's coming next, all in one place.",
+          dashboardSub: "A place to remember show days, like flipping through a bundle of letters.",
+          featuresTitle: "A live show isn't over when it ends.",
+          featuresLead: "The thrill after leaving the venue, a sudden memory on the way home, the time spent waiting for what's next. Live Letter is a small scrapbook for keeping all of it, without rushing.",
+          feature1Title: "Let the afterglow take its time",
+          feature1Body: "You don't have to sort through everything while it's still fresh. Whether it's right when you get home, the next morning, or days later, you can gently set down how you felt that day.",
+          feature2Title: "A place with the feel of paper",
+          feature2Body: "Not a blank, cold screen, but something with a bit of warmth to tuck things into. Live Letter treats the memory of a show as a letter, not just data.",
+          feature3Title: "Connected to what's coming next",
+          feature3Body: "The time spent waiting for a show still to come is already part of the memory. Past afterglow and future anticipation sit gently side by side.",
+          flowTitle: "Less about writing, more about keeping.",
+          flowBody: "What Live Letter values isn't a long list of features, but the feeling in the air when you remember a show day. It leaves room for feelings that don't quite turn into words, just as they are.",
+          step1Title: "The excitement before it begins",
+          step1Body: "The time spent waiting for the day, the walk to the venue, the restlessness before the show starts. The story is already underway from that point on.",
+          step2Title: "The warmth right after it ends",
+          step2Body: "The applause, the lights, the final song, the conversation on the way home. You don't have to organize it all right away—first, just hold onto the feeling you want to keep.",
+          step3Title: "The afterglow once time has passed",
+          step3Body: "Opening it weeks later, a little of that day's warmth comes back. We aim to make that kind of rereading possible.",
+          shareTitle: "Not just to show others, but to remember.",
+          shareLead: "Some nights you want to share, others you'd rather keep to yourself. Live Letter cares about expression that isn't overly flashy, one that lets you keep the memory of a show at your own warmth.",
+          shareItem1Title: "Feelings that don't quite become words",
+          shareItem1Body: "We value being able to keep emotions you can't quite explain, even in just a short line, exactly as they are.",
+          shareItem2Title: "Everyone's afterglow is different",
+          shareItem2Body: "Even at the same show, the moments worth keeping differ from person to person. We make room that fits the shape of your own memory.",
+          shareItem3Title: "An atmosphere that draws you back",
+          shareItem3Body: "When you open it again later, your heart warms just a little. We're building up that kind of small experience.",
+          privacyTitle: "Now available on the App Store.",
+          privacyBody: "Live Letter has been released as an iPhone app. You can keep and revisit the afterglow of a show, and what's coming next, at your own pace.",
+          privacyPoint1: "Never rushing the heat of a live show",
+          privacyPoint2: "Making the act of writing it down itself feel good",
+          privacyPoint3: "Letting the afterglow return when you open it again",
+          ctaBody: "Live Letter is available to download on the App Store. The night a show ends, and the time spent waiting for the next one, can both be kept as your own letter.",
+          ctaStoreButton: "View on the App Store",
+          ctaTopButton: "Back to top",
+          footerCopyright: "© 2026 Live Letter",
+          footerTagline: "An iPhone app for keeping the afterglow of a live show like a letter."
+        },
+        html: {
+          heroTitle: "The afterglow of a live show,<br><span>kept like a letter.</span>",
+          tab1: "<strong>⌂</strong>Afterglow",
+          tab2: "<strong>⌕</strong>Next",
+          tab3: "<strong>▧</strong>Letters",
+          tab4: "<strong>✦</strong>For Me",
+          nextCardBody: "On the way home after the show<br>One song still echoing",
+          sharePreviewBody: "Even after the lights go down<br>Something still stays with you",
+          ctaTitle: "A night you don't want to forget,<br>turned into a letter."
+        },
+        labels: {
+          brandLabel: "Back to the Live Letter home",
+          navLabel: "Page navigation",
+          languageLabel: "Choose a language",
+          storeLinkLabel: "Open Live Letter on the App Store"
+        },
+        meta: {
+          title: "Live Letter - Keep the afterglow of a live show like a letter",
+          description: "Live Letter is an iPhone app for keeping the afterglow of a live show or festival like a letter or a scrapbook. Now available on the App Store.",
+          ogDescription: "So you can remember it in a passing moment, even after the show is over. An iPhone app for keeping the air of that day, written like a letter.",
+          storeUrl: "https://apps.apple.com/us/app/live-letter/id6771392293"
+        }
+      }
+    };
+
+    function savedLanguage() {
+      try {
+        return localStorage.getItem("liveLetterLanguage");
+      } catch {
+        return null;
+      }
+    }
+
+    function rememberLanguage(language) {
+      try {
+        localStorage.setItem("liveLetterLanguage", language);
+      } catch {
+        // Language switching still works when storage is unavailable.
+      }
+    }
+
+    function applyLanguage(language, shouldRemember = false) {
+      const selected = translations[language] ? language : "ja";
+      const translation = translations[selected];
+
+      document.documentElement.lang = selected;
+      document.title = translation.meta.title;
+      document.querySelector("#meta-description").content = translation.meta.description;
+      document.querySelector("#og-title").content = translation.meta.title;
+      document.querySelector("#og-description").content = translation.meta.ogDescription;
+
+      document.querySelectorAll("[data-i18n]").forEach(element => {
+        element.textContent = translation.text[element.dataset.i18n];
+      });
+      document.querySelectorAll("[data-i18n-html]").forEach(element => {
+        element.innerHTML = translation.html[element.dataset.i18nHtml];
+      });
+      document.querySelectorAll("[data-i18n-aria-label]").forEach(element => {
+        element.setAttribute(
+          "aria-label",
+          translation.labels[element.dataset.i18nAriaLabel]
+        );
+      });
+      document.querySelectorAll("[data-store-link]").forEach(element => {
+        element.href = translation.meta.storeUrl;
+      });
+      document.querySelectorAll("[data-language]").forEach(button => {
+        button.setAttribute("aria-pressed", String(button.dataset.language === selected));
+      });
+
+      if (shouldRemember) {
+        rememberLanguage(selected);
+        const url = new URL(window.location.href);
+        url.searchParams.set("lang", selected);
+        history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
+      }
+    }
+
+    const requestedLanguage = new URLSearchParams(window.location.search).get("lang");
+    const hasRequestedLanguage = Object.prototype.hasOwnProperty.call(
+      translations,
+      requestedLanguage
+    );
+    const initialLanguage = hasRequestedLanguage
+      ? requestedLanguage
+      : savedLanguage() || (navigator.language.toLowerCase().startsWith("ja") ? "ja" : "en");
+
+    applyLanguage(initialLanguage);
+
+    document.querySelectorAll("[data-language]").forEach(button => {
+      button.addEventListener("click", () => applyLanguage(button.dataset.language, true));
+    });
+
     document.addEventListener("copy", event => event.preventDefault());
     document.addEventListener("cut", event => event.preventDefault());
     document.addEventListener("contextmenu", event => event.preventDefault());

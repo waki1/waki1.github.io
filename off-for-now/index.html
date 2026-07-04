@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OffForNow - いったん離れる、という選択</title>
+  <meta id="meta-description" name="description" content="OffForNowは、見ない時間を自分で決めて、戻ってきた時間をやさしく記録するiPhoneアプリです。App Storeで配信中。" />
+  <meta name="robots" content="noai, noimageai" />
+  <meta id="og-title" property="og:title" content="OffForNow - いったん離れる、という選択" />
+  <meta id="og-description" property="og:description" content="SNSと少し距離を置く、静かなiPhoneアプリ。今すぐApp Storeで。" />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#403127" />
+  <style>
+    :root {
+      --background: #faf8f4;
+      --surface: #ffffff;
+      --surface-soft: #f2ebe1;
+      --surface-soft-2: #f7f2eb;
+      --text: #3d3128;
+      --text-muted: #74685e;
+      --line: rgba(61, 49, 40, 0.12);
+      --accent: #403127;
+      --accent-soft: #efe6d8;
+      --sage: #7a8a72;
+      --sage-soft: #e7ede4;
+      --dusty-blue: #6f8296;
+      --dusty-blue-soft: #e6ebee;
+      --clay: #b3785a;
+      --clay-soft: #f3e6dd;
+      --radius: 22px;
+      --radius-lg: 34px;
+      --shadow: 0 24px 64px rgba(61, 49, 40, 0.12);
+      --shadow-soft: 0 10px 28px rgba(61, 49, 40, 0.08);
+      --max: 1120px;
+      --font-body: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+      --font-title: "Avenir Next", "SF Pro Display", "Hiragino Sans", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: var(--font-body);
+      line-height: 1.8;
+      background: var(--background);
+      overflow-x: hidden;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    .wrap {
+      width: min(var(--max), calc(100% - clamp(28px, 5vw, 56px)));
+      margin: 0 auto;
+    }
+
+    .bg-alt { background: var(--surface-soft-2); }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid var(--line);
+      background: rgba(250, 248, 244, .92);
+      backdrop-filter: blur(18px);
+    }
+
+    .nav-inner {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      font-weight: 900;
+      letter-spacing: -.035em;
+      font-size: 18px;
+      flex: 0 0 auto;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 21px;
+      color: var(--text-muted);
+      font-size: 14px;
+      font-weight: 800;
+      overflow-x: auto;
+      white-space: nowrap;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      padding: 4px 2px;
+    }
+
+    .nav-links::-webkit-scrollbar { display: none; }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    .language-switch {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--surface);
+      flex: 0 0 auto;
+    }
+
+    .language-switch button {
+      min-width: 38px;
+      min-height: 32px;
+      padding: 5px 9px;
+      border: 0;
+      border-radius: 999px;
+      color: var(--text-muted);
+      background: transparent;
+      font: inherit;
+      font-size: 12px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .language-switch button[aria-pressed="true"] {
+      color: #fff;
+      background: var(--accent);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 12px 21px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      font-weight: 900;
+      letter-spacing: -.025em;
+      white-space: nowrap;
+      transition: transform .2s ease, box-shadow .2s ease;
+      flex: 0 0 auto;
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary {
+      color: #fff;
+      background: var(--accent);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .btn-secondary {
+      color: var(--text);
+      border-color: var(--line);
+      background: var(--surface);
+    }
+
+    .btn-secondary:hover { box-shadow: var(--shadow-soft); }
+
+    .btn-text {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 12px 4px;
+      border: 0;
+      border-bottom: 2px solid var(--accent);
+      border-radius: 0;
+      color: var(--accent);
+      background: transparent;
+      font-weight: 900;
+      letter-spacing: -.025em;
+      white-space: nowrap;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      transition: opacity .2s ease;
+      flex: 0 0 auto;
+    }
+
+    .btn-text:hover { opacity: .72; transform: none; }
+
+    .appstore {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 15px 22px;
+      border-radius: 18px;
+      background: #050505;
+      color: #fff;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, .18);
+      font-weight: 900;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+    .appstore:hover { transform: translateY(-2px); }
+    .appstore .apple { font-size: 28px; line-height: 1; }
+    .appstore small { display: block; font-size: 11px; opacity: .75; font-weight: 700; }
+    .appstore b { display: block; font-size: 18px; letter-spacing: -.02em; }
+
+    .hero { padding: 88px 0 78px; }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.04fr) minmax(320px, .96fr);
+      align-items: center;
+      gap: clamp(38px, 6vw, 72px);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      padding: 8px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--accent);
+      background: var(--surface);
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--sage);
+    }
+
+    h1, h2, h3 { text-wrap: balance; }
+    h1 {
+      margin: 24px 0 20px;
+      font-family: var(--font-title);
+      font-size: clamp(44px, 7vw, 76px);
+      line-height: 1.08;
+      letter-spacing: -.06em;
+      font-weight: 760;
+      color: var(--text);
+    }
+
+    .lead {
+      max-width: 650px;
+      margin: 0;
+      color: var(--text-muted);
+      font-size: clamp(17px, 2vw, 20px);
+      font-weight: 550;
+      line-height: 1.9;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 13px;
+      margin-top: 34px;
+    }
+
+    /* Phone mockup */
+    .visual-stage {
+      position: relative;
+      min-height: 560px;
+      display: grid;
+      place-items: center;
+    }
+
+    .phone {
+      position: relative;
+      width: min(320px, 84vw);
+      min-height: 560px;
+      padding: 22px 20px 26px;
+      border: 1px solid var(--line);
+      border-radius: 46px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .phone-speaker {
+      width: 64px;
+      height: 6px;
+      margin: 0 auto 6px;
+      border-radius: 999px;
+      background: var(--surface-soft);
+    }
+
+    .phone-label {
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .04em;
+    }
+
+    .phone-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 16px 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface-soft-2);
+    }
+
+    .phone-row-app {
+      font-weight: 800;
+      font-size: 15px;
+    }
+
+    .phone-row-duration {
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .phone-badge {
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .phone-cta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 900;
+      pointer-events: none;
+    }
+
+    .phone-result {
+      margin-top: auto;
+      padding: 20px 18px;
+      border-radius: var(--radius);
+      background: var(--surface-soft);
+      text-align: center;
+    }
+
+    .phone-result-label {
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .phone-result-value {
+      margin: 8px 0 4px;
+      font-family: var(--font-title);
+      font-size: 34px;
+      font-weight: 800;
+      letter-spacing: -.03em;
+      color: var(--accent);
+    }
+
+    .phone-result-note {
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 650;
+    }
+
+    section { padding: 80px 0; }
+    .section-tight { padding: 64px 0; }
+    .section-roomy { padding: 96px 0; }
+    .section-head {
+      max-width: 800px;
+      margin: 0 auto 40px;
+      text-align: center;
+    }
+
+    .kicker {
+      display: block;
+      margin-bottom: 12px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 950;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .section-head h2,
+    .release h2 {
+      margin: 0;
+      font-size: clamp(30px, 4.2vw, 46px);
+      line-height: 1.28;
+      letter-spacing: -.05em;
+      color: var(--text);
+    }
+
+    .section-head p {
+      max-width: 720px;
+      margin: 17px auto 0;
+      color: var(--text-muted);
+      font-size: 17px;
+      font-weight: 550;
+    }
+
+    /* Situations */
+    .situations {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      column-gap: 36px;
+      row-gap: 0;
+    }
+
+    .situation-card {
+      padding: 8px 0 8px 24px;
+      border-left: 3px solid var(--line);
+      transition: border-color .2s ease;
+    }
+
+    .situation-card:hover { border-left-color: var(--sage); }
+
+    .situation-mark {
+      position: relative;
+      width: 40px;
+      height: 40px;
+      margin-bottom: 22px;
+      border-radius: 16px;
+      background: var(--sage-soft);
+    }
+
+    .situation-mark::before {
+      content: "";
+      position: absolute;
+      inset: 13px;
+      border-radius: 50%;
+      background: var(--sage);
+    }
+
+    .situation-card:nth-child(2) .situation-mark { background: var(--dusty-blue-soft); }
+    .situation-card:nth-child(2) .situation-mark::before {
+      border-radius: 4px;
+      background: var(--dusty-blue);
+      transform: rotate(45deg);
+    }
+
+    .situation-card:nth-child(3) .situation-mark { background: var(--clay-soft); }
+    .situation-card:nth-child(3) .situation-mark::before {
+      border-radius: 4px 50% 50% 50%;
+      background: var(--clay);
+    }
+
+    .situation-card h3 {
+      margin: 0 0 10px;
+      font-size: 20px;
+      line-height: 1.4;
+      letter-spacing: -.03em;
+    }
+
+    .situation-card p { margin: 0; color: var(--text-muted); font-size: 15px; }
+
+    /* How it works */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      align-items: start;
+      gap: 0;
+    }
+
+    .step {
+      position: relative;
+      padding: 0 20px;
+    }
+
+    .step:first-child { padding-left: 0; }
+    .step:last-child { padding-right: 0; }
+
+    .step-sep {
+      position: absolute;
+      top: 18px;
+      right: -6px;
+      color: var(--line);
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .step:last-child .step-sep { display: none; }
+
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      margin-bottom: 20px;
+      border-radius: 14px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-family: var(--font-title);
+      font-weight: 900;
+      font-size: 15px;
+    }
+
+    .step h3 {
+      margin: 0 0 10px;
+      font-size: 19px;
+      letter-spacing: -.03em;
+    }
+
+    .step p { margin: 0; color: var(--text-muted); font-size: 15px; }
+
+    /* Demo */
+    .demo-box {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: clamp(30px, 5vw, 46px);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: var(--surface);
+      box-shadow: var(--shadow-soft);
+      text-align: center;
+    }
+
+    .demo-choices {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .demo-choice {
+      min-height: 48px;
+      padding: 12px 22px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--surface-soft-2);
+      color: var(--text);
+      font: inherit;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease, color .2s ease;
+    }
+
+    .demo-choice:hover { transform: translateY(-2px); box-shadow: var(--shadow-soft); }
+
+    .demo-choice.is-selected {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .demo-message {
+      min-height: 28px;
+      margin: 24px 0 0;
+      color: var(--accent);
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .demo-disclaimer {
+      margin: 18px 0 0;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    /* Philosophy */
+    .philosophy-items {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-bottom: 48px;
+    }
+
+    .philosophy-item {
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--surface);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .philosophy-num {
+      display: block;
+      width: 14px;
+      height: 14px;
+      margin-bottom: 22px;
+      border-radius: 4px;
+      background: var(--sage);
+    }
+
+    .philosophy-item:nth-child(2) .philosophy-num { background: var(--dusty-blue); border-radius: 50%; }
+    .philosophy-item:nth-child(3) .philosophy-num { background: var(--clay); }
+
+    .philosophy-item h3 {
+      margin: 0 0 10px;
+      font-size: 19px;
+      letter-spacing: -.03em;
+    }
+
+    .philosophy-item p { margin: 0; color: var(--text-muted); font-size: 15px; }
+
+    .philosophy-quote {
+      max-width: 760px;
+      margin: 0 auto;
+      padding-top: 32px;
+      border-top: 1px solid var(--line);
+      text-align: center;
+    }
+
+    .philosophy-quote blockquote {
+      margin: 0;
+      font-family: var(--font-title);
+      font-style: italic;
+      font-size: clamp(24px, 3.4vw, 36px);
+      font-weight: 650;
+      line-height: 1.6;
+      letter-spacing: -.03em;
+      color: var(--text);
+    }
+
+    .philosophy-quote blockquote span { color: var(--accent); }
+
+    /* FAQ */
+    .faq-list { max-width: 760px; margin: 0 auto; display: grid; gap: 12px; }
+
+    .faq-item {
+      padding: 6px 24px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+    }
+
+    .faq-item summary {
+      padding: 20px 0;
+      font-weight: 800;
+      font-size: 16px;
+      cursor: pointer;
+      list-style: none;
+    }
+
+    .faq-item summary::-webkit-details-marker { display: none; }
+
+    .faq-item summary::before {
+      content: "+";
+      display: inline-block;
+      width: 20px;
+      color: var(--accent);
+      font-weight: 900;
+    }
+
+    .faq-item[open] summary::before { content: "–"; }
+
+    .faq-item p {
+      margin: 0 0 20px 20px;
+      color: var(--text-muted);
+      font-size: 15px;
+    }
+
+    /* Release */
+    .release {
+      padding: clamp(35px, 5vw, 52px);
+      border-radius: var(--radius-lg);
+      background: var(--surface);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .release-grid {
+      display: grid;
+      grid-template-columns: 1fr .86fr;
+      gap: 46px;
+      align-items: center;
+    }
+
+    .release p {
+      margin: 18px 0 0;
+      color: var(--text-muted);
+      font-size: 16px;
+    }
+
+    .release-points { display: grid; gap: 12px; margin-top: 24px; }
+    .release-point {
+      padding: 15px 17px;
+      border: 1px solid var(--line);
+      border-radius: 17px;
+      background: var(--surface-soft-2);
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .release-point::before {
+      content: "—";
+      margin-right: 8px;
+      color: var(--accent);
+    }
+
+    .release-cta { display: flex; justify-content: center; }
+
+    footer {
+      padding: 29px 0 44px;
+      border-top: 1px solid var(--line);
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    .foot {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .hero { padding-top: 58px; }
+      .hero-grid,
+      .release-grid { grid-template-columns: 1fr; }
+      .hero-copy { text-align: center; }
+      .eyebrow { margin-inline: auto; }
+      .lead { margin-inline: auto; }
+      .hero-actions { justify-content: center; }
+      .visual-stage { min-height: 520px; }
+      .situations { grid-template-columns: 1fr; row-gap: 28px; }
+      .steps { grid-template-columns: 1fr; gap: 32px; }
+      .step { padding: 0; }
+      .step-sep { display: none; }
+      .philosophy-items { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 580px) {
+      .nav-inner { min-height: 62px; gap: 10px; }
+      .nav-links { gap: 16px; }
+      .nav-links .btn { min-height: 42px; padding: 10px 14px; font-size: 13px; }
+      .language-switch button { min-width: 34px; padding-inline: 7px; }
+      .hero { padding-bottom: 52px; }
+      h1 { font-size: 42px; }
+      section { padding: 56px 0; }
+      .visual-stage { min-height: 480px; }
+      .phone { min-height: 480px; padding: 18px 16px 20px; border-radius: 36px; }
+      .release { border-radius: 26px; }
+      .demo-choices { gap: 10px; }
+      .demo-choice { padding: 10px 16px; font-size: 14px; }
+    }
+  </style>
+</head>
+<body id="top">
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#top" aria-label="OffForNow トップへ" data-i18n-aria-label="brandLabel">
+        <span>OffForNow</span>
+      </a>
+      <nav class="nav-links" aria-label="メインナビゲーション" data-i18n-aria-label="navLabel">
+        <a href="#features" data-i18n="navFeatures">できること</a>
+        <a href="#how-it-works" data-i18n="navHowItWorks">使い方</a>
+        <a href="#philosophy" data-i18n="navPhilosophy">大切にしていること</a>
+        <a href="#release" data-i18n="navRelease">公開情報</a>
+        <div class="language-switch" role="group" aria-label="言語を選択" data-i18n-aria-label="languageLabel">
+          <button type="button" data-language="ja" aria-pressed="true">JA</button>
+          <button type="button" data-language="en" aria-pressed="false">EN</button>
+        </div>
+        <a class="btn btn-primary" href="https://apps.apple.com/jp/app/id6785268275" data-store-link data-i18n="navDownload">ダウンロード</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow" data-i18n="heroEyebrow">SNSと少し距離を置くiPhoneアプリ</span>
+          <h1 data-i18n-html="heroTitle">いったん離れる。<br>自分に戻る。</h1>
+          <p class="lead" data-i18n="heroLead">見ない時間を自分で決めて、戻ってきた時間をやさしく記録するアプリです。</p>
+          <div class="hero-actions">
+            <a class="btn-text" href="#how-it-works" data-i18n="heroHowButton">使い方を見る →</a>
+            <a class="appstore" href="https://apps.apple.com/jp/app/id6785268275" data-store-link>
+              <span class="apple"></span>
+              <span><small data-i18n="appstoreSmall">Download on the</small><b>App Store</b></span>
+            </a>
+          </div>
+        </div>
+
+        <div class="visual-stage" aria-hidden="true">
+          <div class="phone">
+            <div class="phone-speaker"></div>
+            <div class="phone-label" data-i18n="phoneLabel">今日オフるもの</div>
+            <div class="phone-row">
+              <span class="phone-row-app" data-i18n="phoneAppName">SNS</span>
+              <span class="phone-row-duration" data-i18n="phoneDuration">2時間</span>
+              <span class="phone-badge" data-i18n="phoneBadge">選択中</span>
+            </div>
+            <div class="phone-cta" data-i18n="phoneCta">今日はオフる</div>
+            <div class="phone-result">
+              <div class="phone-result-label" data-i18n="phoneResultLabel">戻ってきた時間</div>
+              <div class="phone-result-value" data-i18n="phoneResultValue">1時間24分</div>
+              <div class="phone-result-note" data-i18n="phoneResultNote">自分の時間に戻れました</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="bg-alt">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 data-i18n="featuresTitle">こんなとき、ありませんか。</h2>
+        </div>
+
+        <div class="situations">
+          <article class="situation-card">
+            <div class="situation-mark" aria-hidden="true"></div>
+            <h3 data-i18n="situation1Title">気づくとSNSを開いている</h3>
+            <p data-i18n="situation1Body">見るつもりはなかったのに、いつの間にか時間が過ぎている。</p>
+          </article>
+          <article class="situation-card">
+            <div class="situation-mark" aria-hidden="true"></div>
+            <h3 data-i18n="situation2Title">集中したいのに戻ってしまう</h3>
+            <p data-i18n="situation2Body">作業中や勉強中でも、通知やタイムラインが気になってしまう。</p>
+          </article>
+          <article class="situation-card">
+            <div class="situation-mark" aria-hidden="true"></div>
+            <h3 data-i18n="situation3Title">寝る前だけ離れたい</h3>
+            <p data-i18n="situation3Body">完全にやめたいわけではない。今日の夜だけ、少し静かに過ごしたい。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="how-it-works">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 data-i18n="howTitle">今日、少し離れたいものを選ぶだけ。</h2>
+        </div>
+
+        <div class="steps">
+          <article class="step">
+            <span class="step-sep" aria-hidden="true">&gt;</span>
+            <div class="step-num">01</div>
+            <h3 data-i18n="step1Title">オフにするアプリを選ぶ</h3>
+            <p data-i18n="step1Body">SNSや動画など、今は少し離れたいアプリを選びます。</p>
+          </article>
+          <article class="step">
+            <span class="step-sep" aria-hidden="true">&gt;</span>
+            <div class="step-num">02</div>
+            <h3 data-i18n="step2Title">時間を決める</h3>
+            <p data-i18n="step2Body">30分、1時間、今日の夜まで。今の自分に合う長さを選びます。</p>
+          </article>
+          <article class="step">
+            <div class="step-num">03</div>
+            <h3 data-i18n="step3Title">戻ってきた時間を見る</h3>
+            <p data-i18n="step3Body">我慢した時間ではなく、自分に戻れた時間として記録します。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-alt">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="kicker" data-i18n="demoKicker">体験イメージを試してみる</span>
+          <h2 data-i18n="demoTitle">今日は、どのくらい離れますか。</h2>
+        </div>
+
+        <div class="demo-box">
+          <div class="demo-choices" role="group" aria-label="離れる時間の長さを選ぶ">
+            <button type="button" class="demo-choice" data-i18n="demoOption1">30分</button>
+            <button type="button" class="demo-choice" data-i18n="demoOption2">1時間</button>
+            <button type="button" class="demo-choice" data-i18n="demoOption3">2時間</button>
+            <button type="button" class="demo-choice" data-i18n="demoOption4">今日の夜まで</button>
+          </div>
+          <p class="demo-message" id="demoMessage" aria-live="polite" data-i18n="demoDefaultMessage">時間を選んでください。</p>
+          <p class="demo-disclaimer" data-i18n="demoDisclaimer">※このデモは実際の制限を行うものではありません</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="philosophy">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 data-i18n="philosophyTitle">禁止するのではなく、選び直せるように。</h2>
+        </div>
+
+        <div class="philosophy-items">
+          <article class="philosophy-item">
+            <div class="philosophy-num" aria-hidden="true"></div>
+            <h3 data-i18n="philosophy1Title">「ずっと」ではなく、今だけ</h3>
+            <p data-i18n="philosophy1Body">大きな決意ではなく、今日の自分に合った距離を選びます。</p>
+          </article>
+          <article class="philosophy-item">
+            <div class="philosophy-num" aria-hidden="true"></div>
+            <h3 data-i18n="philosophy2Title">できない日を責めない</h3>
+            <p data-i18n="philosophy2Body">戻ってしまう日があっても、失敗として扱いません。</p>
+          </article>
+          <article class="philosophy-item">
+            <div class="philosophy-num" aria-hidden="true"></div>
+            <h3 data-i18n="philosophy3Title">戻る自由を残す</h3>
+            <p data-i18n="philosophy3Body">完全に遮断するのではなく、自分で選び直せる余白を残します。</p>
+          </article>
+        </div>
+
+        <div class="philosophy-quote">
+          <blockquote data-i18n-html="philosophyQuote">見ないことは、逃げることじゃない。<br><span>自分で選ぶための、ひと呼吸。</span></blockquote>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-alt section-tight">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 data-i18n="faqTitle">よくある質問</h2>
+        </div>
+
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary data-i18n="faq1Q">このアプリの利用を強制的にブロックするものですか？</summary>
+            <p data-i18n="faq1A">いいえ。禁止するのではなく、自分で選んだ時間だけそっと距離を置くためのアプリです。無理に使えなくするものではありません。</p>
+          </details>
+          <details class="faq-item">
+            <summary data-i18n="faq2Q">離れる時間の長さは自由に選べますか？</summary>
+            <p data-i18n="faq2A">はい。30分、1時間、今日の夜までなど、その日の気分に合わせて選べます。</p>
+          </details>
+          <details class="faq-item">
+            <summary data-i18n="faq3Q">途中でやめてしまっても大丈夫ですか？</summary>
+            <p data-i18n="faq3A">もちろんです。それは失敗ではありません。いつでも自分のペースで選び直せます。</p>
+          </details>
+          <details class="faq-item">
+            <summary data-i18n="faq4Q">今すぐ使うことはできますか？</summary>
+            <p data-i18n="faq4A">はい。App Storeで配信中です。今日から始められます。</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section id="release" class="section-roomy">
+      <div class="wrap">
+        <div class="release">
+          <div class="release-grid">
+            <div>
+              <h2 data-i18n="releaseTitle">App Storeで、配信中です。</h2>
+              <p data-i18n="releaseBody">OffForNowは、毎日の中で無理なく使える距離感を目指してつくりました。あなたのペースで、今日から始められます。</p>
+              <div class="release-points">
+                <div class="release-point" data-i18n="releasePoint1">禁止ではなく、自分で選べること</div>
+                <div class="release-point" data-i18n="releasePoint2">数字を競わず、自分の感覚を尊重すること</div>
+                <div class="release-point" data-i18n="releasePoint3">また戻る自由まで、きちんと残すこと</div>
+              </div>
+            </div>
+            <div class="release-cta">
+              <a class="appstore" href="https://apps.apple.com/jp/app/id6785268275" data-store-link>
+                <span class="apple"></span>
+                <span><small data-i18n="appstoreSmall">Download on the</small><b>App Store</b></span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap foot">
+      <span data-i18n="footerCopyright">© 2026 OffForNow</span>
+      <span data-i18n="footerTagline">SNSと少し距離を置く、静かなiPhoneアプリ。</span>
+    </div>
+  </footer>
+
+  <script>
+    const japaneseText = Object.fromEntries(
+      [...document.querySelectorAll("[data-i18n]")].map(element => [
+        element.dataset.i18n,
+        element.textContent
+      ])
+    );
+    const japaneseHTML = Object.fromEntries(
+      [...document.querySelectorAll("[data-i18n-html]")].map(element => [
+        element.dataset.i18nHtml,
+        element.innerHTML
+      ])
+    );
+    const japaneseLabels = Object.fromEntries(
+      [...document.querySelectorAll("[data-i18n-aria-label]")].map(element => [
+        element.dataset.i18nAriaLabel,
+        element.getAttribute("aria-label")
+      ])
+    );
+
+    const translations = {
+      ja: {
+        text: japaneseText,
+        html: japaneseHTML,
+        labels: japaneseLabels,
+        meta: {
+          title: "OffForNow - いったん離れる、という選択",
+          description: "OffForNowは、見ない時間を自分で決めて、戻ってきた時間をやさしく記録するiPhoneアプリです。App Storeで配信中。",
+          ogDescription: "SNSと少し距離を置く、静かなiPhoneアプリ。今すぐApp Storeで。",
+          storeUrl: "https://apps.apple.com/jp/app/id6785268275"
+        }
+      },
+      en: {
+        text: {
+          navFeatures: "Features",
+          navHowItWorks: "How it works",
+          navPhilosophy: "Our philosophy",
+          navRelease: "Availability",
+          navDownload: "Download",
+          heroEyebrow: "An iPhone app for a little distance from social media",
+          heroLead: "Decide for yourself how long to look away, and gently keep a record of the time you get back.",
+          appstoreSmall: "Download on the",
+          heroHowButton: "See how it works →",
+          phoneLabel: "Today's pause",
+          phoneAppName: "Social media",
+          phoneDuration: "2 hours",
+          phoneBadge: "Selected",
+          phoneCta: "Pause for today",
+          phoneResultLabel: "Time you got back",
+          phoneResultValue: "1h 24m",
+          phoneResultNote: "You returned to your own time",
+          featuresTitle: "Do any of these sound familiar?",
+          situation1Title: "You open social media without meaning to",
+          situation1Body: "You didn't plan to check it, but suddenly time has slipped away.",
+          situation2Title: "You want to focus, but you keep drifting back",
+          situation2Body: "Even while working or studying, notifications and feeds keep pulling at your attention.",
+          situation3Title: "You just want to step away before bed",
+          situation3Body: "You don't want to quit for good — just a quieter evening, tonight.",
+          howTitle: "Just choose what to step away from today.",
+          step1Title: "Choose what to pause",
+          step1Body: "Pick the app you'd like some distance from right now — social media, video, anything.",
+          step2Title: "Set the time",
+          step2Body: "30 minutes, an hour, or until tonight. Choose whatever fits how you feel today.",
+          step3Title: "See the time you got back",
+          step3Body: "Not time you endured — time you return to yourself, recorded as your own.",
+          demoKicker: "Try the feeling",
+          demoTitle: "How long will you step away today?",
+          demoOption1: "30 min",
+          demoOption2: "1 hour",
+          demoOption3: "2 hours",
+          demoOption4: "Until tonight",
+          demoDefaultMessage: "Choose a length of time.",
+          demoDisclaimer: "This is a demo only — it doesn't actually restrict anything.",
+          philosophyTitle: "Not a ban — a choice you can make again.",
+          philosophy1Title: "Think “for now,” not “forever.”",
+          philosophy1Body: "No grand resolution needed — just a distance that fits how you feel today.",
+          philosophy2Title: "Don't blame the days it doesn't work",
+          philosophy2Body: "A day you slip back isn't a failure.",
+          philosophy3Title: "Keep the freedom to return",
+          philosophy3Body: "Not a total block — always room to choose again for yourself.",
+          faqTitle: "Frequently asked questions",
+          faq1Q: "Does this app forcibly block the apps I choose?",
+          faq1A: "No. It's not about prohibition — it's a gentle way to keep some distance for a time you choose. It won't lock you out.",
+          faq2Q: "Can I choose how long to step away?",
+          faq2A: "Yes. 30 minutes, an hour, until tonight — whatever fits how you feel today.",
+          faq3Q: "Is it okay if I give up partway through?",
+          faq3A: "Of course. That's not a failure. You can always choose again, at your own pace.",
+          faq4Q: "Can I start using it right now?",
+          faq4A: "Yes. OffForNow is available now on the App Store — you can start today.",
+          releaseTitle: "Now available on the App Store.",
+          releaseBody: "OffForNow was made to fit gently into everyday life. Start today, at your own pace.",
+          releasePoint1: "Choice, not prohibition",
+          releasePoint2: "Your own sense of balance, not numbers or competition",
+          releasePoint3: "The freedom to return, always kept intact",
+          footerCopyright: "© 2026 OffForNow",
+          footerTagline: "A quiet iPhone app for a little distance from social media."
+        },
+        html: {
+          heroTitle: "Step away for now.<br>Come back to yourself.",
+          philosophyQuote: "Looking away is not running away.<br><span>It is one breath before you choose.</span>"
+        },
+        labels: {
+          brandLabel: "Back to the OffForNow home",
+          navLabel: "Main navigation",
+          languageLabel: "Choose a language"
+        },
+        meta: {
+          title: "OffForNow - Step away for now",
+          description: "OffForNow is an iPhone app for deciding how long to look away, and gently recording the time you get back. Available now on the App Store.",
+          ogDescription: "A quiet iPhone app for a little distance from social media. Available now on the App Store.",
+          storeUrl: "https://apps.apple.com/us/app/id6785268275"
+        }
+      }
+    };
+
+    function savedLanguage() {
+      try {
+        return localStorage.getItem("offForNowLanguage");
+      } catch {
+        return null;
+      }
+    }
+
+    function rememberLanguage(language) {
+      try {
+        localStorage.setItem("offForNowLanguage", language);
+      } catch {
+        // Language switching still works when storage is unavailable.
+      }
+    }
+
+    function applyLanguage(language, shouldRemember = false) {
+      const selected = translations[language] ? language : "ja";
+      const translation = translations[selected];
+
+      document.documentElement.lang = selected;
+      document.title = translation.meta.title;
+      document.querySelector("#meta-description").content = translation.meta.description;
+      document.querySelector("#og-title").content = translation.meta.title;
+      document.querySelector("#og-description").content = translation.meta.ogDescription;
+
+      document.querySelectorAll("[data-i18n]").forEach(element => {
+        element.textContent = translation.text[element.dataset.i18n];
+      });
+      document.querySelectorAll("[data-i18n-html]").forEach(element => {
+        element.innerHTML = translation.html[element.dataset.i18nHtml];
+      });
+      document.querySelectorAll("[data-i18n-aria-label]").forEach(element => {
+        element.setAttribute(
+          "aria-label",
+          translation.labels[element.dataset.i18nAriaLabel]
+        );
+      });
+      document.querySelectorAll("[data-store-link]").forEach(element => {
+        element.href = translation.meta.storeUrl;
+      });
+      document.querySelectorAll("[data-language]").forEach(button => {
+        button.setAttribute("aria-pressed", String(button.dataset.language === selected));
+      });
+
+      if (shouldRemember) {
+        rememberLanguage(selected);
+        const url = new URL(window.location.href);
+        url.searchParams.set("lang", selected);
+        history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
+      }
+    }
+
+    const requestedLanguage = new URLSearchParams(window.location.search).get("lang");
+    const hasRequestedLanguage = Object.prototype.hasOwnProperty.call(
+      translations,
+      requestedLanguage
+    );
+    const initialLanguage = hasRequestedLanguage
+      ? requestedLanguage
+      : savedLanguage() || (navigator.language.toLowerCase().startsWith("ja") ? "ja" : "en");
+
+    applyLanguage(initialLanguage);
+
+    document.querySelectorAll("[data-language]").forEach(button => {
+      button.addEventListener("click", () => applyLanguage(button.dataset.language, true));
+    });
+
+    // Interactive demo: choose a duration and show a message using the
+    // button's current (already-localized) text content.
+    const demoChoices = document.querySelectorAll(".demo-choice");
+    const demoMessage = document.getElementById("demoMessage");
+    const demoMessageTemplates = {
+      ja: label => `${label}だけ、情報から少し離れます。`,
+      en: label => `Just ${label}, a little distance from information.`
+    };
+
+    demoChoices.forEach(button => {
+      button.addEventListener("click", () => {
+        demoChoices.forEach(other => other.classList.remove("is-selected"));
+        button.classList.add("is-selected");
+        const currentLanguage = translations[document.documentElement.lang]
+          ? document.documentElement.lang
+          : "ja";
+        const template = demoMessageTemplates[currentLanguage] || demoMessageTemplates.ja;
+        demoMessage.textContent = template(button.textContent);
+      });
+    });
+
+    document.addEventListener("copy", event => event.preventDefault());
+    document.addEventListener("cut", event => event.preventDefault());
+    document.addEventListener("contextmenu", event => event.preventDefault());
+    document.addEventListener("dragstart", event => event.preventDefault());
+    document.addEventListener("keydown", event => {
+      const key = event.key.toLowerCase();
+      if ((event.metaKey || event.ctrlKey) && ["a", "c", "x", "s", "u"].includes(key)) {
+        event.preventDefault();
+      }
+    });
+  </script>
+</body>
+</html>
