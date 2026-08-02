@@ -3,253 +3,306 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>アルコエイド - 飲酒記録で飲み過ぎ防止</title>
-  <meta id="meta-description" name="description" content="アルコエイドは、飲んだお酒をかんたんに記録し、カレンダー・お気に入り・酒場メモ・セーフティ通知で飲みすぎ防止をサポートするiPhoneアプリです。" />
-  <meta id="og-title" property="og:title" content="アルコエイド - 飲酒記録で飲み過ぎ防止" />
-  <meta id="og-description" property="og:description" content="アルコエイドは、飲んだお酒をかんたんに記録し、カレンダー・お気に入り・酒場メモ・セーフティ通知で飲みすぎ防止をサポートするiPhoneアプリです。" />
+  <title>アルコエイド - 飲んだ量を、あとで見返す。</title>
+  <meta id="meta-description" name="description" content="アルコエイドは、お酒の種類や量、日時を記録し、カレンダーや酒場メモで振り返るiPhoneアプリです。" />
+  <meta id="og-title" property="og:title" content="アルコエイド - 飲んだ量を、あとで見返す。" />
+  <meta id="og-description" property="og:description" content="お酒の種類や量、日時を残し、カレンダー、酒場メモ、通知設定で振り返れるiPhoneアプリです。" />
   <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#f4efe8" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --app-bg: #f3f4f8;
-      --card: #ffffff;
-      --text: #070707;
-      --muted: #8a8a91;
-      --line: rgba(0,0,0,.08);
-      --blue: #3478f6;
-      --blue-2: #149cff;
-      --shadow: 0 24px 70px rgba(20, 24, 35, .12);
-      --shadow-card: 0 14px 34px rgba(20, 24, 35, .09);
-      --radius-xl: 34px;
-      --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Noto Sans JP", sans-serif;
+      --bg: #f4efe8;
+      --panel: #fffaf3;
+      --panel-2: #f7f1e8;
+      --text: #171311;
+      --muted: #6f6258;
+      --line: rgba(23, 19, 17, .12);
+      --ink: #2a211b;
+      --accent: #6f4b2f;
+      --tag: #efe2d5;
+      --max: 1120px;
+      --radius: 14px;
+      --radius-lg: 18px;
+      --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Hiragino Sans", "Noto Sans JP", sans-serif;
+      --font-display: "Zen Old Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+      --mono: "SFMono-Regular", ui-monospace, Menlo, Consolas, monospace;
     }
-
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
       font-family: var(--font);
       color: var(--text);
-      background: linear-gradient(180deg, #f7f8fb 0%, var(--app-bg) 50%, #f7f8fb 100%);
+      background: linear-gradient(180deg, #fbf7f0 0%, var(--bg) 100%);
       overflow-x: hidden;
       -webkit-touch-callout: none;
       -webkit-user-select: none;
       user-select: none;
     }
-
     a { color: inherit; text-decoration: none; }
-    img {
-      -webkit-user-drag: none;
-      user-drag: none;
-      pointer-events: none;
-    }
-    .container { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
-
+    .wrap { width: min(var(--max), calc(100% - clamp(28px, 5vw, 56px))); margin: 0 auto; }
     .nav {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      background: rgba(243,244,248,.78);
-      border-bottom: 1px solid rgba(0,0,0,.04);
-      backdrop-filter: blur(22px);
+      position: sticky; top: 0; z-index: 20;
+      background: rgba(244, 239, 232, .94);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(12px);
     }
-    .nav-inner { height: 72px; display: flex; align-items: center; justify-content: space-between; }
-    .brand { display: flex; align-items: center; gap: 12px; font-weight: 900; letter-spacing: -.04em; }
-    .brand-mark { width: 42px; height: 42px; border-radius: 16px; display: grid; place-items: center; background: #fff; box-shadow: var(--shadow-card); }
-    .nav-links { display: flex; align-items: center; gap: 24px; color: #555861; font-weight: 800; font-size: 14px; }
-    .nav-cta { padding: 12px 18px; border-radius: 999px; color: #fff; background: var(--blue); box-shadow: 0 14px 30px rgba(52,120,246,.25); }
-    .language-switch { display: inline-flex; align-items: center; padding: 3px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.8); }
-    .language-switch button { min-width: 38px; min-height: 32px; padding: 5px 9px; border: 0; border-radius: 999px; color: var(--muted); background: transparent; font: inherit; font-size: 12px; font-weight: 900; cursor: pointer; }
-    .language-switch button[aria-pressed="true"] { color: #fff; background: var(--blue); box-shadow: 0 5px 12px rgba(52,120,246,.3); }
+    .nav-inner {
+      min-height: 70px;
+      display: flex; align-items: center; justify-content: space-between; gap: 18px;
+    }
+    .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 650; letter-spacing: 0; }
+    .brand-mark {
+      width: 34px; height: 34px; border-radius: 10px; border: 1px solid var(--line);
+      display: grid; place-items: center; background: var(--panel); font-family: var(--mono);
+      font-size: 12px; color: var(--accent);
+    }
+    .nav-links {
+      display: flex; align-items: center; gap: 18px; color: var(--muted); font-size: 14px; font-weight: 700;
+      overflow-x: auto; white-space: nowrap; scrollbar-width: none;
+    }
+    .nav-links::-webkit-scrollbar { display: none; }
+    .nav-links a:hover { color: var(--accent); }
+    .language-switch {
+      display: inline-flex; align-items: center; padding: 3px; border: 1px solid var(--line);
+      border-radius: 999px; background: var(--panel); flex: 0 0 auto;
+    }
+    .language-switch button {
+      min-width: 38px; min-height: 32px; padding: 5px 9px; border: 0; border-radius: 999px;
+      color: var(--muted); background: transparent; font: inherit; font-size: 12px; font-weight: 650; cursor: pointer;
+    }
+    .language-switch button[aria-pressed="true"] { color: #fff; background: var(--accent); }
+    .button, .text-link {
+      display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 11px 16px;
+      border-radius: 999px; border: 1px solid var(--line); font-weight: 650; letter-spacing: 0; white-space: nowrap;
+    }
+    .button { background: var(--ink); border-color: var(--ink); color: #fff; }
+    .text-link { background: transparent; color: var(--accent); border-color: transparent; border-bottom: 1px solid var(--accent); border-radius: 0; padding-inline: 4px; }
 
-    .hero { padding: 82px 0 72px; }
-    .hero-grid { display: grid; grid-template-columns: 1.04fr .96fr; gap: 54px; align-items: center; }
-    .badge { display: inline-flex; align-items: center; gap: 8px; width: fit-content; padding: 10px 15px; border-radius: 999px; background: #fff; color: var(--blue); box-shadow: var(--shadow-card); font-size: 13px; font-weight: 900; }
-    h1 { margin: 24px 0 18px; font-size: clamp(40px, 6vw, 68px); line-height: 1.06; letter-spacing: -.04em; }
-    .lead { max-width: 570px; margin: 0; color: #74757c; font-size: 18px; font-weight: 500; line-height: 1.85; letter-spacing: -.01em; }
-    .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 34px; }
-    .appstore { display: inline-flex; align-items: center; gap: 12px; padding: 15px 22px; border-radius: 18px; background: #050505; color: #fff; box-shadow: 0 18px 40px rgba(0,0,0,.18); font-weight: 900; }
-    .appstore .apple { font-size: 28px; line-height: 1; }
-    .appstore small { display: block; font-size: 11px; opacity: .75; font-weight: 700; }
-    .appstore b { display: block; font-size: 18px; letter-spacing: -.02em; }
-    .ghost-btn { display: inline-flex; align-items: center; padding: 16px 19px; border-radius: 18px; background: #fff; font-weight: 900; box-shadow: var(--shadow-card); }
-    .note { margin-top: 20px; color: #8b8c92; font-size: 13px; }
+    .hero { padding: 84px 0 60px; }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.02fr) minmax(320px, .98fr); gap: clamp(30px, 5vw, 64px); align-items: center; }
+    .kicker {
+      display: inline-flex; align-items: center; gap: 8px; width: fit-content; padding: 7px 11px;
+      border: 1px solid var(--line); border-radius: 999px; background: var(--panel); color: var(--accent);
+      font-size: 13px; font-weight: 650;
+    }
+    .kicker::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+    h1, h2, h3 { text-wrap: balance; }
+    h1 { margin: 22px 0 16px; font-family: var(--font-display); font-size: clamp(42px, 6vw, 74px); line-height: 1.15; letter-spacing: 0; font-weight: 600; }
+    .lead { max-width: 620px; margin: 0; color: var(--muted); font-size: clamp(17px, 2vw, 20px); line-height: 1.9; font-weight: 500; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+    .note { margin: 16px 0 0; color: var(--muted); font-size: 13px; line-height: 1.7; }
 
-    .phone-stage { min-height: 670px; position: relative; display: grid; place-items: center; }
-    .orb { position: absolute; width: 480px; height: 480px; border-radius: 50%; background: radial-gradient(circle, rgba(52,120,246,.18), transparent 70%); filter: blur(2px); }
-    .phone { width: min(342px, 84vw); height: 684px; padding: 12px; border-radius: 58px; background: #050505; box-shadow: 0 34px 90px rgba(0,0,0,.24); position: relative; transform: rotate(1.5deg); }
-    .phone::before { content: ""; position: absolute; top: 18px; left: 50%; transform: translateX(-50%); width: 118px; height: 32px; border-radius: 999px; background: #050505; z-index: 2; }
-    .phone-screen { height: 100%; border-radius: 47px; overflow: hidden; background: var(--app-bg); position: relative; }
-    .status { height: 62px; display: flex; align-items: end; justify-content: space-between; padding: 0 30px 8px; font-size: 15px; font-weight: 900; }
-    .app-shot { padding: 34px 22px 94px; }
-    .app-shot h3 { margin: 0 0 26px; font-size: 30px; line-height: 1.15; letter-spacing: -.06em; }
-    .label { color: #8b8b91; font-weight: 900; margin-bottom: 14px; }
-    .category-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
-    .drink-tile { height: 116px; border-radius: 28px; background: #fff; box-shadow: var(--shadow-card); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; font-weight: 900; }
-    .drink-icon { width: 54px; height: 54px; border-radius: 50%; display: grid; place-items: center; background: #fff3d8; font-size: 26px; }
-    .bottom-nav { position: absolute; left: 12px; right: 12px; bottom: 18px; height: 76px; border-radius: 999px; background: rgba(255,255,255,.92); display: grid; grid-template-columns: repeat(5,1fr); align-items: center; box-shadow: 0 18px 40px rgba(0,0,0,.12); }
-    .tab { text-align: center; font-weight: 900; color: #111; padding: 0 2px; }
-    .tab span:first-child { display: block; font-size: 20px; margin-bottom: 3px; }
-    .tab span:last-child { display: block; font-size: 9px; letter-spacing: -.03em; white-space: nowrap; }
-    .tab.active { color: var(--blue); background: rgba(52,120,246,.1); border-radius: 999px; padding: 9px 0; margin: 0 3px; }
+    .log-stage { display: grid; place-items: center; position: relative; min-height: 520px; }
+    .log-shell { width: min(430px, 92vw); background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 18px; }
+    .log-card {
+      border: 1px solid var(--line); border-radius: 16px;
+      background: #fffdf8;
+      padding: 18px 16px 16px; color: var(--ink);
+      box-shadow: 0 18px 40px rgba(42, 33, 27, .08);
+    }
+    .log-head {
+      display: flex; justify-content: space-between; gap: 16px; align-items: center;
+      padding-bottom: 14px; border-bottom: 1px solid var(--line);
+      margin-bottom: 14px; font-family: var(--mono); font-size: 12px; color: var(--muted); font-weight: 650;
+    }
+    .log-title { margin: 0 0 12px; font-size: 20px; font-weight: 650; letter-spacing: 0; }
+    .log-line {
+      display: flex; justify-content: space-between; gap: 12px; padding: 9px 0; border-bottom: 1px solid rgba(23, 19, 17, .08);
+      font-size: 14px; line-height: 1.4;
+    }
+    .log-line span:last-child { text-align: right; white-space: nowrap; font-family: var(--mono); color: var(--accent); font-weight: 650; }
+    .log-total {
+      display: flex; justify-content: space-between; gap: 12px; margin-top: 14px; padding: 12px; border: 1px solid var(--line);
+      border-radius: 12px; background: var(--panel-2); font-size: 14px; font-weight: 650;
+    }
+    .log-total span:last-child { font-family: var(--mono); }
+    .log-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+    .tag {
+      padding: 6px 9px; border: 1px solid var(--line); border-radius: 999px; background: var(--tag);
+      font-size: 12px; font-weight: 800; color: var(--ink);
+    }
+    .log-side {
+      position: absolute; right: 0; bottom: 18px; transform: translateX(22px) rotate(-2deg); width: min(220px, 42vw);
+      border: 1px solid var(--line); border-radius: 12px; background: var(--panel-2); padding: 14px 14px 12px;
+      font-size: 12px; line-height: 1.55; color: var(--ink);
+    }
+    .log-side strong { display: block; margin-bottom: 8px; font-size: 15px; }
+    .log-side .mini-row { display: flex; justify-content: space-between; gap: 10px; padding: 4px 0; border-bottom: 1px solid rgba(23, 19, 17, .08); }
+    .log-side .mini-row:last-child { border-bottom: 0; }
 
-    .floating-panel { position: absolute; z-index: 3; background: rgba(255,255,255,.88); backdrop-filter: blur(18px); box-shadow: var(--shadow); border-radius: 26px; padding: 18px 20px; font-weight: 900; }
-    .floating-panel small { display: block; color: #8b8b91; margin-top: 4px; }
-    .float-left { left: 2%; top: 19%; }
-    .float-right { right: -2%; bottom: 18%; }
-
-    section { padding: 86px 0; }
-    .section-head { text-align: center; max-width: 740px; margin: 0 auto 44px; }
-    .section-head h2 { margin: 0 0 14px; font-size: clamp(30px, 4.5vw, 50px); line-height: 1.12; letter-spacing: -.04em; }
-    .section-head p { margin: 0; color: #7e7f86; font-size: 16px; line-height: 1.85; font-weight: 500; }
-
-    .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-    .feature-card { padding: 30px; min-height: 230px; border-radius: var(--radius-xl); background: #fff; box-shadow: var(--shadow-card); }
-    .feature-icon { width: 56px; height: 56px; border-radius: 18px; display: grid; place-items: center; background: #eef4ff; color: var(--blue); font-size: 26px; margin-bottom: 16px; }
-    .feature-card h3 { margin: 0 0 10px; font-size: 20px; letter-spacing: -.03em; }
-    .feature-card p { margin: 0; color: #7d7e85; line-height: 1.8; font-weight: 500; }
-
-    .how-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
-    .step-card { position: relative; padding: 32px; border-radius: var(--radius-xl); background: #fff; box-shadow: var(--shadow-card); min-height: 210px; }
-    .step-card h3 { font-size: 20px; margin: 0 0 10px; letter-spacing: -.03em; }
-    .step-card p { color: #7d7e85; line-height: 1.8; font-weight: 500; margin: 0; }
-
-    .cta-box { border-radius: 42px; padding: 60px; color: #fff; background: linear-gradient(135deg, #2550a6, #3478f6); box-shadow: var(--shadow); position: relative; overflow: hidden; }
-    .cta-box h2 { max-width: 650px; margin:0 0 14px; font-size: clamp(30px, 4vw, 52px); line-height:1.1; letter-spacing:-.04em; }
-    .cta-box p { max-width: 620px; color:#e8f1ff; font-weight:500; line-height:1.8; }
-    .cta-box .hero-actions { margin-top: 28px; }
-
-    footer { padding: 32px 0 44px; color: #87888f; font-size: 13px; font-weight: 700; }
-    .footer-inner { display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px; }
+    section { padding: 70px 0; }
+    .section-head { max-width: 720px; margin: 0 auto 34px; text-align: center; }
+    .section-head h2 { margin: 0; font-family: var(--font-display); font-size: clamp(30px, 4.2vw, 48px); line-height: 1.25; letter-spacing: 0; font-weight: 600; }
+    .section-head p { margin: 14px auto 0; color: var(--muted); font-size: 16px; line-height: 1.8; }
+    .feature-grid, .how-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .feature-card, .step-card {
+      border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); padding: 22px 20px;
+    }
+    .feature-card h3, .step-card h3 { margin: 0 0 10px; font-size: 18px; line-height: 1.35; letter-spacing: 0; }
+    .feature-card p, .step-card p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.8; }
+    .feature-chip {
+      display: inline-flex; align-items: center; margin-bottom: 12px; padding: 6px 8px; border: 1px solid var(--line);
+      border-radius: 999px; background: var(--panel-2); font-family: var(--mono); font-size: 12px; color: var(--accent);
+    }
+    .log-strip { display: grid; gap: 10px; margin-top: 14px; }
+    .log-row {
+      display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px dotted var(--line);
+      font-family: var(--mono); font-size: 12px; color: var(--ink);
+    }
+    .log-row:last-child { border-bottom: 0; }
+    .cta { border: 1px solid var(--line); border-radius: calc(var(--radius-lg) + 2px); background: var(--panel); padding: 28px; }
+    .cta-grid { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center; }
+    .cta h2 { margin: 0; font-family: var(--font-display); font-size: clamp(28px, 4vw, 50px); line-height: 1.22; letter-spacing: 0; font-weight: 600; }
+    .cta p { margin: 14px 0 0; color: var(--muted); font-size: 16px; line-height: 1.8; max-width: 640px; }
+    footer { padding: 28px 0 42px; color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); }
+    .foot { display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
 
     @media (max-width: 940px) {
-      .hero-grid { grid-template-columns: 1fr; }
-      .feature-grid, .how-grid { grid-template-columns: 1fr 1fr; }
-      .phone-stage { min-height: 640px; }
-      .nav-links a:not(.nav-cta) { display:none; }
-    }
-    @media (max-width: 640px) {
-      .container { width: min(100% - 28px, 1120px); }
-      .hero { padding: 54px 0 40px; }
-      h1 { font-size: 49px; }
-      .lead { font-size: 16px; }
+      .hero-grid, .cta-grid { grid-template-columns: 1fr; }
       .feature-grid, .how-grid { grid-template-columns: 1fr; }
-      .phone { width: 304px; height: 608px; }
-      .phone-stage { min-height: 590px; }
-      .floating-panel { display:none; }
-      .category-grid { gap: 10px; }
-      .drink-tile { height: 100px; border-radius: 24px; }
-      section { padding: 62px 0; }
-      .cta-box { padding: 38px 24px; border-radius: 32px; }
-      .nav-inner { height: 64px; }
+      .log-stage { min-height: 420px; }
+      .log-side { position: static; transform: none; width: 100%; margin-top: 14px; }
+    }
+    @media (max-width: 620px) {
+      .nav-inner { min-height: 64px; }
+      .nav-links { gap: 14px; }
+      .nav-links a:not(.button) { display: none; }
+      .hero { padding-top: 56px; }
+      h1 { font-size: 40px; }
+      section { padding: 56px 0; }
+      .log-shell { padding: 12px; }
+      .log-card { padding: 16px 12px 12px; }
+      .log-title { font-size: 18px; }
+      .cta { padding: 22px; }
       .language-switch button { min-width: 34px; padding-inline: 7px; }
     }
   </style>
 </head>
 <body>
-  <nav class="nav">
-    <div class="container nav-inner">
-      <a class="brand" href="#" aria-label="アルコエイド トップへ" data-i18n-aria-label="brandLabel">
-        <span class="brand-mark">🍺</span>
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#top" aria-label="アルコエイド トップへ" data-i18n-aria-label="brandLabel">
+        <span class="brand-mark">DS</span>
         <span>アルコエイド</span>
       </a>
       <div class="nav-links">
-        <a href="#features" data-i18n="navFeatures">機能</a>
+        <a href="#features" data-i18n="navFeatures">できること</a>
         <a href="#howto" data-i18n="navHowto">使い方</a>
+	        <a href="#record" data-i18n="navPromise">記録</a>
         <div class="language-switch" role="group" aria-label="言語を選択" data-i18n-aria-label="languageLabel">
           <button type="button" data-language="ja" aria-pressed="true">JA</button>
           <button type="button" data-language="en" aria-pressed="false">EN</button>
         </div>
-        <a class="nav-cta" href="https://apps.apple.com/jp/app/id6759056143" data-store-link data-i18n="navAppStore">App Store</a>
+        <a class="button" href="https://apps.apple.com/jp/app/id6759056143" data-store-link data-i18n="navStore">App Store</a>
       </div>
     </div>
-  </nav>
+  </header>
 
-  <main>
-    <header class="hero">
-      <div class="container hero-grid">
+  <main id="top">
+    <section class="hero">
+      <div class="wrap hero-grid">
         <div>
-          <h1 data-i18n-html="heroTitle">何を飲んだか、<br />すぐ残せる。</h1>
-          <p class="lead" data-i18n="heroLead">アルコエイドは、ビール・ハイボール・ワインなどをタップで記録できるiPhoneアプリ。カレンダー、写真のお気に入り、酒場メモ、セーフティ通知まで、飲酒習慣をサポートします。</p>
+	          <div class="kicker" data-i18n="heroKicker">飲酒記録 / 酒場メモ</div>
+	          <h1 data-i18n-html="heroTitle">飲んだ量を、<br><span>あとで見返す。</span></h1>
+	          <p class="lead" data-i18n="heroLead">アルコエイドは、お酒の種類、量、日時をタップで残すためのiPhoneアプリです。カレンダー、お気に入り、酒場メモ、通知設定で、自分の飲み方をあとから確認できます。</p>
           <div class="hero-actions">
-            <a class="appstore" href="https://apps.apple.com/jp/app/id6759056143" data-store-link>
-              <span class="apple"></span>
-              <span><small data-i18n="appstoreSmall">Download on the</small><b>App Store</b></span>
-            </a>
-            <a class="ghost-btn" href="#features" data-i18n="heroGhostButton">できることを見る →</a>
+            <a class="button" href="https://apps.apple.com/jp/app/id6759056143" data-store-link data-i18n="heroStore">App Storeで見る</a>
+            <a class="text-link" href="#features" data-i18n="heroLink">内容を見る</a>
           </div>
-          <p class="note" data-i18n="heroNote">※飲酒は20歳になってから。飲酒量の記録と振り返りをサポートするアプリです。</p>
+          <p class="note" data-i18n="heroNote">※飲酒は20歳になってから。体調や医師の指示に従ってご利用ください。</p>
         </div>
 
-        <div class="phone-stage" aria-hidden="true">
-          <div class="phone">
-            <div class="phone-screen">
-              <div class="status"><span>0:03</span><span>••• Wi‑Fi ▰</span></div>
-              <div class="app-shot">
-                <h3 data-i18n="shotTitle">何を飲みますか？</h3>
-                <div class="label" data-i18n="shotLabel">カテゴリー</div>
-                <div class="category-grid">
-                  <div class="drink-tile"><span class="drink-icon">🍺</span><span data-i18n="drinkBeer">ビール</span></div>
-                  <div class="drink-tile"><span class="drink-icon">🥃</span><span data-i18n="drinkHighball">ハイボール</span></div>
-                  <div class="drink-tile"><span class="drink-icon" style="background:#f6dce7">🍷</span><span data-i18n="drinkWine">ワイン</span></div>
-                  <div class="drink-tile"><span class="drink-icon" style="background:#f4e8df">🥃</span><span data-i18n="drinkWhisky">ウイスキー</span></div>
-                  <div class="drink-tile"><span class="drink-icon" style="background:#efe9e3">🍸</span><span data-i18n="drinkBrandy">ブランデー</span></div>
-                  <div class="drink-tile"><span class="drink-icon" style="background:#e1f0e8">🍾</span><span data-i18n="drinkGin">ジン</span></div>
-                </div>
-              </div>
-              <div class="bottom-nav">
-                <div class="tab active"><span>📋</span><span data-i18n="tabRecord">記録</span></div>
-                <div class="tab"><span>▦</span><span data-i18n="tabCalendar">カレンダー</span></div>
-                <div class="tab"><span>▣</span><span data-i18n="tabFavorite">お気に入り</span></div>
-                <div class="tab"><span>👥</span><span data-i18n="tabBar">酒場メモ</span></div>
-                <div class="tab"><span>⚙</span><span data-i18n="tabSettings">設定</span></div>
+        <div class="log-stage" aria-hidden="true" id="record">
+          <div class="log-shell">
+            <div class="log-card">
+	              <div class="log-head"><span>今日の記録 / 21:18</span><span>3件</span></div>
+	              <p class="log-title">飲酒量サマリー</p>
+	              <div class="log-line"><span data-i18n="recordLine1L">ビール</span><span data-i18n="recordLine1R">350ml</span></div>
+	              <div class="log-line"><span data-i18n="recordLine2L">ハイボール</span><span data-i18n="recordLine2R">1杯</span></div>
+	              <div class="log-line"><span data-i18n="recordLine3L">ワイン</span><span data-i18n="recordLine3R">150ml</span></div>
+	              <div class="log-line"><span data-i18n="recordLine4L">酒場メモ</span><span data-i18n="recordLine4R">店や人、会話</span></div>
+	              <div class="log-total"><span data-i18n="recordTotalLabel">今日の合計</span><span data-i18n="recordTotalValue">3件</span></div>
+              <div class="log-tags">
+                <span class="tag" data-i18n="tag1">酒場メモ</span>
+                <span class="tag" data-i18n="tag2">カレンダー</span>
+                <span class="tag" data-i18n="tag3">通知</span>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </header>
-
-    <section id="features">
-      <div class="container">
-        <div class="section-head">
-          <h2 data-i18n="featuresTitle">迷わず記録できて、あとから見返せる。</h2>
-          <p data-i18n="featuresLead">タップで記録、カレンダーで振り返り、通知で飲みすぎに気づける。日常で続けやすい機能だけに絞っています。</p>
-        </div>
-        <div class="feature-grid">
-          <div class="feature-card"><div class="feature-icon">🍺</div><h3 data-i18n="feature1Title">タップで飲酒記録</h3><p data-i18n="feature1Body">ビール、ハイボール、ワイン、ウイスキーなどから選ぶだけ。標準量も表示されるので迷わず記録できます。</p></div>
-          <div class="feature-card"><div class="feature-icon">▦</div><h3 data-i18n="feature2Title">カレンダーで振り返り</h3><p data-i18n="feature2Body">日ごとの飲酒記録を月表示で確認。上限に対する割合や、その日の記録をまとめて見られます。</p></div>
-          <div class="feature-card"><div class="feature-icon">📷</div><h3 data-i18n="feature3Title">クイック・ショット</h3><p data-i18n="feature3Body">起動したら1タップでカメラへ。飲み始めの景色やラベルを、自分だけの記憶として残せます。</p></div>
-          <div class="feature-card"><div class="feature-icon">♡</div><h3 data-i18n="feature4Title">お気に入り保存</h3><p data-i18n="feature4Body">気に入った一杯にハートを付けて、あとからスライドショーでゆっくり振り返れます。</p></div>
-          <div class="feature-card"><div class="feature-icon">👥</div><h3 data-i18n="feature5Title">酒場メモ</h3><p data-i18n="feature5Body">お店ごとのメモや人数、会話の内容などを保存。飲んだ場所の思い出も整理できます。</p></div>
-          <div class="feature-card"><div class="feature-icon">🔔</div><h3 data-i18n="feature6Title">セーフティ通知</h3><p data-i18n="feature6Body">1日・1週間の飲みすぎ防止、体調チェック、和らぎ水リマインダーで安心感をプラス。</p></div>
+          <div class="log-side">
+	            <strong data-i18n="sideTitle">振り返り</strong>
+	            <div class="mini-row"><span data-i18n="sideRow1L">カレンダー</span><span data-i18n="sideRow1R">日別表示</span></div>
+	            <div class="mini-row"><span data-i18n="sideRow2L">お気に入り</span><span data-i18n="sideRow2R">一杯の記録</span></div>
+	            <div class="mini-row"><span data-i18n="sideRow3L">通知</span><span data-i18n="sideRow3R">上限設定</span></div>
+          </div>
         </div>
       </div>
     </section>
 
-    <section id="howto">
-      <div class="container">
+    <section id="features">
+      <div class="wrap">
         <div class="section-head">
-          <h2 data-i18n="howtoTitle">使い方はシンプル。</h2>
-          <p data-i18n="howtoLead">飲んだら記録して、あとで振り返るだけ。3ステップで続けられます。</p>
+	          <h2 data-i18n="featuresTitle">あとから確認しやすい記録</h2>
+	          <p data-i18n="featuresLead">飲んだ種類、量、日付を中心に、カレンダーや酒場メモで振り返れる形にします。</p>
         </div>
-        <div class="how-grid">
-          <div class="step-card"><h3 data-i18n="step1Title">お酒を選ぶ</h3><p data-i18n="step1Body">カテゴリーから飲んだお酒をタップ。量・日付・時刻を確認して記録します。</p></div>
-          <div class="step-card"><h3 data-i18n="step2Title">カレンダーで見る</h3><p data-i18n="step2Body">その日の合計量や飲んだ内容を確認。月ごとのリズムも自然に把握できます。</p></div>
-          <div class="step-card"><h3 data-i18n="step3Title">写真やメモを残す</h3><p data-i18n="step3Body">お気に入りの一杯や酒場の思い出も保存。飲酒記録が自分だけのログになります。</p></div>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <div class="feature-chip" data-i18n="featureChip1">タップで追加</div>
+	            <h3 data-i18n="feature1Title">お酒の種類と量を記録する</h3>
+	            <p data-i18n="feature1Body">ビール、ハイボール、ワインなどを選び、量と日時をその場で残せます。</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-chip" data-i18n="featureChip2">店のメモ</div>
+	            <h3 data-i18n="feature2Title">店や人、会話を控える</h3>
+	            <p data-i18n="feature2Body">酒場メモで、店や人、会話の手がかりを飲酒記録とは別に整理できます。</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-chip" data-i18n="featureChip3">あとで確認</div>
+	            <h3 data-i18n="feature3Title">カレンダーと通知で振り返る</h3>
+	            <p data-i18n="feature3Body">日ごとの記録、お気に入り、飲酒量の通知設定で、あとから確認しやすくします。</p>
+          </article>
         </div>
       </div>
     </section>
 
     <section>
-      <div class="container">
-        <div class="cta-box">
-          <h2 data-i18n-html="ctaTitle">飲んだ記憶を、<br />きれいに残そう。</h2>
-          <p data-i18n="ctaBody">アルコエイドで、飲酒量・写真・酒場メモ・セーフティ通知をひとつに。毎日の記録を無理なく続けられます。</p>
-          <div class="hero-actions">
-            <a class="appstore" href="https://apps.apple.com/jp/app/id6759056143" data-store-link>
-              <span class="apple"></span>
-              <span><small data-i18n="appstoreSmall">Download on the</small><b>App Store</b></span>
-            </a>
+      <div class="wrap">
+        <div class="section-head">
+	          <h2 data-i18n="howTitle">記録までの流れ</h2>
+	          <p data-i18n="howLead">お酒の記録を中心に、必要な情報だけを短い操作で残します。</p>
+        </div>
+        <div class="how-grid">
+          <article class="step-card">
+            <h3 data-i18n="step1Title">飲んだものを選ぶ</h3>
+            <p data-i18n="step1Body">ビール、ハイボール、ワインなど、短いカテゴリから選びます。迷うための画面にしません。</p>
+          </article>
+          <article class="step-card">
+	            <h3 data-i18n="step2Title">量と日時を残す</h3>
+	            <p data-i18n="step2Body">選んだお酒を、その日の飲酒記録として保存します。</p>
+          </article>
+          <article class="step-card">
+            <h3 data-i18n="step3Title">あとで読み返す</h3>
+	            <p data-i18n="step3Body">カレンダーやお気に入りから、飲んだ量や記録を振り返れます。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="cta">
+          <div class="cta-grid">
+            <div>
+              <h2 data-i18n-html="ctaTitle">飲んだ記録を、<br>あとで読める形に。</h2>
+	              <p data-i18n="ctaBody">アルコエイドは、飲酒量、カレンダー、お気に入り、酒場メモ、通知設定で、自分の飲み方を振り返るためのアプリです。</p>
+            </div>
+            <div>
+              <a class="button" href="https://apps.apple.com/jp/app/id6759056143" data-store-link data-i18n="ctaStore">App Storeで見る</a>
+            </div>
           </div>
         </div>
       </div>
@@ -257,29 +310,21 @@
   </main>
 
   <footer>
-    <div class="container footer-inner">
+    <div class="wrap foot">
       <span data-i18n="footerCopyright">© 2026 アルコエイド</span>
       <span data-i18n="footerNote">飲酒は20歳になってから。体調や医師の指示に従ってご利用ください。</span>
     </div>
   </footer>
+
   <script>
     const japaneseText = Object.fromEntries(
-      [...document.querySelectorAll("[data-i18n]")].map(element => [
-        element.dataset.i18n,
-        element.textContent
-      ])
+      [...document.querySelectorAll("[data-i18n]")].map(element => [element.dataset.i18n, element.textContent])
     );
     const japaneseHTML = Object.fromEntries(
-      [...document.querySelectorAll("[data-i18n-html]")].map(element => [
-        element.dataset.i18nHtml,
-        element.innerHTML
-      ])
+      [...document.querySelectorAll("[data-i18n-html]")].map(element => [element.dataset.i18nHtml, element.innerHTML])
     );
     const japaneseLabels = Object.fromEntries(
-      [...document.querySelectorAll("[data-i18n-aria-label]")].map(element => [
-        element.dataset.i18nAriaLabel,
-        element.getAttribute("aria-label")
-      ])
+      [...document.querySelectorAll("[data-i18n-aria-label]")].map(element => [element.dataset.i18nAriaLabel, element.getAttribute("aria-label")])
     );
 
     const translations = {
@@ -288,9 +333,9 @@
         html: japaneseHTML,
         labels: japaneseLabels,
         meta: {
-          title: "アルコエイド - 飲酒記録で飲み過ぎ防止",
-          description: "アルコエイドは、飲んだお酒をかんたんに記録し、カレンダー・お気に入り・酒場メモ・セーフティ通知で飲みすぎ防止をサポートするiPhoneアプリです。",
-          ogDescription: "アルコエイドは、飲んだお酒をかんたんに記録し、カレンダー・お気に入り・酒場メモ・セーフティ通知で飲みすぎ防止をサポートするiPhoneアプリです。",
+	          title: "アルコエイド - 飲んだ量を、あとで見返す。",
+	          description: "アルコエイドは、お酒の種類や量、日時を記録し、カレンダーや酒場メモで振り返るiPhoneアプリです。",
+	          ogDescription: "お酒の種類や量、日時を残し、カレンダー、酒場メモ、通知設定で振り返れるiPhoneアプリです。",
           storeUrl: "https://apps.apple.com/jp/app/id6759056143"
         }
       },
@@ -298,115 +343,94 @@
         text: {
           navFeatures: "Features",
           navHowto: "How it works",
-          navAppStore: "App Store",
-          heroBadge: "📋 Track drinks, avoid overdoing it",
-          heroLead: "AlcoAid is an iPhone app for logging beer, highballs, wine, and more with a single tap. It supports your drinking habits with a calendar, photo favorites, bar notes, and safety alerts.",
-          appstoreSmall: "Download on the",
-          heroGhostButton: "See what it can do →",
-          heroNote: "※ Drinking is only for those of legal age. This app supports tracking and reflecting on your drinking habits.",
-          shotTitle: "What did you drink?",
-          shotLabel: "Category",
-          drinkBeer: "Beer",
-          drinkHighball: "Highball",
-          drinkWine: "Wine",
-          drinkWhisky: "Whisky",
-          drinkBrandy: "Brandy",
-          drinkGin: "Gin",
-          tabRecord: "Log",
-          tabCalendar: "Calendar",
-          tabFavorite: "Favorites",
-          tabBar: "Bar notes",
-          tabSettings: "Settings",
-          featuresTitle: "Log without thinking, look back whenever you like.",
-          featuresLead: "Tap to log, review on the calendar, and catch overdrinking with alerts. We kept only the features that are easy to stick with every day.",
-          feature1Title: "Log a drink with a tap",
-          feature1Body: "Just pick from beer, highball, wine, whisky, and more. Standard serving sizes are shown, so you can log without hesitation.",
-          feature2Title: "Review on the calendar",
-          feature2Body: "Check your daily drinking log in a monthly view. See your progress toward your limit and that day's records all at once.",
-          feature3Title: "Quick shot",
-          feature3Body: "One tap to the camera right when you open the app. Save the scene or the label as a memory that's just for you.",
-          feature4Title: "Save favorites",
-          feature4Body: "Heart the drinks you loved, then slowly look back through them later in a slideshow.",
-          feature5Title: "Bar notes",
-          feature5Body: "Save notes about each place—who you were with, what you talked about. Keep the memories of where you drank organized too.",
-          feature6Title: "Safety alerts",
-          feature6Body: "Daily and weekly overdrinking alerts, wellness check-ins, and water reminders add an extra layer of peace of mind.",
-          howtoTitle: "It's simple to use.",
-          howtoLead: "Log it when you drink, look back later. Just three steps to keep it going.",
-          step1Title: "Pick your drink",
-          step1Body: "Tap the drink you had from the categories. Check the amount, date, and time, then log it.",
-          step2Title: "View the calendar",
-          step2Body: "Check your total for the day and what you drank. You'll naturally get a feel for your monthly rhythm too.",
-          step3Title: "Save photos and notes",
-          step3Body: "Save your favorite drinks and memories from the bar too. Your drinking log becomes a record that's uniquely yours.",
-          ctaBody: "Bring your drink amounts, photos, bar notes, and safety alerts together with AlcoAid. Keep up your daily log without strain.",
+	          navPromise: "Records",
+          navStore: "App Store",
+	          heroKicker: "drink log / bar memo",
+	          heroLead: "AlcoAid is an iPhone app for logging alcohol type, amount, and time. Calendar review, favorites, bar memos, and notification settings help you look back on your drinking habits.",
+          heroStore: "View on the App Store",
+          heroLink: "See the details",
+          heroNote: "Please drink legally and follow your health condition or medical advice.",
+	          recordLine1L: "Beer",
+		          recordLine1R: "350ml",
+	          recordLine2L: "Highball",
+		          recordLine2R: "1 glass",
+		          recordLine3L: "Wine",
+		          recordLine3R: "150ml",
+		          recordLine4L: "Bar memo",
+		          recordLine4R: "place / people / talk",
+		          recordTotalLabel: "Today",
+		          recordTotalValue: "3 records",
+	          tag1: "bar memo",
+          tag2: "calendar",
+          tag3: "safety",
+	          sideTitle: "review",
+	          sideRow1L: "calendar",
+	          sideRow1R: "daily view",
+	          sideRow2L: "favorites",
+	          sideRow2R: "drink memory",
+          sideRow3L: "reminder",
+	          sideRow3R: "limit settings",
+	          featuresTitle: "Records, easy to review later.",
+	          featuresLead: "Focus on drink type, amount, and date, then review them through calendar and bar memos.",
+          featureChip1: "tap / add",
+	          feature1Title: "Record alcohol type and amount",
+	          feature1Body: "Choose beer, highball, wine, and more, then save the amount and time.",
+          featureChip2: "note / place",
+	          feature2Title: "Keep places, people, and conversations",
+	          feature2Body: "Use bar memos to organize clues about places, people, and conversations separately from drink records.",
+          featureChip3: "review / later",
+	          feature3Title: "Review with calendar and notifications",
+	          feature3Body: "Daily records, favorites, and alcohol amount notification settings make review easier.",
+	          howTitle: "From choosing a drink to reviewing later.",
+	          howLead: "Keep alcohol records with only the details that matter.",
+          step1Title: "Pick what you drank",
+          step1Body: "Beer, highball, wine, and more. Short categories keep the flow simple.",
+	          step2Title: "Save amount and time",
+	          step2Body: "Save the selected drink as part of that day's alcohol record.",
+          step3Title: "Read it back later",
+	          step3Body: "Use calendar and favorites to review amounts and records later.",
+	          ctaTitle: "Keep your drink records<br>ready to review.",
+	          ctaBody: "AlcoAid helps you review drinking habits with amount logs, calendar review, favorites, bar memos, and notification settings.",
+          ctaStore: "View on the App Store",
           footerCopyright: "© 2026 AlcoAid",
-          footerNote: "Drinking is only for those of legal age. Please use this app in line with your health and any medical guidance."
+          footerNote: "Drinking is for those of legal age. Please use this app in line with your health and any medical guidance."
         },
         html: {
-          heroTitle: "Log what you drank,<br />right away.",
-          panelLeft: "16 categories<small>Tap to log your usual drinks</small>",
-          panelRight: "Safety alerts<small>For overdrinking and water breaks too</small>",
-          ctaTitle: "Keep your drinking<br />memories, beautifully."
+	          heroTitle: "Log what you drank,<br>then review it later.",
+	          ctaTitle: "Keep your drink records<br>ready to review."
         },
         labels: {
           brandLabel: "Back to the AlcoAid home",
           languageLabel: "Choose a language"
         },
         meta: {
-          title: "AlcoAid - Track drinks, avoid overdoing it",
-          description: "AlcoAid is an iPhone app for logging your drinks with ease, supporting moderation with a calendar, favorites, bar notes, and safety alerts.",
-          ogDescription: "AlcoAid is an iPhone app for logging your drinks with ease, supporting moderation with a calendar, favorites, bar notes, and safety alerts.",
+	          title: "AlcoAid - Log what you drank and review it later.",
+	          description: "AlcoAid is an iPhone app for recording alcohol type, amount, and time, then reviewing through calendar and bar memos.",
+	          ogDescription: "Record alcohol type, amount, and time, then review with calendar, bar memos, and notification settings.",
           storeUrl: "https://apps.apple.com/us/app/id6759056143"
         }
       }
     };
 
     function savedLanguage() {
-      try {
-        return localStorage.getItem("drinkSocialLanguage");
-      } catch {
-        return null;
-      }
+      try { return localStorage.getItem("drinkSocialLanguage"); } catch { return null; }
     }
-
     function rememberLanguage(language) {
-      try {
-        localStorage.setItem("drinkSocialLanguage", language);
-      } catch {
-        // Language switching still works when storage is unavailable.
-      }
+      try { localStorage.setItem("drinkSocialLanguage", language); } catch {}
     }
-
     function applyLanguage(language, shouldRemember = false) {
       const selected = translations[language] ? language : "ja";
       const translation = translations[selected];
-
       document.documentElement.lang = selected;
       document.title = translation.meta.title;
       document.querySelector("#meta-description").content = translation.meta.description;
       document.querySelector("#og-title").content = translation.meta.title;
       document.querySelector("#og-description").content = translation.meta.ogDescription;
-
-      document.querySelectorAll("[data-i18n]").forEach(element => {
-        element.textContent = translation.text[element.dataset.i18n];
-      });
-      document.querySelectorAll("[data-i18n-html]").forEach(element => {
-        element.innerHTML = translation.html[element.dataset.i18nHtml];
-      });
-      document.querySelectorAll("[data-i18n-aria-label]").forEach(element => {
-        element.setAttribute(
-          "aria-label",
-          translation.labels[element.dataset.i18nAriaLabel]
-        );
-      });
-      document.querySelectorAll("[data-store-link]").forEach(element => {
-        element.href = translation.meta.storeUrl;
-      });
-      document.querySelectorAll("[data-language]").forEach(button => {
-        button.setAttribute("aria-pressed", String(button.dataset.language === selected));
-      });
-
+      document.querySelectorAll("[data-i18n]").forEach(element => { element.textContent = translation.text[element.dataset.i18n]; });
+      document.querySelectorAll("[data-i18n-html]").forEach(element => { element.innerHTML = translation.html[element.dataset.i18nHtml]; });
+      document.querySelectorAll("[data-i18n-aria-label]").forEach(element => { element.setAttribute("aria-label", translation.labels[element.dataset.i18nAriaLabel]); });
+      document.querySelectorAll("[data-store-link]").forEach(element => { element.href = translation.meta.storeUrl; });
+      document.querySelectorAll("[data-language]").forEach(button => { button.setAttribute("aria-pressed", String(button.dataset.language === selected)); });
       if (shouldRemember) {
         rememberLanguage(selected);
         const url = new URL(window.location.href);
@@ -416,29 +440,17 @@
     }
 
     const requestedLanguage = new URLSearchParams(window.location.search).get("lang");
-    const hasRequestedLanguage = Object.prototype.hasOwnProperty.call(
-      translations,
-      requestedLanguage
-    );
-    const initialLanguage = hasRequestedLanguage
-      ? requestedLanguage
-      : savedLanguage() || (navigator.language.toLowerCase().startsWith("ja") ? "ja" : "en");
-
+    const hasRequestedLanguage = Object.prototype.hasOwnProperty.call(translations, requestedLanguage);
+    const initialLanguage = hasRequestedLanguage ? requestedLanguage : savedLanguage() || (navigator.language.toLowerCase().startsWith("ja") ? "ja" : "en");
     applyLanguage(initialLanguage);
-
-    document.querySelectorAll("[data-language]").forEach(button => {
-      button.addEventListener("click", () => applyLanguage(button.dataset.language, true));
-    });
-
+    document.querySelectorAll("[data-language]").forEach(button => { button.addEventListener("click", () => applyLanguage(button.dataset.language, true)); });
     document.addEventListener("copy", event => event.preventDefault());
     document.addEventListener("cut", event => event.preventDefault());
     document.addEventListener("contextmenu", event => event.preventDefault());
     document.addEventListener("dragstart", event => event.preventDefault());
     document.addEventListener("keydown", event => {
       const key = event.key.toLowerCase();
-      if ((event.metaKey || event.ctrlKey) && ["a", "c", "x", "s", "u"].includes(key)) {
-        event.preventDefault();
-      }
+      if ((event.metaKey || event.ctrlKey) && ["a", "c", "x", "s", "u"].includes(key)) event.preventDefault();
     });
   </script>
 </body>

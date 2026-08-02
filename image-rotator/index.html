@@ -3,358 +3,99 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title id="page-title">ImageRotator - 見せる前に、まっすぐに。</title>
-  <meta id="meta-description" name="description" content="ImageRotatorは、写真や動画を人に見せる前に、向きや形をそっと整えるためのiPhoneアプリです。" />
-  <meta id="og-title" property="og:title" content="ImageRotator - 見せる前に、まっすぐに。" />
-  <meta id="og-description" property="og:description" content="ImageRotatorは、写真や動画を人に見せる前に、向きや形をそっと整えるためのiPhoneアプリです。" />
+  <title id="page-title">ImageRotator - 写真の向きと、動画の保存を整える</title>
+  <meta id="meta-description" name="description" content="ImageRotatorは、写真の向き補正と、動画のトリミングや保存設定を手元で整えるためのiPhoneアプリです。" />
+  <meta id="og-title" property="og:title" content="ImageRotator - 写真の向きと、動画の保存を整える" />
+  <meta id="og-description" property="og:description" content="写真は向きを直し、動画はトリミングや保存設定を確認してから保存できる小さなiPhoneツールです。" />
   <meta property="og:type" content="website" />
-  <meta name="theme-color" content="#2563eb" />
-  <style>
-    :root {
-      --bg: #f7f9fd;
-      --text: #101828;
-      --muted: #5b6472;
-      --card: rgba(255,255,255,.84);
-      --white: #fff;
-      --line: rgba(16,24,40,.10);
-      --blue: #2563eb;
-      --blue2: #1d4ed8;
-      --cyan: #06b6d4;
-      --shadow2: 0 16px 44px rgba(37,99,235,.18);
-      --radius: 28px;
-      --max: 1120px;
-    }
-
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", Meiryo, sans-serif;
-      line-height: 1.75;
-      background:
-        radial-gradient(circle at top left, rgba(37,99,235,.18), transparent 34rem),
-        radial-gradient(circle at 84% 8%, rgba(6,182,212,.14), transparent 28rem),
-        linear-gradient(180deg, #fbfdff 0%, var(--bg) 45%, #fff 100%);
-      overflow-x: hidden;
-      -webkit-touch-callout: none;
-      -webkit-user-select: none;
-      user-select: none;
-    }
-
-    a { color: inherit; text-decoration: none; }
-    img {
-      max-width: 100%;
-      display: block;
-      -webkit-user-drag: none;
-      user-drag: none;
-      pointer-events: none;
-    }
-
-    .wrap { width: min(var(--max), calc(100% - 40px)); margin: 0 auto; }
-
-    .nav {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      backdrop-filter: blur(18px);
-      background: rgba(255,255,255,.72);
-      border-bottom: 1px solid var(--line);
-    }
-    .nav-inner {
-      height: 72px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-    }
-    .brand { display: flex; align-items: center; gap: 12px; font-weight: 900; letter-spacing: -.03em; }
-    .logo {
-      width: 40px; height: 40px; border-radius: 13px;
-      background: var(--blue);
-      display: grid; place-items: center; color: #fff; font-size: 20px;
-      box-shadow: 0 12px 30px rgba(37,99,235,.28);
-    }
-    .nav-links {
-      display: flex; align-items: center; gap: 22px; color: var(--muted); font-size: 14px; font-weight: 700;
-      overflow-x: auto; white-space: nowrap; scrollbar-width: none;
-    }
-    .nav-links::-webkit-scrollbar { display: none; }
-    .nav-links a:hover { color: var(--blue); }
-    .language-switch {
-      display: inline-flex;
-      align-items: center;
-      padding: 3px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: rgba(255,255,255,.72);
-    }
-    .language-switch button {
-      min-width: 38px;
-      min-height: 32px;
-      padding: 5px 9px;
-      border: 0;
-      border-radius: 999px;
-      color: var(--muted);
-      background: transparent;
-      font: inherit;
-      font-size: 12px;
-      font-weight: 900;
-      cursor: pointer;
-    }
-    .language-switch button[aria-pressed="true"] {
-      color: #fff;
-      background: var(--blue);
-      box-shadow: 0 5px 12px rgba(37,99,235,.28);
-    }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      border-radius: 999px;
-      border: 1px solid transparent;
-      padding: 13px 20px;
-      font-weight: 900;
-      letter-spacing: -.02em;
-      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-    .btn:hover { transform: translateY(-2px); }
-    .btn-primary { background: linear-gradient(135deg, var(--blue), var(--blue2)); color: #fff; box-shadow: var(--shadow2); }
-    .btn-secondary { background: rgba(255,255,255,.88); border-color: var(--line); color: var(--text); }
-
-    .hero { padding: 88px 0 74px; }
-    .hero-grid { display: grid; grid-template-columns: 1.08fr .92fr; gap: 56px; align-items: center; }
-    .eyebrow {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 8px 13px; border-radius: 999px;
-      background: rgba(37,99,235,.10); color: var(--blue);
-      font-size: 13px; font-weight: 900;
-      margin-bottom: 22px;
-    }
-    .hero h1 {
-      margin: 0;
-      font-size: clamp(42px, 6vw, 76px);
-      line-height: 1.05;
-      letter-spacing: -.03em;
-    }
-    .hero h1 span { color: var(--blue); }
-    .lead { margin: 26px 0 0; color: var(--muted); font-size: clamp(17px, 2vw, 21px); max-width: 660px; }
-    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; }
-    .trust { margin-top: 22px; color: var(--muted); font-size: 13px; display: flex; flex-wrap: wrap; gap: 10px 16px; }
-    .trust span { display: inline-flex; align-items: center; gap: 6px; }
-
-    .phone-stage { position: relative; min-height: 590px; display: grid; place-items: center; }
-    .phone-stage-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; }
-    .phone {
-      position: relative;
-      width: min(330px, 78vw);
-      border-radius: 44px;
-      padding: 12px;
-      background: #111827;
-      box-shadow: 0 34px 90px rgba(15,23,42,.34);
-      transform: rotate(2deg);
-    }
-    .screen {
-      min-height: 640px;
-      border-radius: 34px;
-      overflow: hidden;
-      background: linear-gradient(180deg, #f7fbff, #eef4ff);
-      border: 1px solid rgba(255,255,255,.16);
-      position: relative;
-    }
-    .status { height: 32px; display: flex; justify-content: center; align-items: end; padding-bottom: 5px; }
-    .island { width: 82px; height: 22px; border-radius: 999px; background: #111827; }
-    .app-ui { padding: 24px 18px; }
-    .app-title { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
-    .app-title strong { font-size: 22px; letter-spacing: -.05em; }
-    .pill { padding: 6px 10px; border-radius: 999px; background: #dbeafe; color: #1d4ed8; font-size: 12px; font-weight: 900; }
-    .phone-note {
-      margin: 12px 0 0;
-      color: #667085;
-      font-size: 11px;
-      line-height: 1.45;
-      font-weight: 700;
-      text-align: center;
-    }
-    .photo-stack { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .photo-card {
-      height: 128px; border-radius: 22px;
-      background: rgba(37,99,235,.16);
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,.55);
-      position: relative; overflow: hidden;
-    }
-    .photo-card:nth-child(2) { background: rgba(6,182,212,.16); transform: rotate(90deg); }
-    .photo-card:nth-child(3) { background: rgba(37,99,235,.10); transform: rotate(-90deg); }
-    .photo-card:nth-child(4) { background: rgba(6,182,212,.22); }
-    .photo-card:before { content:""; position:absolute; left:18px; bottom:18px; width:54px; height:38px; background:rgba(255,255,255,.62); clip-path: polygon(0 100%, 45% 40%, 64% 70%, 78% 30%, 100% 100%); }
-    .photo-card:after { content:""; position:absolute; right:16px; top:16px; width:20px; height:20px; border-radius:50%; background:rgba(255,255,255,.72); }
-    .control { margin-top: 18px; background: rgba(255,255,255,.86); border:1px solid rgba(37,99,235,.10); border-radius: 24px; padding: 16px; box-shadow: 0 14px 30px rgba(37,99,235,.08); }
-    .control-row { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; font-size:13px; color:var(--muted); font-weight:800; }
-    .rotate-buttons { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-    .rotate-buttons div { border-radius:16px; background:#eff6ff; color:#1d4ed8; padding:13px 8px; text-align:center; font-weight:900; }
-    .save-bar { margin-top: 12px; border-radius: 18px; padding: 14px; background: var(--blue); color:#fff; text-align:center; font-weight:900; }
-
-    section { padding: 76px 0; }
-    .section-head { max-width: 780px; margin: 0 auto 34px; text-align: center; }
-    .section-head h2 { margin:0; font-size: clamp(30px, 4vw, 48px); line-height:1.18; letter-spacing:-.03em; }
-    .section-head p { margin:16px auto 0; color:var(--muted); font-size:17px; }
-
-    .approach-items { display:grid; grid-template-columns: repeat(3, 1fr); gap:18px; }
-    .approach-item {
-      background: var(--card);
-      border: 1px solid rgba(255,255,255,.72);
-      border-radius: var(--radius);
-      padding: 26px;
-      box-shadow: 0 18px 48px rgba(15,23,42,.08);
-    }
-    .approach-item h3 { margin:0 0 8px; font-size:20px; letter-spacing:-.04em; }
-    .approach-item p { margin:0; color:var(--muted); font-size:15px; }
-
-    .moments { display:grid; grid-template-columns: repeat(3, 1fr); gap:18px; }
-    .moment {
-      background: var(--card);
-      border: 1px solid rgba(255,255,255,.72);
-      border-radius: var(--radius);
-      padding: 26px;
-      box-shadow: 0 18px 48px rgba(15,23,42,.08);
-      color: var(--muted);
-      font-size: 16px;
-    }
-
-    .manifesto { text-align:center; }
-    .manifesto blockquote {
-      margin: 0 auto;
-      max-width: 720px;
-      font-size: clamp(22px, 3.2vw, 34px);
-      line-height: 1.5;
-      letter-spacing: -.02em;
-      font-weight: 800;
-      color: var(--text);
-    }
-
-    .privacy { background:#0f172a; color:#fff; border-radius: 36px; padding: 44px; display:grid; grid-template-columns: 1fr 1fr; gap:28px; align-items:center; box-shadow: 0 30px 90px rgba(15,23,42,.28); }
-    .privacy h2 { margin:0; font-size: clamp(28px, 4vw, 42px); line-height:1.18; letter-spacing:-.03em; }
-    .privacy p { color:#cbd5e1; margin:14px 0 0; }
-    .privacy-items { display:grid; gap:12px; }
-    .privacy-item { background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.10); border-radius:18px; padding:16px; }
-
-    .cta { padding-bottom: 96px; }
-    .cta-box { text-align:center; border-radius: 40px; padding: 58px 24px; background: rgba(37,99,235,.08); border:1px solid rgba(37,99,235,.12); }
-    .cta-box h2 { margin:0; font-size: clamp(32px, 5vw, 56px); line-height:1.12; letter-spacing:-.03em; }
-    .cta-box p { margin:18px auto 28px; color:var(--muted); max-width:680px; }
-    footer { padding: 28px 0 44px; color:var(--muted); font-size:13px; border-top:1px solid var(--line); }
-    .foot { display:flex; justify-content:space-between; gap:18px; flex-wrap:wrap; }
-
-    @media (max-width: 900px) {
-      .hero { padding-top: 54px; }
-      .hero-grid, .privacy { grid-template-columns:1fr; }
-      .phone-stage { min-height: 500px; }
-      .phone { width:min(300px,82vw); }
-      .screen { min-height: 560px; }
-      .floating-card { display:none; }
-      .approach-items { grid-template-columns:1fr; }
-      .moments { grid-template-columns:1fr; }
-    }
-    @media (max-width: 560px) {
-      .wrap { width:min(100% - 28px, var(--max)); }
-      .nav-inner { height:66px; }
-      .brand span { display:none; }
-      .btn { padding: 11px 15px; font-size:14px; }
-      .language-switch button { min-width: 34px; padding-inline: 7px; }
-      .hero h1 { font-size: 42px; }
-      section { padding: 54px 0; }
-      .privacy { padding: 28px; border-radius: 28px; }
-      .cta-box { border-radius: 30px; }
-    }
-  </style>
+  <meta name="theme-color" content="#265b8f" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../src/app-page.css" />
 </head>
-<body>
-  <header class="nav">
+<body class="app-rotator" data-storage-key="imageRotatorLanguage">
+  <nav class="site-nav">
     <div class="wrap nav-inner">
       <a class="brand" href="#top" aria-label="ImageRotator トップへ" data-i18n-aria-label="brandLabel">
-        <div class="logo">↻</div>
+        <span class="brand-mark">IR</span>
         <span>ImageRotator</span>
       </a>
-      <nav class="nav-links" aria-label="ページ内ナビゲーション" data-i18n-aria-label="navLabel">
-        <a href="#approach" data-i18n="navApproach">考え方</a>
-        <a href="#moments" data-i18n="navMoments">こんな瞬間に</a>
+      <div class="nav-links" aria-label="ページ内ナビゲーション" data-i18n-aria-label="navLabel">
+        <a href="#features" data-i18n="navFeatures">できること</a>
+        <a href="#moments" data-i18n="navMoments">使う場面</a>
         <a href="#privacy" data-i18n="navPrivacy">プライバシー</a>
         <div class="language-switch" role="group" aria-label="言語を選択" data-i18n-aria-label="languageLabel">
           <button type="button" data-language="ja" aria-pressed="true">JA</button>
           <button type="button" data-language="en" aria-pressed="false">EN</button>
         </div>
-        <a class="btn btn-primary" href="https://apps.apple.com/jp/app/id6754210727" target="_blank" rel="noopener" data-store-link data-i18n="navAppStore">App Store</a>
-      </nav>
+        <a class="button" href="https://apps.apple.com/jp/app/id6754210727" target="_blank" rel="noopener" data-store-link data-i18n="navStore">App Store</a>
+      </div>
     </div>
-  </header>
+  </nav>
 
   <main id="top">
-    <section class="hero">
+    <header class="hero">
       <div class="wrap hero-grid">
         <div>
-          <div class="eyebrow" data-i18n="heroEyebrow">写真と動画の、小さな仕上げ。</div>
-          <h1 data-i18n-html="heroTitle">見せる前に、<br><span>まっすぐに。</span></h1>
-          <p class="lead" data-i18n="heroLead">
-            撮ったときのままでいい。傾いた一枚も、向きの違う数枚も、見せる前にそっと整えるだけです。
-          </p>
+          <span class="utility-label" data-i18n="utilityLabel">写真・動画ツール</span>
+          <h1 data-i18n-html="heroTitle">写真は向きを、<br><span>動画は保存前の設定を。</span></h1>
+          <p class="lead" data-i18n="heroLead">ImageRotatorは、写真の向きを直し、動画はトリミングや保存設定を確認してから保存できる小さなツールです。余計な演出を挟まず、必要な補正だけに集中します。</p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="https://apps.apple.com/jp/app/id6754210727" target="_blank" rel="noopener" data-store-link data-i18n="heroAppStoreButton">App Storeで見る</a>
-            <a class="btn btn-secondary" href="#approach" data-i18n="heroApproachButton">考え方を見る</a>
+            <a class="button" href="https://apps.apple.com/jp/app/id6754210727" target="_blank" rel="noopener" data-store-link data-i18n="heroStore">App Storeで見る</a>
+            <a class="text-link" href="#features" data-i18n="heroLink">機能を見る</a>
           </div>
-          <div class="trust">
-            <span data-i18n="trust1">✓ 端末内だけで完結</span>
-            <span data-i18n="trust2">✓ 元の写真はそのまま残せる</span>
-            <span data-i18n="trust3">✓ 迷わず使える、シンプルな操作</span>
-          </div>
+          <p class="micro-note">
+            <span data-i18n="note1">端末内で整える</span>
+            <span data-i18n="note2">元ファイルの扱いを選べる</span>
+          </p>
         </div>
 
-        <div class="phone-stage-wrap" aria-hidden="true">
-          <div class="phone-stage">
-            <div class="phone">
-              <div class="screen">
-                <div class="status"><div class="island"></div></div>
-                <div class="app-ui">
-                  <div class="app-title"><strong data-i18n="appTitle">向きを整える</strong><span class="pill" data-i18n="appPill">選択中</span></div>
-                  <div class="photo-stack">
-                    <div class="photo-card"></div>
-                    <div class="photo-card"></div>
-                    <div class="photo-card"></div>
-                    <div class="photo-card"></div>
-                  </div>
-                  <div class="control">
-                    <div class="control-row"><span data-i18n="controlRow1">向き</span><span data-i18n="controlRow2">タップして調整</span></div>
-                    <div class="rotate-buttons"><div data-i18n="rotateLeft">↺ 左に</div><div data-i18n="rotateRight">↻ 右に</div></div>
-                    <div class="save-bar" data-i18n="saveBar">まとめて保存</div>
-                  </div>
-                </div>
-              </div>
+        <div class="motif-panel" aria-hidden="true">
+          <div class="motif-inner">
+            <div class="motif-title">
+	              <span>写真回転プレビュー</span>
+              <span class="motif-meta">90度</span>
+            </div>
+            <div class="tool-preview">
+              <div class="photo-shape before"></div>
+              <div class="arrow">-&gt;</div>
+              <div class="photo-shape after"></div>
+            </div>
+            <div class="tool-controls">
+	              <div class="control-row"><span data-i18n="control1">写真の回転</span><span>90度</span></div>
+              <div class="control-row"><span data-i18n="control2">位置情報</span><span data-i18n="control2Value">削除を選択</span></div>
+              <div class="control-row"><span data-i18n="control3">元ファイル</span><span data-i18n="control3Value">残す</span></div>
             </div>
           </div>
-          <p class="phone-note" data-i18n="phoneNote">※画面は開発中のものを含み、実際の表示と異なる場合があります。</p>
         </div>
       </div>
-    </section>
+    </header>
 
-    <section id="approach">
+    <section id="features">
       <div class="wrap">
         <div class="section-head">
-          <h2 data-i18n="approachTitle">整えるのに、正解はいらない。</h2>
+          <h2 data-i18n="featuresTitle">写真と動画、それぞれの補正</h2>
+	          <p data-i18n="featuresLead">共有前のひと手間に必要な選択を、写真の向き、動画の保存、情報の扱いに分けて見せます。</p>
         </div>
-        <div class="approach-items">
-          <article class="approach-item">
-            <h3 data-i18n="approach1Title">撮った瞬間を、疑わない</h3>
-            <p data-i18n="approach1Body">手ぶれも、傾きも、まず気にせず撮っていい。整えるのはあとからで十分です。</p>
+        <div class="fragment-grid">
+          <article class="fragment">
+            <span class="fragment-kicker">回転</span>
+	            <h3 data-i18n="feature1Title">写真の向きを直す</h3>
+	            <p data-i18n="feature1Body">横向きや逆さまの写真を、共有前にすばやく整えます。</p>
+            <div class="inline-chips"><span>左回転</span><span>右回転</span><span>180度</span></div>
           </article>
-          <article class="approach-item">
-            <h3 data-i18n="approach2Title">やり直しは、失敗じゃない</h3>
-            <p data-i18n="approach2Body">一度で決まらなくても構いません。何度でも向きや形を選び直せます。</p>
+          <article class="fragment">
+            <span class="fragment-kicker">保存</span>
+	            <h3 data-i18n="feature2Title">動画の保存を整える</h3>
+	            <p data-i18n="feature2Body">動画はトリミングや保存設定を確認してから保存できます。写真向けの向き補正とは別の流れで扱います。</p>
+	            <div class="inline-chips"><span>トリミング</span><span>解像度</span></div>
           </article>
-          <article class="approach-item">
-            <h3 data-i18n="approach3Title">見せる前の、ひと手間だけ</h3>
-            <p data-i18n="approach3Body">誰かに送る前、投稿する前。その直前だけ、そっと形を整えます。</p>
+          <article class="fragment">
+            <span class="fragment-kicker">情報</span>
+            <h3 data-i18n="feature3Title">余計な情報を外す</h3>
+            <p data-i18n="feature3Body">位置情報の削除や、検出した顔のぼかしで、見せる前の不安を減らします。</p>
+            <div class="inline-chips"><span>位置情報</span><span>顔ぼかし</span></div>
           </article>
         </div>
       </div>
@@ -363,133 +104,101 @@
     <section id="moments">
       <div class="wrap">
         <div class="section-head">
-          <h2 data-i18n="momentsTitle">こんな瞬間に。</h2>
+          <h2 data-i18n="momentsTitle">使う場面</h2>
+          <p data-i18n="momentsLead">その場では気にしなかった傾きも、人に送る前には少し整えたくなることがあります。</p>
         </div>
-        <div class="moments">
-          <div class="moment" data-i18n="moment1">旅先で撮った一枚が、あとで見たら横を向いていたとき。</div>
-          <div class="moment" data-i18n="moment2">送る前に、なんとなく整えたい一本の動画があるとき。</div>
-          <div class="moment" data-i18n="moment3">誰かに見せる前に、少しだけ整える時間がほしいとき。</div>
+        <div class="steps">
+          <div class="step"><span class="step-num">ケース 01</span><h3 data-i18n="case1Title">写真が横を向いていた</h3><p data-i18n="case1Body">旅先や食事の一枚を、送る直前に直せます。</p></div>
+	          <div class="step"><span class="step-num">ケース 02</span><h3 data-i18n="case2Title">動画を保存前に整えたい</h3><p data-i18n="case2Body">トリミングや保存設定を確認してから、必要な形で保存できます。</p></div>
+          <div class="step"><span class="step-num">ケース 03</span><h3 data-i18n="case3Title">情報を減らして共有したい</h3><p data-i18n="case3Body">位置情報など、共有に不要な情報を扱いやすくします。</p></div>
         </div>
       </div>
     </section>
 
     <section id="privacy">
-      <div class="wrap">
-        <div class="privacy">
-          <div>
-            <h2 data-i18n="privacyTitle">見せる前の整えは、あなたの手元だけで。</h2>
-            <p data-i18n="privacyLead">写真や動画を人に見せる前に、余計なものは持ち出しません。整える作業は、すべて端末の中で完結します。</p>
-          </div>
-          <div class="privacy-items">
-            <div class="privacy-item" data-i18n-html="privacyItem1"><strong>位置情報の削除</strong><br><span style="color:#cbd5e1;">保存時に位置情報を削除するか選択できます。</span></div>
-            <div class="privacy-item" data-i18n-html="privacyItem2"><strong>元ファイルの保持を選択</strong><br><span style="color:#cbd5e1;">元の写真や動画を残すか、変換後に削除するか設定できます。</span></div>
-            <div class="privacy-item" data-i18n-html="privacyItem3"><strong>顔モザイク加工</strong><br><span style="color:#cbd5e1;">写真内の顔を隠したいときの加工にも対応しています。</span></div>
-          </div>
+      <div class="wrap promise">
+        <blockquote class="quote" data-i18n-html="privacyQuote">見せる前の補正は、<br>あなたの手元で終わる。</blockquote>
+        <div class="promise-list">
+	          <div data-i18n="privacy1">写真の向き補正も動画の保存準備も、端末の中だけで行われます。ImageRotatorが写真や動画を外部のサーバーへ送ることはありません。</div>
+          <div data-i18n="privacy2">保存時に、元ファイルや位置情報の扱いを選べます。</div>
+          <div data-i18n="privacy3">共有前の不安を減らす機能を優先します。派手な編集機能は増やしません。</div>
         </div>
       </div>
     </section>
 
-    <section class="manifesto">
-      <div class="wrap section-head">
-        <blockquote data-i18n-html="manifestoQuote">まっすぐでなくても、撮っていい。<br>見せる前に、整えればいい。</blockquote>
-      </div>
-    </section>
-
-    <section id="release" class="cta">
-      <div class="wrap">
-        <div class="cta-box">
-          <h2 data-i18n="ctaTitle">App Storeで、公開中です。</h2>
-          <p data-i18n="ctaBody">見せる前の小さな整えを、ImageRotatorで。今日から、手元ではじめられます。</p>
-          <a class="btn btn-primary" href="https://apps.apple.com/jp/app/id6754210727" target="_blank" rel="noopener" data-store-link data-i18n="ctaButton">App Storeでダウンロード</a>
+    <section class="cta">
+      <div class="wrap cta-panel">
+        <div>
+          <h2 data-i18n="ctaTitle">送る前の、最後の整えに。</h2>
+	          <p data-i18n="ctaBody">App Storeページを確認できます。</p>
         </div>
+        <a class="button" href="https://apps.apple.com/jp/app/id6754210727" target="_blank" rel="noopener" data-store-link data-i18n="ctaStore">App Storeで見る</a>
       </div>
     </section>
   </main>
 
   <footer>
-    <div class="wrap foot">
-      <div data-i18n="footerCopyright">© ImageRotator</div>
-      <div data-i18n="footerTagline">見せる前に、まっすぐに。写真と動画のための、小さな整え。</div>
+    <div class="wrap footer-inner">
+      <span data-i18n="footerCopyright">© ImageRotator</span>
+	      <span data-i18n="footerTagline">写真の向きと動画保存のための、小さな補正ツール。</span>
     </div>
   </footer>
-  <script>
-    const japaneseText = Object.fromEntries(
-      [...document.querySelectorAll("[data-i18n]")].map(element => [
-        element.dataset.i18n,
-        element.textContent
-      ])
-    );
-    const japaneseHTML = Object.fromEntries(
-      [...document.querySelectorAll("[data-i18n-html]")].map(element => [
-        element.dataset.i18nHtml,
-        element.innerHTML
-      ])
-    );
-    const japaneseLabels = Object.fromEntries(
-      [...document.querySelectorAll("[data-i18n-aria-label]")].map(element => [
-        element.dataset.i18nAriaLabel,
-        element.getAttribute("aria-label")
-      ])
-    );
 
-    const translations = {
+  <script>
+    window.PAGE_TRANSLATIONS = {
       ja: {
-        text: japaneseText,
-        html: japaneseHTML,
-        labels: japaneseLabels,
         meta: {
-          title: "ImageRotator - 見せる前に、まっすぐに。",
-          description: "ImageRotatorは、写真や動画を人に見せる前に、向きや形をそっと整えるためのiPhoneアプリです。",
-          ogDescription: "ImageRotatorは、写真や動画を人に見せる前に、向きや形をそっと整えるためのiPhoneアプリです。",
+	          title: "ImageRotator - 写真の向きと、動画の保存を整える",
+	          description: "ImageRotatorは、写真の向き補正と、動画のトリミングや保存設定を手元で整えるためのiPhoneアプリです。",
+	          ogDescription: "写真は向きを直し、動画はトリミングや保存設定を確認してから保存できる小さなiPhoneツールです。",
           storeUrl: "https://apps.apple.com/jp/app/id6754210727"
         }
       },
       en: {
         text: {
-          navApproach: "Our approach",
+          navFeatures: "Features",
           navMoments: "Moments",
           navPrivacy: "Privacy",
-          navAppStore: "App Store",
-          heroEyebrow: "A small finishing touch for your photos and videos.",
-          heroLead: "It's fine as you shot it. A tilted photo, a handful of mismatched clips — just tidy them up gently before you share.",
-          heroAppStoreButton: "View on the App Store",
-          heroApproachButton: "See our approach",
-          trust1: "✓ Everything happens on your device",
-          trust2: "✓ Your originals stay untouched",
-          trust3: "✓ Simple, no guesswork",
-          appTitle: "Straighten it out",
-          appPill: "Selected",
-          controlRow1: "Orientation",
-          controlRow2: "Just tap to adjust",
-          rotateLeft: "↺ Left",
-          rotateRight: "↻ Right",
-          saveBar: "Save all",
-          phoneNote: "*Screens may show work-in-progress UI and can differ from the final app.",
-          approachTitle: "There's no one right way to straighten something out.",
-          approach1Title: "Don't second-guess the moment",
-          approach1Body: "Shake, tilt, whatever — shoot first and worry about it later. Straightening it out can always come after.",
-          approach2Title: "Redoing it isn't a mistake",
-          approach2Body: "It doesn't have to be right the first time. You can always choose the orientation or shape again.",
-          approach3Title: "Just one small step before you show it",
-          approach3Body: "Right before you send it, right before you post it — that's the only moment this touches.",
-          momentsTitle: "Moments like these.",
-          moment1: "The photo you took on a trip turns out to be lying on its side.",
-          moment2: "A video you want to tidy up, just a little, before you send it.",
-          moment3: "You just want a moment to adjust something before showing it to someone.",
-          privacyTitle: "The tidying happens only on your device.",
-          privacyLead: "Nothing extra leaves your device before you share. All the tidying happens right there, on your phone.",
-          ctaTitle: "Now available on the App Store.",
-          ctaBody: "A small tidying-up before you share — that's ImageRotator. Start right on your phone, today.",
-          ctaButton: "Download on the App Store",
+          navStore: "App Store",
+	          utilityLabel: "PHOTO / VIDEO TOOL",
+	          heroLead: "ImageRotator is a small tool for fixing photo orientation and preparing videos with trimming and save settings before you save them. It stays focused on the correction you actually need.",
+          heroStore: "View on the App Store",
+          heroLink: "See features",
+          note1: "Process on device",
+          note2: "Choose how originals are handled",
+	          control1: "Photo rotation",
+          control2: "Location",
+          control2Value: "Remove",
+          control3: "Original",
+          control3Value: "Keep",
+          featuresTitle: "Correction for photos and videos.",
+	          featuresLead: "The choices are separated into photo orientation, video saving, and how private information is handled.",
+	          feature1Title: "Fix photo orientation",
+	          feature1Body: "Straighten sideways or upside-down photos before sharing.",
+	          feature2Title: "Prepare video saving",
+	          feature2Body: "For videos, check trimming and save settings before saving. Photo rotation is handled separately.",
+          feature3Title: "Remove extra information",
+                    feature3Body: "Location removal and detected-face blur help reduce worry before sharing.",
+          momentsTitle: "Moments it comes in handy",
+          momentsLead: "A tilt that did not matter at the time can become something you want to fix before sending.",
+          case1Title: "A photo is sideways",
+          case1Body: "Fix a travel or meal photo right before sending it.",
+	          case2Title: "You want to prepare a video before saving",
+		          case2Body: "Check trimming and save settings, then save the video in the form you need.",
+          case3Title: "You want to share less information",
+          case3Body: "Handle location and other details that do not need to travel with the file.",
+	          privacy1: "Photo orientation fixes and video save preparation all happen on your device. ImageRotator never sends your photos or videos to an external server.",
+          privacy2: "Choose what happens to originals and location information when saving.",
+          privacy3: "The priority is reducing sharing anxiety. We don't add flashy editing tools.",
+          ctaTitle: "For the final tidy-up before sending.",
+	          ctaBody: "View the App Store page for ImageRotator.",
+          ctaStore: "View on the App Store",
           footerCopyright: "© ImageRotator",
-          footerTagline: "Straighten it out before you show it. A small tidy-up for your photos and videos."
+	          footerTagline: "A small correction tool for photo orientation and video saving."
         },
         html: {
-          heroTitle: "Straighten it out,<br><span>before you show it.</span>",
-          manifestoQuote: "It's fine if it's not straight.<br>You can always straighten it out before you show it.",
-          privacyItem1: "<strong>Remove location data</strong><br><span style=\"color:#cbd5e1;\">Choose whether to strip location data when saving.</span>",
-          privacyItem2: "<strong>Keep or discard the originals</strong><br><span style=\"color:#cbd5e1;\">Decide whether to keep the original photo or video, or delete it after converting.</span>",
-          privacyItem3: "<strong>Face mosaic</strong><br><span style=\"color:#cbd5e1;\">Also supports blurring faces in photos when you want to hide them.</span>"
+	          heroTitle: "Fix photo orientation,<br><span>prepare videos before saving.</span>",
+          privacyQuote: "The correction before sharing<br>stays in your hands."
         },
         labels: {
           brandLabel: "Back to the ImageRotator home",
@@ -497,92 +206,14 @@
           languageLabel: "Choose a language"
         },
         meta: {
-          title: "ImageRotator - Straighten it out, before you show it.",
-          description: "ImageRotator is an iPhone app for gently tidying up the orientation and shape of your photos and videos, right before you share them.",
-          ogDescription: "It's fine as you shot it. Just tidy it up gently before you show it to anyone.",
+	          title: "ImageRotator - Photo orientation and video saving",
+	          description: "ImageRotator is an iPhone app for fixing photo orientation and preparing videos with trimming and save settings.",
+	          ogDescription: "A small iPhone tool for photo orientation, video trimming, save settings, and privacy choices.",
           storeUrl: "https://apps.apple.com/us/app/id6754210727"
         }
       }
     };
-
-    function savedLanguage() {
-      try {
-        return localStorage.getItem("imageRotatorLanguage");
-      } catch {
-        return null;
-      }
-    }
-
-    function rememberLanguage(language) {
-      try {
-        localStorage.setItem("imageRotatorLanguage", language);
-      } catch {
-        // Language switching still works when storage is unavailable.
-      }
-    }
-
-    function applyLanguage(language, shouldRemember = false) {
-      const selected = translations[language] ? language : "ja";
-      const translation = translations[selected];
-
-      document.documentElement.lang = selected;
-      document.title = translation.meta.title;
-      document.querySelector("#meta-description").content = translation.meta.description;
-      document.querySelector("#og-title").content = translation.meta.title;
-      document.querySelector("#og-description").content = translation.meta.ogDescription;
-
-      document.querySelectorAll("[data-i18n]").forEach(element => {
-        element.textContent = translation.text[element.dataset.i18n];
-      });
-      document.querySelectorAll("[data-i18n-html]").forEach(element => {
-        element.innerHTML = translation.html[element.dataset.i18nHtml];
-      });
-      document.querySelectorAll("[data-i18n-aria-label]").forEach(element => {
-        element.setAttribute(
-          "aria-label",
-          translation.labels[element.dataset.i18nAriaLabel]
-        );
-      });
-      document.querySelectorAll("[data-store-link]").forEach(element => {
-        element.href = translation.meta.storeUrl;
-      });
-      document.querySelectorAll("[data-language]").forEach(button => {
-        button.setAttribute("aria-pressed", String(button.dataset.language === selected));
-      });
-
-      if (shouldRemember) {
-        rememberLanguage(selected);
-        const url = new URL(window.location.href);
-        url.searchParams.set("lang", selected);
-        history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
-      }
-    }
-
-    const requestedLanguage = new URLSearchParams(window.location.search).get("lang");
-    const hasRequestedLanguage = Object.prototype.hasOwnProperty.call(
-      translations,
-      requestedLanguage
-    );
-    const initialLanguage = hasRequestedLanguage
-      ? requestedLanguage
-      : savedLanguage() || (navigator.language.toLowerCase().startsWith("ja") ? "ja" : "en");
-
-    applyLanguage(initialLanguage);
-
-    document.querySelectorAll("[data-language]").forEach(button => {
-      button.addEventListener("click", () => applyLanguage(button.dataset.language, true));
-    });
-
-    document.addEventListener("copy", event => event.preventDefault());
-    document.addEventListener("cut", event => event.preventDefault());
-    document.addEventListener("contextmenu", event => event.preventDefault());
-    document.addEventListener("dragstart", event => event.preventDefault());
-    document.addEventListener("keydown", event => {
-      const key = event.key.toLowerCase();
-      if ((event.metaKey || event.ctrlKey) && ["a", "c", "x", "s", "u"].includes(key)) {
-        event.preventDefault();
-      }
-    });
   </script>
+  <script src="../src/app-page.js"></script>
 </body>
 </html>
